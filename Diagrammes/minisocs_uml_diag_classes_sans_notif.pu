@@ -1,0 +1,36 @@
+@startuml
+
+'Diagramme de classes (PlantUML)'
+
+'Configuration charte graphique'
+hide empty methods
+hide circle
+skinparam class {
+  BackgroundColor White
+  ArrowColor Black
+  BorderColor Black
+}
+
+'Classes, énumérations, etc.'
+class MiniSocs {
+  - nom: String
+}
+class Utilisateur {
+  - pseudonyme: String
+  - nom: String
+  - prénom: String
+  - courriel: String
+  - etatCompte: ÉtatCompte
+}
+enum ÉtatCompte <<enum>> {
+  ACTIF
+  DÉSACTIVÉ
+  BLOQUÉ
+}
+
+'Associations, etc.'
+MiniSocs *--> "*" Utilisateur
+
+'Au besoin, aides pour le positionnement'
+
+@enduml

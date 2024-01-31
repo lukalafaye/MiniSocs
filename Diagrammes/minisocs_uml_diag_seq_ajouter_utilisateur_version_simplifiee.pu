@@ -1,0 +1,22 @@
+@startuml
+
+'Diagramme de séquence simplifié du cas d'utilisation "Ajouter utilisateur" (PlantUML)'
+
+'Version simplifiée (voir ...[_version_simplifiée].pu pour une version plus détaillée'
+
+hide footbox
+skinparam sequenceParticipantBackgroundColor White
+skinparam sequenceActorBackgroundColor White
+actor "__:Administrateur__" as admin
+participant "__m:MiniSocs__" as m
+admin -> m : ajouterUtilisateur(pseudo, nom, prénom, courriel)
+opt pseudo, nom, prénom, courriel non null ∧ non vide
+  m -> m : u=chercherUtilisateur(pseudo): Utilisateur
+  create "__u:Utilisateur__" as u
+  opt u == null
+    m -> "__u:Utilisateur__" as u : u=<<create(pseudo, nom, prénom, courriel)>>
+    u --> m
+  end
+end
+m --> admin
+@enduml

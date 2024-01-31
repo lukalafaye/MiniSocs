@@ -1,0 +1,28 @@
+@startuml
+
+'Diagramme de cas d'utilisation (PlantUML)'
+
+'Configuration charte graphique'
+skinparam usecase {
+BackgroundColor White
+BorderColor Black
+ArrowColor Black
+ActorBackgroundColor<< Human >> Gold
+}
+
+left to right direction
+
+'Déclaration des acteurs :'
+actor Administrateur
+actor Utilisateur
+Utilisateur <|-- Administrateur
+
+'Déclaration des cas d'utilisation dans le système'
+rectangle "MiniSocs" {
+:Administrateur: -- (ajouter un utilisateur)
+:Administrateur: -- (lister les utilisateur)
+:Administrateur: -- (bloquer un compte utilisateur)
+:Utilisateur:    -- (désactiver son compte)
+}
+
+@enduml

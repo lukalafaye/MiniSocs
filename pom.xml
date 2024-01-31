@@ -1,0 +1,256 @@
+<!--
+This file is part of the course CSC4102.
+
+The course material is free software: you can redistribute it and/or modify
+it under the terms of the GNU Lesser General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+The course material is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public License
+along with the course CSC4102.  If not, see <http://www.gnu.org/licenses/>.
+
+Initial developer(s): Denis Conan
+Contributor(s):
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>eu.telecomsudparis.csc4102</groupId>
+  <artifactId>csc4102-minisocs-Nom1_Prenom1-Nom2_Prenom2</artifactId>
+  <packaging>jar</packaging>
+  <version>1.0-SNAPSHOT</version>
+  <name>Mini réseaux sociaux</name>
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+  <pluginRepositories>
+    <pluginRepository>
+      <id>tsp-csc-checkstyle-config-stable</id>
+      <name>TSP CSC Checkstyle configuration, stable</name>
+      <url>https://www-inf.telecom-sudparis.eu/COURS/CSC4102/maven-repository/stable/</url>
+    </pluginRepository>
+    <pluginRepository>
+      <id>tsp-csc-checkstyle-config-snapshot</id>
+      <name>TSP CSC Checkstyle configuration, snapshot</name>
+      <url>https://www-inf.telecom-sudparis.eu/COURS/CSC4102/maven-repository/snapshot/</url>
+    </pluginRepository>
+  </pluginRepositories>
+  <repositories>
+    <repository>
+      <id>csc4102-util-stable</id>
+      <name>CSC4102, librairie Util, stable</name>
+      <url>https://www-inf.telecom-sudparis.eu/COURS/CSC4102/maven-repository/stable/</url>
+    </repository>
+    <repository>
+      <id>csc4102-util-snapshot</id>
+      <name>CSC4102, librairie Util, snapshot</name>
+      <url>https://www-inf.telecom-sudparis.eu/COURS/CSC4102/maven-repository/snapshot/</url>
+    </repository>
+  </repositories>
+  <dependencies>
+    <dependency>
+      <groupId>eu.telecomsudparis.csc</groupId>
+      <artifactId>tsp-csc-config-checkstyle</artifactId>
+      <version>1.1-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>eu.telecomsudparis.csc4102</groupId>
+      <artifactId>csc4102-util</artifactId>
+      <version>1.1-SNAPSHOT</version>
+    </dependency>
+    <!-- for Apache Commons validator for email -->
+     <dependency>
+      <groupId>commons-validator</groupId>
+      <artifactId>commons-validator</artifactId>
+      <version>1.7</version>
+     </dependency>
+    <!-- for serialising with GSON and with more converters such as InstantConverter -->
+    <dependency>
+      <groupId>com.fatboyindustrial.gson-javatime-serialisers</groupId>
+      <artifactId>gson-javatime-serialisers</artifactId>
+      <version>1.1.2</version>
+    </dependency>
+    <!-- junit testing -->
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-engine</artifactId>
+      <version>5.9.0</version>
+      <scope>test</scope>
+    </dependency>
+    <!-- tests with sleep (http://www.awaitility.org/)  -->
+    <dependency>
+      <groupId>org.awaitility</groupId>
+      <artifactId>awaitility</artifactId>
+      <version>4.2.0</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+  <build>
+    <pluginManagement>
+      <plugins>
+        <!-- spotbugs configuration -->
+        <plugin>
+          <groupId>com.github.spotbugs</groupId>
+          <artifactId>spotbugs-maven-plugin</artifactId>
+          <version>4.7.2.0</version>
+          <dependencies>
+            <dependency>
+              <groupId>com.github.spotbugs</groupId>
+              <artifactId>spotbugs</artifactId>
+              <version>4.7.2</version>
+            </dependency>
+          </dependencies>
+        </plugin>
+        <!-- checkstyle configuration -->
+        <plugin>
+	  <groupId>org.apache.maven.plugins</groupId>
+	  <artifactId>maven-checkstyle-plugin</artifactId>
+	  <version>3.2.0</version>
+          <dependencies>
+            <dependency>
+              <groupId>com.puppycrawl.tools</groupId>
+              <artifactId>checkstyle</artifactId>
+              <version>10.2</version>
+            </dependency>
+            <dependency>
+              <groupId>eu.telecomsudparis.csc</groupId>
+              <artifactId>tsp-csc-config-checkstyle</artifactId>
+	      <version>1.1-SNAPSHOT</version>
+            </dependency>
+          </dependencies>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+    <plugins>
+      <!-- enforce JDK version >= 17 and Maven version >= 3.8.6 -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-enforcer-plugin</artifactId>
+        <version>3.1.0</version>
+        <executions>
+          <execution>
+            <id>enforce-versions</id>
+            <goals>
+              <goal>enforce</goal>
+            </goals>
+            <configuration>
+              <rules>
+                <requireJavaVersion>
+                  <version>[17,)</version>
+                  <message>
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+You need a JDK version >= 17
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!</message>
+                </requireJavaVersion>
+                <requireMavenVersion>
+                  <version>[3.8.6,)</version>
+                  <message>
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+You need a Maven version >= 3.8.6
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!</message>
+                </requireMavenVersion>
+              </rules>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <!-- <plugin> -->
+      <!--   <groupId>org.apache.maven.plugins</groupId> -->
+      <!--   <artifactId>maven-eclipse-plugin</artifactId> -->
+      <!--   <version>2.10</version> -->
+      <!--   <configuration> -->
+      <!--     <downloadSources>true</downloadSources> -->
+      <!--     <downloadJavadocs>true</downloadJavadocs> -->
+      <!--   </configuration> -->
+      <!-- </plugin> -->
+      <plugin>
+	<groupId>org.apache.maven.plugins</groupId>
+	<artifactId>maven-compiler-plugin</artifactId>
+        <version>3.10.1</version>
+	<configuration>
+          <source>17</source>
+          <target>17</target>
+	</configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>3.2.2</version>
+        <configuration>
+          <enableAssertions>true</enableAssertions>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>com.github.spotbugs</groupId>
+        <artifactId>spotbugs-maven-plugin</artifactId>
+        <configuration>
+          <maxRank>15</maxRank>
+        </configuration>
+      </plugin>
+      <plugin>
+	<groupId>org.apache.maven.plugins</groupId>
+	<artifactId>maven-checkstyle-plugin</artifactId>
+	<configuration>
+	  <configLocation>config/checkstyle/sun_checks_adapted_to_tsp_csc_pour_eclipse_2019_09.xml</configLocation>
+	  <consoleOutput>true</consoleOutput>
+	  <failsOnError>false</failsOnError>
+	  <linkXRef>false</linkXRef>
+	</configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-site-plugin</artifactId>
+        <version>4.0.0-M12</version>
+        <configuration>
+          <locales>fr</locales>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+  <!-- reports in the maven site -->
+  <reporting>
+    <plugins>
+     <plugin>
+	<groupId>org.apache.maven.plugins</groupId>
+	<artifactId>maven-project-info-reports-plugin</artifactId>
+	<version>3.5.0</version>
+	<configuration>
+          <dependencyDetailsEnabled>false</dependencyDetailsEnabled>
+          <dependencyLocationsEnabled>false</dependencyLocationsEnabled>
+	</configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+	<artifactId>maven-javadoc-plugin</artifactId>
+        <configuration>
+          <excludePackageNames>*.unitaires:*.validation</excludePackageNames>
+        </configuration>
+    	<version>3.6.2</version>
+      </plugin>
+      <plugin>
+        <groupId>com.github.spotbugs</groupId>
+        <artifactId>spotbugs-maven-plugin</artifactId>
+        <version>4.7.2.0</version>
+        <configuration>
+          <maxRank>15</maxRank>
+        </configuration>
+      </plugin>
+      <plugin>
+	<groupId>org.apache.maven.plugins</groupId>
+	<artifactId>maven-checkstyle-plugin</artifactId>
+	<version>3.2.0</version>
+	<configuration>
+	  <configLocation>config/checkstyle/sun_checks_adapted_to_tsp_csc_pour_eclipse_2019_09.xml</configLocation>
+	  <consoleOutput>true</consoleOutput>
+	  <failsOnError>false</failsOnError>
+	  <linkXRef>false</linkXRef>
+	</configuration>
+      </plugin>
+    </plugins>
+  </reporting>
+</project>

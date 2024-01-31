@@ -1,0 +1,19 @@
+@startuml
+skinparam usecase {
+BackgroundColor White
+BorderColor Black
+ArrowColor Black
+ActorBackgroundColor<< Human >> Gold
+}
+
+left to right direction
+actor Administrateur
+actor Utilisateur
+Utilisateur <|-- Administrateur
+rectangle "MiniSocs" {
+:Administrateur: -- (ajouter un utilisateur)
+:Administrateur: -- (lister les utilisateur)
+:Administrateur: -- (bloquer un compte utilisateur)
+:Utilisateur:    -- (désactiver son compte)
+}
+@enduml
