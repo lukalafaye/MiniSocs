@@ -1,4 +1,4 @@
 F1 -- terminé
-F2
-F3
+F2 -- commencé
+F3 -- terminé
 F4
