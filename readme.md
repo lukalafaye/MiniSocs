@@ -1,8 +1,8 @@
 # Gestion de mini réseaux sociaux MiniSocs
 
 Binôme :
-* Prénom1 NOM1
-* Prénom2 NOM2
+* Luka LAFAYE DE MICHEAUX
+* Alexandre CHIDIAC
 
 ## Syntaxe MarkDown
 
@@ -70,6 +70,38 @@ retrait de priorité « basse ».
 Voici les précondition et postcondition des cas d'utilisation de
 priorité HAUTE.
 
+### Cas d'utilisation de l'administrateur
+
+
+
+#### Créer un réseau social (HAUTE)
+- précondition : \
+∧ pseudo bien formé (non null ∧ non vide) \
+∧ le compte n'est pas bloqué \
+∧ le nom du réseau social est disponible
+
+- postcondition : \
+∧ le réseau social est créé \
+∧ l'utilisateur est modérateur de ce réseau social
+
+#### Ajouter un membre à un réseau social (HAUTE)
+
+- précondition : \
+∧ pseudo du membre bien formé (non null ∧ non vide) \
+∧ compte du membre n'est pas bloqué \
+∧ le réseau social existe
+∧ le compte utilisé n'est pas bloqué \
+∧ le compte utilisé est administrateur du réseau \
+
+
+- postcondition : \
+∧ le membre est ajouté au réseau social \
+
+
+#### Poster un message (HAUTE)
+
+
+
 #### Ajouter un utilisateur (HAUTE)
 - précondition : \
 ∧ pseudo bien formé (non null ∧ non vide) \
@@ -89,6 +121,10 @@ priorité HAUTE.
 - postcondition : le compte de l'utilisateur est désactivé
 
 NB : l'opération est idempotente.
+
+#### 
+
+
 
 #### Autres cas d'utilisation et leur priorité respective
 
