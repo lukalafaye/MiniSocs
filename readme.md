@@ -72,36 +72,6 @@ priorité HAUTE.
 
 ### Cas d'utilisation de l'administrateur
 
-
-
-#### Créer un réseau social (HAUTE)
-- précondition : \
-∧ pseudo bien formé (non null ∧ non vide) \
-∧ le compte n'est pas bloqué \
-∧ le nom du réseau social est disponible
-
-- postcondition : \
-∧ le réseau social est créé \
-∧ l'utilisateur est modérateur de ce réseau social
-
-#### Ajouter un membre à un réseau social (HAUTE)
-
-- précondition : \
-∧ pseudo du membre bien formé (non null ∧ non vide) \
-∧ compte du membre n'est pas bloqué \
-∧ le réseau social existe
-∧ le compte utilisé n'est pas bloqué \
-∧ le compte utilisé est administrateur du réseau \
-
-
-- postcondition : \
-∧ le membre est ajouté au réseau social \
-
-
-#### Poster un message (HAUTE)
-
-
-
 #### Ajouter un utilisateur (HAUTE)
 - précondition : \
 ∧ pseudo bien formé (non null ∧ non vide) \
@@ -113,7 +83,18 @@ priorité HAUTE.
 ∧ utilisateur avec ce pseudo existant \
 ∧ le compte de l'utilisateur est actif
 
-#### Désactiver son compte (HAUTE)
+#### Lister les utilisateurs (moyenne)
+...
+
+#### Bloquer un compte utilisateur (basse)
+...
+
+#### Retirer un compte utilisateur (basse)
+...
+
+### Cas d'utilisation de l'utilisateur
+
+#### Désactiver son compte (moyenne)
 - précondition : \
 ∧ pseudo bien formé (non null ∧ non vide) \
 ∧ le compte n'est pas bloqué \
@@ -122,17 +103,38 @@ priorité HAUTE.
 
 NB : l'opération est idempotente.
 
-#### 
+#### Activer son compte (moyenne)
+...
 
+#### Créer un réseau social (HAUTE)
+- précondition : \
+∧ pseudo bien formé (non null ∧ non vide) \
+∧ le compte n'est pas bloqué \
+∧ le nom du réseau social est disponible
 
+- postcondition : \
+∧ le réseau social est créé \
+∧ l'utilisateur est modérateur de ce réseau social
 
-#### Autres cas d'utilisation et leur priorité respective
+#### Rejoindre un réseau social (HAUTE)
+...
 
-- Retirer un utilisateur (basse)
+### Cas d'utilisation du modérateur
 
-- Bloquer le compte d'un utilisateur (basse)
+#### Modérer un message (HAUTE)
+...
 
-- Lister les utilisateurs (moyenne)
+#### Fermer un réseau social (moyenne)
+...
+
+### Cas d'utilisation du membre
+
+#### Poster un message (HAUTE)
+...
+
+#### Cacher un message (basse)
+...
+
 
 ## 2. Préparation des tests de validation des cas d'utilisation
 
