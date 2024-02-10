@@ -154,33 +154,74 @@ NB : l'opération est idempotente.
 #### Modérer un message (HAUTE)
 - précondition : \
 ∧ pseudo bien formé (non null ∧ non vide) \
-∧ l'utilisateur n'est pas bloqué \
-∧ l'utilisateur est actif \
 ∧ le réseau social existe \
-∧ le compte n'est pas déjà dans le réseau social
+∧ l'utilisateur est moderateur de ce reseau social \
+∧ le message existe dans le réseau social 
+
 
 - postcondition : \
-∧ l'utilisateur est membre du réseau social
+∧ le message est modéré (caché, supprimé, ou marqué comme inapproprié)
 
 #### Fermer un réseau social (moyenne)
-...
+- précondition : \
+∧ pseudo bien formé (non null ∧ non vide) \
+∧ le réseau social existe \
+∧ l'utilisateur est moderateur de ce reseau social 
+
+- postcondition : \
+∧ le réseau social est fermé \
+∧ plus aucun utilisateur ne peut accéder au réseau social
 
 #### Bloquer un membre sur son réseau social (basse) BONUS
-...
+- précondition : \
+∧ pseudo bien formé (non null ∧ non vide) \
+∧ le réseau social existe \ 
+∧ l'utilisateur est moderateur de ce reseau social \
+∧ le membre existe dans le réseau social \
+∧ le membre n'est pas déjà bloqué 
+
+- postcondition : \
+∧ le membre est bloqué et ne peut plus interagir dans le réseau social
 
 #### Débloquer un membre sur son réseau social (basse) BONUS
-...
+- précondition : \
+∧ pseudo bien formé (non null ∧ non vide) \
+∧ le réseau social existe \ 
+∧ l'utilisateur est moderateur de ce reseau social \
+∧ le membre existe \
+∧ le membre est actuellement bloqué dans le réseau social
+
+- postcondition : \
+∧ le membre est débloqué et peut de nouveau interagir dans le réseau social
 
 ### Cas d'utilisation du membre
 
 #### Poster un message (HAUTE)
-...
+- précondition : \
+∧ pseudo bien formé (non null ∧ non vide) \
+∧ l'utilisateur est membre actif du réseau social \
+∧ le contenu du message est bien formé (non null ∧ non vide)
+
+- postcondition : \
+∧ le message est publié dans le réseau social
 
 #### Cacher un message (basse)
-...
+- précondition : \
+∧ pseudo bien formé (non null ∧ non vide) \
+∧ le membre est l'auteur du message \
+∧ le message existe et est visible
+
+- postcondition : \
+∧ le message est caché et n'est plus visible aux membres du réseau social
 
 #### Quitter un réseau social (basse)
-...
+- précondition : \
+∧ pseudo bien formé (non null ∧ non vide) \
+∧ l'utilisateur est membre du réseau social
+
+- postcondition : \
+∧ l'utilisateur n'est plus membre du réseau social
+
 
 ## 2. Préparation des tests de validation des cas d'utilisation
 
