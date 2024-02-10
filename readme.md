@@ -84,32 +84,54 @@ priorité HAUTE.
 ∧ le compte de l'utilisateur est actif
 
 #### Lister les utilisateurs (moyenne)
-...
+- précondition : \
+∧ pseudo bien formé (non null ∧ non vide) \
+
+- postcondition : \
+∧ liste des utilisateurs affichée \
 
 #### Bloquer un compte utilisateur (basse)
-...
+- précondition : \
+∧ pseudo bien formé (non null ∧ non vide) \
+∧ utilisateur avec ce pseudo existe \
+∧ utilisateur avec ce pseudo n'est pas déjà bloqué
+
+- postcondition : \
+∧ utilisateur avec ce pseudo est bloqué \s
 
 #### Retirer un compte utilisateur (basse)
-...
+- précondition : \
+∧ pseudo bien formé (non null ∧ non vide) \
+∧ utilisateur avec ce pseudo existe
+
+- postcondition : \
+∧ utilisateur avec ce pseudo inexistant \
 
 ### Cas d'utilisation de l'utilisateur
 
 #### Désactiver son compte (moyenne)
 - précondition : \
 ∧ pseudo bien formé (non null ∧ non vide) \
-∧ le compte n'est pas bloqué \
-∧ utilisateur avec ce pseudo existant
+∧ le compte n'est pas bloqué
+∧ le compte est actif
+
 - postcondition : le compte de l'utilisateur est désactivé
 
 NB : l'opération est idempotente.
 
 #### Activer son compte (moyenne)
-...
+- précondition : \
+∧ pseudo bien formé (non null ∧ non vide) \
+∧ le compte n'est bloqué \
+∧ le compte est désactivé
+
+- postcondition : le compte de l'utilisateur est actif
 
 #### Créer un réseau social (HAUTE)
 - précondition : \
 ∧ pseudo bien formé (non null ∧ non vide) \
-∧ le compte n'est pas bloqué \
+∧ le compte n'est pas bloqué
+∧ l'utilisateur est actif \
 ∧ le nom du réseau social est disponible
 
 - postcondition : \
@@ -117,14 +139,36 @@ NB : l'opération est idempotente.
 ∧ l'utilisateur est modérateur de ce réseau social
 
 #### Rejoindre un réseau social (HAUTE)
-...
+- précondition : \
+∧ pseudo bien formé (non null ∧ non vide) \
+∧ l'utilisateur n'est pas bloqué \
+∧ l'utilisateur est actif \
+∧ le réseau social existe \
+∧ le compte n'est pas déjà dans le réseau social
+
+- postcondition : \
+∧ l'utilisateur est membre du réseau social
 
 ### Cas d'utilisation du modérateur
 
 #### Modérer un message (HAUTE)
-...
+- précondition : \
+∧ pseudo bien formé (non null ∧ non vide) \
+∧ l'utilisateur n'est pas bloqué \
+∧ l'utilisateur est actif \
+∧ le réseau social existe \
+∧ le compte n'est pas déjà dans le réseau social
+
+- postcondition : \
+∧ l'utilisateur est membre du réseau social
 
 #### Fermer un réseau social (moyenne)
+...
+
+#### Bloquer un membre sur son réseau social (basse) BONUS
+...
+
+#### Débloquer un membre sur son réseau social (basse) BONUS
 ...
 
 ### Cas d'utilisation du membre
@@ -135,6 +179,8 @@ NB : l'opération est idempotente.
 #### Cacher un message (basse)
 ...
 
+#### Quitter un réseau social (basse)
+...
 
 ## 2. Préparation des tests de validation des cas d'utilisation
 

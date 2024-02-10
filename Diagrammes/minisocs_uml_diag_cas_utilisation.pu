@@ -19,24 +19,28 @@ actor Membre
 actor Moderateur
 Utilisateur <|-- Administrateur
 Membre      <|-- Moderateur
+Utilisateur <|-- Membre
 
 'Déclaration des cas d'utilisation dans le système'
 rectangle "MiniSocs" {
 :Administrateur: -- (ajouter un utilisateur)
 :Administrateur: -- (lister les utilisateur)
 :Administrateur: -- (bloquer un compte utilisateur)
+:Administrateur: -- (débloquer un compte utilisateur)
 
 :Utilisateur:    -- (désactiver son compte)
 :Utilisateur:    -- (activer son compte)
 :Utilisateur:    -- (créer un réseau social)
 :Utilisateur:    -- (rejoindre un réseau social)
 
-
 :Moderateur:     -- (modérer un message)
 :Moderateur:     -- (fermer son réseau social) 
+:Moderateur:     -- (bloquer un membre sur son réseau social bonus)
+:Moderateur:     -- (débloquer un membre sur son réseau social bonus)
 
 :Membre:         -- (poster un message)
 :Membre:         -- (cacher un message)
+:Membre:         -- (quitter un réseau social)
 }
 
 @enduml
