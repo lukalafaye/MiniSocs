@@ -373,14 +373,106 @@ conditions.
 
 ## Tests modérateurs
 
+
+### Cas d'utilisation du modérateur
+
+#### Modérer un message (HAUTE)
+
+| Décision                                                | 1 | 2 | 3 | 4 | 5 |
+|---------------------------------------------------------|---|---|---|---|---|
+| Pseudo de l'exécuteur bien formé  (non null ∧ non vide) | F | T | T | T | T |
+| Le réseau social existe                                 |   | F | T | T | T |
+| L'utilisateur est moderateur de ce reseau social        |   |   | F | T | T |
+| Le message existe dans le réseau social                 |   |   |   | F | T |
+|                                                         |   |   |   |   |   |
+| Le message est modéré                                   | F | F | F | F | T |
+|                                                         |   |   |   |   |   |
+| nombre de tests dans le jeu de tests                    | 2 | 1 | 1 | 1 | 1 |
+
+
+#### Fermer un réseau social (moyenne)
+
+| Décision                                                | 1 | 2 | 3 | 4 |
+|---------------------------------------------------------|---|---|---|---|
+| Pseudo de l'exécuteur bien formé  (non null ∧ non vide) | F | T | T | T |
+| Le réseau social existe                                 |   | F | T | T |
+| L'utilisateur est moderateur de ce reseau social        |   |   | F | T |
+|                                                         |   |   |   |   | 
+| Le réseau social est fermé                              | F | F | F | T | 
+| Plus aucun utilisateur ne peut accéder au réseau social | F | F | F | T | 
+|                                                         |   |   |   |   | 
+| nombre de tests dans le jeu de tests                    | 2 | 1 | 1 | 1 | 
+
+
+#### Bloquer un membre sur son réseau social (basse) BONUS
+
+| Décision                                                | 1 | 2 | 3 | 4 | 5 | 6 |
+|---------------------------------------------------------|---|---|---|---|---|---|
+| Pseudo de l'exécuteur bien formé  (non null ∧ non vide) | F | T | T | T | T | T |
+| Le réseau social existe                                 |   | F | T | T | T | T |
+| L'utilisateur est moderateur de ce reseau social        |   |   | F | T | T | T |
+| Le membre existe dans le réseau social                  |   |   |   | F | T | T |
+| Le membre n'est pas déjà bloqué                         |   |   |   |   | F | T |
+|                                                         |   |   |   |   |   |   |
+| Le membre est bloqué dans le réseau social              | F | F | F | F | F | T |
+|                                                         |   |   |   |   |   |   |
+| nombre de tests dans le jeu de tests                    | 2 | 1 | 1 | 1 | 1 | 1 |
+
+
+#### Débloquer un membre sur son réseau social (basse) BONUS
+
+| Décision                                                | 1 | 2 | 3 | 4 | 5 | 6 |
+|---------------------------------------------------------|---|---|---|---|---|---|
+| Pseudo de l'exécuteur bien formé  (non null ∧ non vide) | F | T | T | T | T | T |
+| Le réseau social existe                                 |   | F | T | T | T | T |
+| L'utilisateur est moderateur de ce reseau social        |   |   | F | T | T | T |
+| Le membre existe dans le réseau social                  |   |   |   | F | T | T |
+| Le membre est actuellement bloqué dans le réseau social |   |   |   |   | F | T |
+|                                                         |   |   |   |   |   |   |
+| Le membre est débloqué dans le réseau social            | F | F | F | F | F | T |
+|                                                         |   |   |   |   |   |   |
+| nombre de tests dans le jeu de tests                    | 2 | 1 | 1 | 1 | 1 | 1 |
+
+
 ## Tests membres
 
+#### Poster un message (HAUTE)
+
+| Décision                                                | 1 | 2 | 3 | 4 |
+|---------------------------------------------------------|---|---|---|---|
+| Pseudo de l'exécuteur bien formé  (non null ∧ non vide) | F | T | T | T |
+| L'utilisateur est membre actif du réseau social         |   | F | T | T |
+| Contenu du message bien formé (non null ∧ non vide)     |   |   | F | T |
+|                                                         |   |   |   |   |
+| Le message est publié dans le réseau social             | F | F | F | T |
+|                                                         |   |   |   |   |
+| nombre de tests dans le jeu de tests                    | 2 | 1 | 2 | 1 |
+
+
+#### Cacher un message (basse)
+
+| Décision                                                | 1 | 2 | 3 | 4 |
+|---------------------------------------------------------|---|---|---|---|
+| Pseudo de l'exécuteur bien formé  (non null ∧ non vide) | F | T | T | T |
+| Le membre est l'auteur du message                       |   | F | T | T |
+| Le message existe et est visible                        |   |   | F | T |
+|                                                         |   |   |   |   |
+| Le message est caché et n'est plus visible              | F | F | F | T |
+|                                                         |   |   |   |   |
+| nombre de tests dans le jeu de tests                    | 2 | 1 | 2 | 1 |
 
 
 
+#### Quitter un réseau social (basse)
 
-
-
+| Décision                                                | 1 | 2 | 3 |
+|---------------------------------------------------------|---|---|---|
+| Pseudo de l'exécuteur bien formé  (non null ∧ non vide) | F | T | T |
+| L'utilisateur est membre du réseau social               |   | F | T |
+|                                                         |   |   |   |
+| L'utilisateur n'est plus membre du réseau social        | F | F | T |
+|                                                         |   |   |   |
+| nombre de tests dans le jeu de tests                    | 2 | 1 | 1 |
 
 
 # 3. Conception
