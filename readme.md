@@ -74,6 +74,9 @@ priorité HAUTE.
 
 #### Ajouter un utilisateur (HAUTE)
 - précondition : \
+∧ pseudo de l'exécuteur bien formé  (non null ∧ non vide) \
+∧ pseudo de l'exécuteur existe \
+∧ pseudo de l'exécuteur est administrateur \ 
 ∧ pseudo bien formé (non null ∧ non vide) \
 ∧ nom bien formé  (non null ∧ non vide) \
 ∧ prénom bien formé  (non null ∧ non vide) \
@@ -85,22 +88,30 @@ priorité HAUTE.
 
 #### Lister les utilisateurs (moyenne)
 - précondition : \
-∧ pseudo bien formé (non null ∧ non vide) \
+∧ pseudo de l'exécuteur bien formé  (non null ∧ non vide) \
+∧ pseudo de l'exécuteur existe \
+∧ pseudo de l'exécuteur est administrateur
 
 - postcondition : \
 ∧ liste des utilisateurs affichée \
 
 #### Bloquer un compte utilisateur (basse)
 - précondition : \
+∧ pseudo de l'exécuteur bien formé  (non null ∧ non vide) \
+∧ pseudo de l'exécuteur existe \
+∧ pseudo de l'exécuteur est administrateur
 ∧ pseudo bien formé (non null ∧ non vide) \
 ∧ utilisateur avec ce pseudo existe \
 ∧ utilisateur avec ce pseudo n'est pas déjà bloqué
 
 - postcondition : \
-∧ utilisateur avec ce pseudo est bloqué \s
+∧ utilisateur avec ce pseudo est bloqué \
 
 #### Retirer un compte utilisateur (basse)
 - précondition : \
+∧ pseudo de l'exécuteur bien formé (non null ∧ non vide) \
+∧ pseudo de l'exécuteur existe \
+∧ pseudo de l'exécuteur est administrateur
 ∧ pseudo bien formé (non null ∧ non vide) \
 ∧ utilisateur avec ce pseudo existe
 
@@ -111,43 +122,49 @@ priorité HAUTE.
 
 #### Désactiver son compte (moyenne)
 - précondition : \
-∧ pseudo bien formé (non null ∧ non vide) \
+∧ pseudo de l'exécuteur bien formé (non null ∧ non vide) \
+∧ pseudo de l'exécuteur existe \
+∧ pseudo de l'exécuteur n'est pas administrateur \
 ∧ le compte n'est pas bloqué
 ∧ le compte est actif
 
-- postcondition : le compte de l'utilisateur est désactivé
+- postcondition : le compte de l'exécuteur est désactivé
 
 NB : l'opération est idempotente.
 
 #### Activer son compte (moyenne)
 - précondition : \
-∧ pseudo bien formé (non null ∧ non vide) \
+∧ pseudo de l'exécuteur bien formé (non null ∧ non vide) \
+∧ pseudo de l'exécuteur existe \
 ∧ le compte n'est bloqué \
 ∧ le compte est désactivé
 
-- postcondition : le compte de l'utilisateur est actif
+- postcondition : le compte de l'exécuteur est actif
 
 #### Créer un réseau social (HAUTE)
 - précondition : \
-∧ pseudo bien formé (non null ∧ non vide) \
-∧ le compte n'est pas bloqué
-∧ l'utilisateur est actif \
+∧ pseudo de l'exécuteur bien formé (non null ∧ non vide) \
+∧ pseudo de l'exécuteur existe \
+∧ le compte n'est pas bloqué \
+∧ le compte est actif \
+∧ le nom du réseau social est bien formé (non null ∧ non vide) \
 ∧ le nom du réseau social est disponible
 
 - postcondition : \
 ∧ le réseau social est créé \
-∧ l'utilisateur est modérateur de ce réseau social
+∧ l'exécuteur est modérateur de ce réseau social
 
 #### Rejoindre un réseau social (HAUTE)
 - précondition : \
-∧ pseudo bien formé (non null ∧ non vide) \
-∧ l'utilisateur n'est pas bloqué \
-∧ l'utilisateur est actif \
+∧ pseudo de l'exécuteur bien formé (non null ∧ non vide) \
+∧ pseudo de l'exécuteur existe \
+∧ le compte n'est pas bloqué \
+∧ le compte est actif \
 ∧ le réseau social existe \
 ∧ le compte n'est pas déjà dans le réseau social
 
 - postcondition : \
-∧ l'utilisateur est membre du réseau social
+∧ l'exécuteur est membre du réseau social
 
 ### Cas d'utilisation du modérateur
 
@@ -225,37 +242,146 @@ NB : l'opération est idempotente.
 
 ## 2. Préparation des tests de validation des cas d'utilisation
 
+### Tests administrateur
+
 #### Ajouter un utilisateur (HAUTE)
 
-|                                                     | 1 | 2 | 3 | 4 | 5 | 6 |
-|:----------------------------------------------------|:--|:--|:--|---|---|---|
-| pseudo bien formé (non null ∧ non vide)              | F | T | T | T | T | T |
-| nom bien formé  (non null ∧ non vide)               |   | F | T | T | T | T |
-| prénom bien formé  (non null ∧ non vide)            |   |   | F | T | T | T |
-| courriel bien formé (respectant le standard RFC822) |   |   |   | F | T | T |
-| utilisateur avec ce pseudo inexistant               |   |   |   |   | F | T |
-|                                                     |   |   |   |   |   |   |
-| utilisateur avec ce pseudo existant                 | F | F | F | F | F | T |
-| compte de l'utilisateur actif                       | F | F | F | F | F | T |
-|                                                     |   |   |   |   |   |   |
-| nombre de tests dans le jeu de tests                | 2 | 2 | 2 | 3 | 1 | 1 |
+| Décision                                                | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 |
+|---------------------------------------------------------|---|---|---|---|---|---|---|---|---|
+| Pseudo de l'exécuteur bien formé  (non null ∧ non vide) | F | T | T | T | T | T | T | T | T |
+| Pseudo de l'exécuteur existe                            |   | F | T | T | T | T | T | T | T |
+| Pseudo de l'exécuteur est administrateur                |   |   | F | T | T | T | T | T | T |
+| Pseudo bien formé (non null ∧ non vide)                 |   |   |   | F | T | T | T | T | T |
+| Nom bien formé (non null ∧ non vide)                    |   |   |   |   | F | T | T | T | T |
+| Prénom bien formé (non null ∧ non vide)                 |   |   |   |   |   | F | T | T | T |
+| Courriel bien formé (respectant le standard RFC822)     |   |   |   |   |   |   | F | T | T |
+| Utilisateur avec ce pseudo inexistant                   |   |   |   |   |   |   |   | F | T |
+|                                                         |   |   |   |   |   |   |   |   |   |
+| Utilisateur avec ce pseudo existant                     | F | F | F | F | F | F | F | F | T |
+| Le compte de l'utilisateur est actif                    | F | F | F | F | F | F | F | F | T |
+|                                                         |   |   |   |   |   |   |   |   |   |
+| nombre de tests dans le jeu de tests                    | 2 | 1 | 1 | 2 | 2 | 2 | 3 | 1 | 1 |
 
-Le jeu de test 4 comporte trois tests : non null, non vide, et adresse
+
+Le jeu de test 7 comporte trois tests : non null, non vide, et adresse
 courriel bien formée. On aurait pu n'en faire qu'un en considérant la
 bibliothèque de validation RFC822 vérifie les deux premières
 conditions.
 
-#### Désactiver son compte (HAUTE)
+#### Lister les utilisateurs (moyenne)
 
-|                                          | 1 | 2 | 3 | 4 |
-|:-----------------------------------------|:--|:--|:--|:--|
-| pseudo bien formé (non null ∧ non vide)   | F | T | T | T |
-| le compte n'est pas bloqué               |   | F | T | T |
-| utilisateur avec ce pseudo existant      |   |   | F | T |
-|                                          |   |   |   |   |
-| le compte de l'utilisateur est désactivé | F | F | F | T |
-|                                          |   |   |   |   |
-| nombre de tests dans le jeu de tests     | 2 | 1 | 1 | 1 |
+| Décision                                                | 1 | 2 | 3 | 4 |
+|---------------------------------------------------------|---|---|---|---|
+| Pseudo de l'exécuteur bien formé  (non null ∧ non vide) | F | T | T | T |
+| Pseudo de l'exécuteur existe                            |   | F | T | T |
+| Pseudo de l'exécuteur est administrateur                |   |   | F | T |
+|                                                         |   |   |   |   |
+| Liste des utilisateurs affichée                         | F | F | F | T |
+|                                                         |   |   |   |   |
+| nombre de tests dans le jeu de tests                    | 2 | 1 | 1 | 1 |
+
+#### Bloquer un compte utilisateur (basse)
+
+| Décision                                                | 1 | 2 | 3 | 4 | 5 | 6 | 7 |
+|---------------------------------------------------------|---|---|---|---|---|---|---|
+| Pseudo de l'exécuteur bien formé  (non null ∧ non vide) | F | T | T | T | T | T | T |
+| Pseudo de l'exécuteur existe                            |   | F | T | T | T | T | T |
+| Pseudo de l'exécuteur est administrateur                |   |   | F | T | T | T | T |
+| Pseudo bien formé (non null ∧ non vide)                 |   |   |   | F | T | T | T |
+| Utilisateur avec ce pseudo existe                       |   |   |   |   | F | T | T |
+| Utilisateur avec ce pseudo n'est pas déjà bloqué        |   |   |   |   |   | F | T |
+|                                                         |   |   |   |   |   |   |   |
+| Utilisateur avec ce pseudo est bloqué                   | F | F | F | F | F | F | T |
+|                                                         |   |   |   |   |   |   |   |
+| nombre de tests dans le jeu de tests                    | 2 | 1 | 1 | 2 | 1 | 1 | 1 |
+
+
+#### Retirer un compte utilisateur (basse)
+
+| Décision                                                | 1 | 2 | 3 | 4 | 5 | 6 |
+|---------------------------------------------------------|---|---|---|---|---|---|
+| Pseudo de l'exécuteur bien formé  (non null ∧ non vide) | F | T | T | T | T | T |
+| Pseudo de l'exécuteur existe                            |   | F | T | T | T | T |
+| Pseudo de l'exécuteur est administrateur                |   |   | F | T | T | T |
+| Pseudo bien formé (non null ∧ non vide)                 |   |   |   | F | T | T |
+| Utilisateur avec ce pseudo existe                       |   |   |   |   | F | T |
+|                                                         |   |   |   |   |   |   |
+| Utilisateur avec ce pseudo est bloqué                   | F | F | F | F | F | T |
+|                                                         |   |   |   |   |   |   |
+| nombre de tests dans le jeu de tests                    | 2 | 1 | 1 | 2 | 1 | 1 |
+
+## Tests utilisateur
+
+#### Désactiver son compte (moyenne)
+
+| Décision                                                | 1 | 2 | 3 | 4 | 5 | 6 |
+|---------------------------------------------------------|---|---|---|---|---|---|
+| Pseudo de l'exécuteur bien formé  (non null ∧ non vide) | F | T | T | T | T | T |
+| Pseudo de l'exécuteur existe                            |   | F | T | T | T | T |
+| Pseudo de l'exécuteur n'est pas administrateur          |   |   | F | T | T | T |
+| Le compte n'est pas bloqué                              |   |   |   | F | T | T |
+| Le compte est actif                                     |   |   |   |   | F | T |
+|                                                         |   |   |   |   |   |   |
+| Le compte de l'exécuteur est désactivé                  | F | F | F | F | F | T |
+|                                                         |   |   |   |   |   |   |
+| nombre de tests dans le jeu de tests                    | 2 | 1 | 1 | 1 | 1 | 1 |
+
+#### Activer son compte (moyenne)
+
+| Décision                                                | 1 | 2 | 3 | 4 | 5 |
+|---------------------------------------------------------|---|---|---|---|---|
+| Pseudo de l'exécuteur bien formé  (non null ∧ non vide) | F | T | T | T | T |
+| Pseudo de l'exécuteur existe                            |   | F | T | T | T |
+| Le compte n'est pas bloqué                              |   |   | F | T | T |
+| Le compte est désactivé                                 |   |   |   | F | T |
+|                                                         |   |   |   |   |   |
+| Le compte de l'exécuteur est actif                      | F | F | F | F | T |
+|                                                         |   |   |   |   |   |
+| nombre de tests dans le jeu de tests                    | 2 | 1 | 1 | 1 | 1 |
+
+#### Créer un réseau social (HAUTE)
+
+| Décision                                                      | 1 | 2 | 3 | 4 | 5 | 6 | 7 |
+|---------------------------------------------------------------|---|---|---|---|---|---|---|
+| Pseudo de l'exécuteur bien formé  (non null ∧ non vide)       | F | T | T | T | T | T | T |
+| Pseudo de l'exécuteur existe                                  |   | F | T | T | T | T | T |
+| Le compte n'est pas bloqué                                    |   |   | F | T | T | T | T |
+| Le compte est actif                                           |   |   |   | F | T | T | T |
+| Le nom du réseau social est bien formé  (non null ∧ non vide) |   |   |   |   | F | T | T |
+| Le nom du réseau social est disponible                        |   |   |   |   |   | F | T |
+|                                                               |   |   |   |   |   |   |   |
+| Le réseau social est créé                                     | F | F | F | F | F | F | T |
+| L'exécuteur est modérateur de ce réseau social                | F | F | F | F | F | F | T |
+|                                                               |   |   |   |   |   |   |   |
+| nombre de tests dans le jeu de tests                          | 2 | 1 | 1 | 1 | 2 | 1 | 1 |
+
+#### Rejoindre un réseau social (HAUTE)
+
+| Décision                                                      | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 |
+|---------------------------------------------------------------|---|---|---|---|---|---|---|---|
+| Pseudo de l'exécuteur bien formé  (non null ∧ non vide)       | F | T | T | T | T | T | T | T |
+| Pseudo de l'exécuteur existe                                  |   | F | T | T | T | T | T | T |
+| Le compte n'est pas bloqué                                    |   |   | F | T | T | T | T | T |
+| Le compte est actif                                           |   |   |   | F | T | T | T | T |
+| Le nom du réseau social est bien formé  (non null ∧ non vide) |   |   |   |   | F | T | T | T |
+| Le réseau social existe                                       |   |   |   |   |   | F | T | T |
+| Le compte n'est pas déjà dans le réseau social                |   |   |   |   |   |   | F | T |
+|                                                               |   |   |   |   |   |   |   |   |
+| L'exécuteur est membre du réseau social                       | F | F | F | F | F | F | F | T |
+|                                                               |   |   |   |   |   |   |   |   |
+| nombre de tests dans le jeu de tests                          | 2 | 1 | 1 | 1 | 2 | 1 | 1 | 1 |
+
+## Tests modérateurs
+
+## Tests membres
+
+
+
+
+
+
+
+
 
 # 3. Conception
 
