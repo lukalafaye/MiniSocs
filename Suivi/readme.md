@@ -14,3 +14,37 @@ exposer votre point de vue.
 - [x] Action (réalisée)
     - RÉPONSE et éventuelles remarques de votre part, 
 
+ 
+---
+# Suivi du lun. 12 févr. 2024 21:23:58
+Sophie Chabridon
+ 
+Bon démarrage.
+
+Pour prendre de bonnes habitudes, merci d'indiquer lorsque vous prenez une remarque en compte.
+
+* Pour les cas d'utilisation, revoir l'héritage. Un membre d'un réseau social est également un utilisateur...
+
+[] DIAGUC-06-Pb-généralisation-spécialisation-acteur
+
+* Le cas d'utilisation "rejoindre un réseau social" n'est pas proposé directement aux utilisateurs. Cela doit passer par le modérateur qui peut ajouter un utilisateur à un réseau social.
+
+[] DIAGUC-02-Compréhension-étude-de-cas
+
+* Revoir les pré- et post-conditions, pour tous les cas d'usage obligatoires. 
+
+Par exemple, pour "créer un réseau social", dans les post-conditions, il faut prévoir d'activer le réseau social, et d'ajouter l'utilisateur qui vient de le créer également comme membre.
+
+Pour "poster un message", ne pas oublier de vérifier que le réseau social existe et est ouvert. Il y a également plusieurs post-conditions à ajouter telles que le message est visible pour le modérateur, mais en attente de modération pour les autres membres du réseau social...
+
+[] PREPOSTCOND-01-Pré-post-condition-manquante
+
+[] PREPOSTCOND-05-Chaîne-de-caractères
+
+[] PREPOSTCOND-06-Précondition-postcondition-incomplète
+
+* Il faudra ensuite revoir les tables de décision selon les pré- et post-conditions ajoutées/modifiées :
+
+[] TABLEDECTV-07-MAJ-précondition-postcondition
+
+ 
