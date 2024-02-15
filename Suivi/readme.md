@@ -25,11 +25,11 @@ Pour prendre de bonnes habitudes, merci d'indiquer lorsque vous prenez une remar
 
 * Pour les cas d'utilisation, revoir l'héritage. Un membre d'un réseau social est également un utilisateur...
 
-[] DIAGUC-06-Pb-généralisation-spécialisation-acteur
+[X] DIAGUC-06-Pb-généralisation-spécialisation-acteur
 
 * Le cas d'utilisation "rejoindre un réseau social" n'est pas proposé directement aux utilisateurs. Cela doit passer par le modérateur qui peut ajouter un utilisateur à un réseau social.
 
-[] DIAGUC-02-Compréhension-étude-de-cas
+[X] DIAGUC-02-Compréhension-étude-de-cas
 
 * Revoir les pré- et post-conditions, pour tous les cas d'usage obligatoires. 
 

@@ -154,18 +154,6 @@ NB : l'opération est idempotente.
 ∧ le réseau social est créé \
 ∧ l'exécuteur est modérateur de ce réseau social
 
-#### Rejoindre un réseau social (HAUTE)
-- précondition : \
-∧ pseudo de l'exécuteur bien formé (non null ∧ non vide) \
-∧ pseudo de l'exécuteur existe \
-∧ le compte n'est pas bloqué \
-∧ le compte est actif \
-∧ le réseau social existe \
-∧ le compte n'est pas déjà dans le réseau social
-
-- postcondition : \
-∧ l'exécuteur est membre du réseau social
-
 ### Cas d'utilisation du modérateur
 
 #### Modérer un message (HAUTE)
@@ -178,6 +166,21 @@ NB : l'opération est idempotente.
 
 - postcondition : \
 ∧ le message est modéré (caché, supprimé, ou marqué comme inapproprié)
+
+#### Inviter un utilisateur à un réseau social (HAUTE)
+- précondition : \
+∧ pseudo de l'exécuteur bien formé (non null ∧ non vide) \
+∧ pseudo de l'exécuteur existe \
+∧ le compte de l'exécuteur est actif \
+∧ le nom du réseau social est bien formé (non null ∧ non vide) \
+∧ le réseau social existe \
+∧ l'exécuteur est modérateur du réseau social \
+∧ pseudo de l'utilisateur bien formé (non null ∧ non vide)
+∧ utilisateur existe \
+∧ utilisateur n'est pas déjà dans le réseau social
+
+- postcondition : \
+∧ l'utilisateur est membre du réseau social
 
 #### Fermer un réseau social (moyenne)
 - précondition : \
