@@ -37,14 +37,14 @@ Par exemple, pour "créer un réseau social", dans les post-conditions, il faut 
 
 Pour "poster un message", ne pas oublier de vérifier que le réseau social existe et est ouvert. Il y a également plusieurs post-conditions à ajouter telles que le message est visible pour le modérateur, mais en attente de modération pour les autres membres du réseau social...
 
-[] PREPOSTCOND-01-Pré-post-condition-manquante
+[X] PREPOSTCOND-01-Pré-post-condition-manquante
 
-[] PREPOSTCOND-05-Chaîne-de-caractères
+[X] PREPOSTCOND-05-Chaîne-de-caractères
 
-[] PREPOSTCOND-06-Précondition-postcondition-incomplète
+[X] PREPOSTCOND-06-Précondition-postcondition-incomplète
 
 * Il faudra ensuite revoir les tables de décision selon les pré- et post-conditions ajoutées/modifiées :
 
-[] TABLEDECTV-07-MAJ-précondition-postcondition
+[X] TABLEDECTV-07-MAJ-précondition-postcondition
 
  
