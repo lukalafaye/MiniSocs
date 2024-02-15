@@ -31,9 +31,9 @@ rectangle "MiniSocs" {
 :Utilisateur:    -- (désactiver son compte)
 :Utilisateur:    -- (activer son compte)
 :Utilisateur:    -- (créer un réseau social)
-:Utilisateur:    -- (rejoindre un réseau social)
 
 :Moderateur:     -- (modérer un message)
+:Moderateur:     -- (inviter un utilisateur sur un réseau social) 
 :Moderateur:     -- (fermer son réseau social) 
 :Moderateur:     -- (bloquer un membre sur son réseau social bonus)
 :Moderateur:     -- (débloquer un membre sur son réseau social bonus)

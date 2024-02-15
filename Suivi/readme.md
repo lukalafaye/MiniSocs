@@ -27,7 +27,7 @@ Pour prendre de bonnes habitudes, merci d'indiquer lorsque vous prenez une remar
 
 [X] DIAGUC-06-Pb-généralisation-spécialisation-acteur
 
-* Le cas d'utilisation "rejoindre un réseau social" n'est pas proposé directement aux utilisateurs. Cela doit passer par le modérateur qui peut ajouter un utilisateur à un réseau social.
+* Le cas d'utilisation "rejoindre un réseau social" n'est pas proposé directement aux utilisateurs. Cela doit passer par le modérateur qui peut ajouter un utilisateur à un réseau
 
 [X] DIAGUC-02-Compréhension-étude-de-cas
 

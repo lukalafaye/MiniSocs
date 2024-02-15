@@ -167,7 +167,7 @@ NB : l'opération est idempotente.
 - postcondition : \
 ∧ le message est modéré (caché, supprimé, ou marqué comme inapproprié)
 
-#### Inviter un utilisateur à un réseau social (HAUTE)
+#### Inviter un utilisateur sur un réseau social (HAUTE)
 - précondition : \
 ∧ pseudo de l'exécuteur bien formé (non null ∧ non vide) \
 ∧ pseudo de l'exécuteur existe \
@@ -358,24 +358,7 @@ conditions.
 |                                                               |   |   |   |   |   |   |   |
 | nombre de tests dans le jeu de tests                          | 2 | 1 | 1 | 1 | 2 | 1 | 1 |
 
-#### Rejoindre un réseau social (HAUTE)
-
-| Décision                                                      | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 |
-|---------------------------------------------------------------|---|---|---|---|---|---|---|---|
-| Pseudo de l'exécuteur bien formé  (non null ∧ non vide)       | F | T | T | T | T | T | T | T |
-| Pseudo de l'exécuteur existe                                  |   | F | T | T | T | T | T | T |
-| Le compte n'est pas bloqué                                    |   |   | F | T | T | T | T | T |
-| Le compte est actif                                           |   |   |   | F | T | T | T | T |
-| Le nom du réseau social est bien formé  (non null ∧ non vide) |   |   |   |   | F | T | T | T |
-| Le réseau social existe                                       |   |   |   |   |   | F | T | T |
-| Le compte n'est pas déjà dans le réseau social                |   |   |   |   |   |   | F | T |
-|                                                               |   |   |   |   |   |   |   |   |
-| L'exécuteur est membre du réseau social                       | F | F | F | F | F | F | F | T |
-|                                                               |   |   |   |   |   |   |   |   |
-| nombre de tests dans le jeu de tests                          | 2 | 1 | 1 | 1 | 2 | 1 | 1 | 1 |
-
 ## Tests modérateurs
-
 
 ### Cas d'utilisation du modérateur
 
@@ -392,6 +375,7 @@ conditions.
 |                                                         |   |   |   |   |   |
 | nombre de tests dans le jeu de tests                    | 2 | 1 | 1 | 1 | 1 |
 
+# Inviter un utilisateur sur un réseau social
 
 #### Fermer un réseau social (moyenne)
 
