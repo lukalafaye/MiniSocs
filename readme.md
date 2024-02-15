@@ -152,7 +152,9 @@ NB : l'opération est idempotente.
 
 - postcondition : \
 ∧ le réseau social est créé \
-∧ l'exécuteur est modérateur de ce réseau social
+∧ l'exécuteur est modérateur de ce réseau social \
+∧ le réseau social est activé \
+∧ l'utilisateur créateur du réseau social est membre de ce dernier
 
 ### Cas d'utilisation du modérateur
 
@@ -220,10 +222,12 @@ NB : l'opération est idempotente.
 - précondition : \
 ∧ pseudo bien formé (non null ∧ non vide) \
 ∧ l'utilisateur est membre actif du réseau social \
-∧ le contenu du message est bien formé (non null ∧ non vide)
+∧ le contenu du message est bien formé (chaine de caractère non null ∧ non vide)\
+∧ le réseau social existe et est ouvert
 
 - postcondition : \
-∧ le message est publié dans le réseau social
+∧ le message est publié dans le réseau social \
+∧ le message est visible pour le modérateur, mais en attente de modération pour les autres membres du réseau social
 
 #### Cacher un message (basse)
 - précondition : \
@@ -355,6 +359,8 @@ conditions.
 |                                                               |   |   |   |   |   |   |   |
 | Le réseau social est créé                                     | F | F | F | F | F | F | T |
 | L'exécuteur est modérateur de ce réseau social                | F | F | F | F | F | F | T |
+| Le réseau social est activé                                   | F | F | F | F | F | F | T |
+| L'utilisateur créateur du réseau social est membre            | F | F | F | F | F | F | T |
 |                                                               |   |   |   |   |   |   |   |
 | nombre de tests dans le jeu de tests                          | 2 | 1 | 1 | 1 | 2 | 1 | 1 |
 
@@ -441,15 +447,17 @@ conditions.
 
 #### Poster un message (HAUTE)
 
-| Décision                                                | 1 | 2 | 3 | 4 |
-|---------------------------------------------------------|---|---|---|---|
-| Pseudo de l'exécuteur bien formé  (non null ∧ non vide) | F | T | T | T |
-| L'utilisateur est membre actif du réseau social         |   | F | T | T |
-| Contenu du message bien formé (non null ∧ non vide)     |   |   | F | T |
-|                                                         |   |   |   |   |
-| Le message est publié dans le réseau social             | F | F | F | T |
-|                                                         |   |   |   |   |
-| nombre de tests dans le jeu de tests                    | 2 | 1 | 2 | 1 |
+| Décision                                                                | 1 | 2 | 3 | 4 | 5 |
+|-------------------------------------------------------------------------|---|---|---|---|---|
+| Pseudo de l'exécuteur bien formé  (non null ∧ non vide)                 | F | T | T | T | T |
+| L'utilisateur est membre actif du réseau social                         |   | F | T | T | T |
+| Contenu du message bien formé (non null ∧ non vide)                     |   |   | F | T | T |
+| Le réseau social existe et est ouvert                                   |   |   |   | F | T |
+|                                                                         |   |   |   |   |   |
+| Le message est publié dans le réseau social                             | F | F | F | F | T |
+| Le message est visible pour le modérateur et en attente pour les autres | F | F | F | F | T |
+|                                                                         |   |   |   |   |   |
+| nombre de tests dans le jeu de tests                                    | 2 | 1 | 2 | 2 | 1 |
 
 
 #### Cacher un message (basse)
