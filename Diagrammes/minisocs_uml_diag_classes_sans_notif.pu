@@ -15,6 +15,7 @@ skinparam class {
 class MiniSocs {
   - nom: String
 }
+
 class Utilisateur {
   - pseudonyme: String
   - nom: String
@@ -29,8 +30,30 @@ enum ÉtatCompte <<enum>> {
   DÉBLOQUÉ
 }
 
+class Participation {
+  - pseudoParticulier: String
+  - modérateur: Bool
+  / pseudonyme: String
+}
+
+class reseauSocial {
+  - nom: String
+}
+
+class Message {
+  - contenu: String
+  - accepté: bool
+  /pseudoParticulier: String
+}
+
 'Associations, etc.'
 MiniSocs *--> "*" Utilisateur
+Utilisateur "1" *-- "*" Participation: possède
+Participation "*" -->* "1" reseauSocial: modère (si modérateur=True)
+Participation "*" -->* "1" reseauSocial: appartient (si modérateur=False)
+Participation "1" *--> "*" Message: Demander (si modérateur=False)
+Participation "1" *--> "*" Message: Poster (si modérateur=True)
+Message "*" <--* "1" reseauSocial: contient
 
 'Au besoin, aides pour le positionnement'
 
