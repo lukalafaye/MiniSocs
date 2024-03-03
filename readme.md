@@ -525,7 +525,16 @@ Pour rappel, la documentation du langage pour écrire les diagrammes
 UML avec PlantUML est disponible à l'adress suivante :
 - (https://plantuml.com/fr/)
 
-#### Ajouter un utilisateur (HAUTE)
+#### DSUC1 : Creer un reseau social (HAUTE)
+
+Version recommandée
+([source](./Diagrammes/minisocs_uml_diag_seq_create_rs.pu)).
+
+![diagrammeséquencecreerreseausocial](./Diagrammes/minisocs_uml_diag_seq_create_rs.svg)
+([source](./Diagrammes/minisocs_uml_diag_seq_create_rs.pu))
+
+
+#### DSUC2 : Ajouter un utilisateur (HAUTE)
 
 Version recommandée
 ([source](./Diagrammes/minisocs_uml_diag_seq_ajouter_utilisateur.pu)).
@@ -540,6 +549,15 @@ Version simplifiée
 
 ![diagrammeséquenceajouterutilisateursimplifié](./Diagrammes/minisocs_uml_diag_seq_ajouter_utilisateur_version_simplifiee.svg)
 ([source](./Diagrammes/minisocs_uml_diag_seq_ajouter_utilisateur_version_simplifiee.pu))
+
+#### DSUC3 : Poster un message (HAUTE)
+
+Version recommandée
+([source](./Diagrammes/minisocs_uml_diag_seq_poster_message.pu)).
+
+![diagrammeséquencepostermessage](./Diagrammes/minisocs_uml_diag_seq_poster_message.svg)
+([source](./Diagrammes/minisocs_uml_diag_seq_poster_message.pu))
+
 
 # 7. Diagrammes de machine à états et invariants
 

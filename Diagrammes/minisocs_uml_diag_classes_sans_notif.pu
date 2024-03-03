@@ -36,7 +36,7 @@ class Participation {
   / pseudonyme: String
 }
 
-class reseauSocial {
+class ReseauSocial {
   - nom: String
 }
 
@@ -49,11 +49,12 @@ class Message {
 'Associations, etc.'
 MiniSocs *--> "*" Utilisateur
 Utilisateur "1" *-- "*" Participation: possède
-Participation "*" --> "1" reseauSocial: modère (si modérateur=True)
-Participation "*" --> "1" reseauSocial: appartient (si modérateur=False)
+Participation "*" --> "1" ReseauSocial: modère (si modérateur=True)
+Participation "*" --> "1" ReseauSocial: appartient (si modérateur=False)
 Participation "1" *--> "*" Message: Demander (si modérateur=False)
 Participation "1" *--> "*" Message: Poster (si modérateur=True)
-Message "*" <--* "1" reseauSocial: contient
+Message "*" <--* "1" ReseauSocial: contient
+MiniSocs *--> "*" ReseauSocial
 
 'Au besoin, aides pour le positionnement'
 
