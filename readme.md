@@ -617,7 +617,7 @@ Voici tous les attributs de la classe :
 
 Diagramme ([source](./Diagrammes/minisocs_uml_diag_machine_a_etats_message.pu)).
 
-![diagrammemachineaétatsutilisateur](./Diagrammes/minisocs_uml_diag_machine_a_etats_message.svg)
+![diagrammemachineaétatsmessage](./Diagrammes/minisocs_uml_diag_machine_a_etats_message.svg)
 ([source](./Diagrammes/minisocs_uml_diag_machine_a_etats_message.pu))
 
 ### 7.2.2. Fiche de la classe
@@ -625,7 +625,7 @@ Diagramme ([source](./Diagrammes/minisocs_uml_diag_machine_a_etats_message.pu)).
 Voici tous les attributs de la classe :
 ```
 — String contenu
-— bool accepte (valeur par defaut false)
+— boolean accepte = false
 — pseudoParticulier : String (attribut derive)
 — participation : Participation (association)
 — reseauSocial : ReseauSocial (association)
@@ -633,11 +633,12 @@ Voici tous les attributs de la classe :
 
 Voici toutes les operations de la classe :
 ```
-— Constructeur 
-+modifierMessage
-+modererMessage
-+supprimerMessage
-+cacherMessage
+— Constructeur
++envoyerMessage()
++modifierMessage()
++modererMessage()
++supprimerMessage()
++cacherMessage()
 — Destructeur
 
 ```
