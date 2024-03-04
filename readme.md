@@ -617,43 +617,36 @@ Voici tous les attributs de la classe :
 
 Diagramme ([source](./Diagrammes/minisocs_uml_diag_machine_a_etats_message.pu)).
 
-![diagrammemachineaétatsmessage](./Diagrammes/minisocs_uml_diag_machine_a_etats_message.svg)
+![diagrammemachineaétatsutilisateur](./Diagrammes/minisocs_uml_diag_machine_a_etats_message.svg)
 ([source](./Diagrammes/minisocs_uml_diag_machine_a_etats_message.pu))
-
 
 ### 7.2.2. Fiche de la classe
 
 Voici tous les attributs de la classe :
 ```
-— private String contenu
-— private boolean sent = false
-— private boolean verificationPending = true
-— private boolean inappropriate = false
-— private boolean hidden = true
-— private String pseudoParticulier (attribut dérivé)
-— private Participation participation (composition)
-— private ReseauSocial reseauSocial (composition)
+— String contenu
+— bool accepte (valeur par defaut false)
+— pseudoParticulier : String (attribut derive)
+— participation : Participation (association)
+— reseauSocial : ReseauSocial (association)
 ```
 
 Voici toutes les operations de la classe :
 ```
-request_post()
-send()
-delete_message()
-cancel_message()
-hide_message()
-mark_inappropriate()
+— Constructeur 
++modifierMessage
++modererMessage
++supprimerMessage
++cacherMessage
+— Destructeur
+
 ```
 
 ### 7.2.3. Invariant
 
 ```
-
-contenu != null ∧ !contenu.isBlank()
-∧ (sent == true ∨ sent == false)
-∧ (verificationPending == true ∨ verificationPending == false)
-∧ (inappropriate == true ∨ inappropriate == false)
-∧ (hidden == true ∨ hidden == false)
+  contenu != null ∧ !contenu.isBlank()
+∧ accepte == true ∨ accepte == false
 ∧ pseudoParticulier != null ∧ !pseudoParticulier.isBlank()
 ∧ participation != null
 ∧ reseauSocial != null
