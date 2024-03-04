@@ -611,6 +611,38 @@ Voici tous les attributs de la classe :
 ∧ EmailValidator.getInstance().isValid(courriel)
 ∧ etatCompte != null
 ```
+## 7.2. Classe Message
+
+### 7.2.1. Diagramme de machine à états
+
+
+
+### 7.2.2. Fiche de la classe
+
+Voici tous les attributs de la classe :
+```
+— String contenu
+— bool accepte (valeur par defaut false)
+— pseudoParticulier : String (attribut derive)
+— participation : Participation (association)
+— reseauSocial : ReseauSocial (association)
+```
+
+Voici toutes les operations de la classe :
+```
+
+```
+
+### 7.2.3. Invariant
+
+```
+  contenu != null ∧ !contenu.isBlank()
+∧ accepte == true ∨ accepte == false
+∧ pseudoParticulier != null ∧ !pseudoParticulier.isBlank()
+∧ participation != null
+∧ reseauSocial != null
+
+```
 
 # 8 Préparation des tests unitaires
 
@@ -651,6 +683,43 @@ enfin une chaîne de caractères qui n'est pas une adresse courriel.
 | nombre de tests dans le jeu de tests | 1   | 2   |
 
 Deux tests dans le jeu de tests 2 pour l'idempotence.
+
+## 8.2. Opérations de la classe Message
+
+### Opération constructeur
+
+|                                                    | 1   | 2   | 3   | 4   | 5   | 6   |
+|:---------------------------------------------------|:----|:----|:----|:----|:----|:----|
+| contenu bien formé (non null ∧ non vide)           | F   | T   | T   | T   | T   | T   |
+| boolean accepte bien defini                        |     | F   | T   | T   | T   | T   |
+| pseudoParticulier bien formé (non null ∧ non vide) |     |     | F   | T   | T   | T   |
+| reseauSocial bien defini                           |     |     |     | F   | T   | T   |
+| participation bien definie                         |     |     |     |     | F   | T   |
+|                                                    |     |     |     |     |     |     |
+| contenu' = contenu                                 | F   | F   | F   | F   | F   | T   |
+| accepte' = accepte                                 | F   | F   | F   | F   | F   | T   |
+| pseudoParticulier' = pseudoParticulier             | F   | F   | F   | F   | F   | T   |
+| reseauSocial' = reseauSocial                       | F   | F   | F   | F   | F   | T   |
+| participation' = participation                     | F   | F   | F   | F   | F   | T   |
+|                                                    |     |     |     |     |     |     |
+| levée d'un exception                               | oui | oui | oui | oui | oui | non |
+|                                                    |     |     |     |     |     |     |
+| nombre de tests dans le jeu de tests               | 2   | 1   | 2   | 1   | 1   | 1   |
+
+## 8.3. Opérations de la classe Participation
+
+### Opération modererMessage
+
+|                                      | 1   | 2   |
+|:-------------------------------------|:----|:----|
+| moderateur = true                    | F   | T   |
+|                                      |     |     |
+| message.accepte' = !message.accepte  |     | T   |
+|                                      |     |     |
+| levée d'une exception                | oui | non |
+|                                      |     |     |
+| nombre de tests dans le jeu de tests | 1   | 2   |
+
 
 ---
 FIN DU DOCUMENT
