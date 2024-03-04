@@ -33,7 +33,7 @@ enum ÉtatCompte <<enum>> {
 class Participation {
   - pseudoParticulier: String
   - modérateur: Bool
-  / pseudonyme: String
+  - pseudonyme: String
 }
 
 class ReseauSocial {
@@ -43,12 +43,12 @@ class ReseauSocial {
 class Message {
   - contenu: String
   - accepté: bool
-  /pseudoParticulier: String
+  - pseudoParticulier: String
 }
 
 'Associations, etc.'
 MiniSocs *--> "*" Utilisateur
-Utilisateur "1" *-- "*" Participation: possède
+Utilisateur "1" *--> "*" Participation: possède
 Participation "*" --> "1" ReseauSocial: modère (si modérateur=True)
 Participation "*" --> "1" ReseauSocial: appartient (si modérateur=False)
 Participation "1" *--> "*" Message: Demander (si modérateur=False)

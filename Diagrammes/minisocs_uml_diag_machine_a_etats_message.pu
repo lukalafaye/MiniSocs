@@ -1,0 +1,26 @@
+@startuml
+
+' Configuration charte graphique
+' États et transitions
+skinparam state {
+    FontSize 10
+    RoundCorner 10
+}
+
+state EnCréation : entry : constructeur()
+state EnDestruction : entry : destructeur()
+
+[*] -right-> EnCréation
+EnCréation --> VerificationPending: message owner not moderator / request_post()
+EnCréation --> Sent: message owner is moderator / send_message()
+VerificationPending --> EnDestruction: Message deleted by moderator / delete_message()
+VerificationPending --> Inappropriate: Message marked by moderator / mark_inappropriate()
+VerificationPending --> Hidden: Message hidden by moderator / hide_message()
+VerificationPending --> EnDestruction: Message owner cancels his message / cancel_message()
+
+Sent --> EnDestruction: Message owner deletes his message / delete_message()
+
+
+EnDestruction-left-> [*]
+
+@enduml
