@@ -38,6 +38,7 @@ rectangle "MiniSocs" {
 :Moderateur:     -- (bloquer un membre sur son réseau social bonus)
 :Moderateur:     -- (débloquer un membre sur son réseau social bonus)
 
+:Membre:         -- (rejoindre un réseau social)
 :Membre:         -- (poster un message)
 :Membre:         -- (cacher un message)
 :Membre:         -- (quitter un réseau social)

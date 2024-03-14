@@ -21,7 +21,7 @@ Contributor(s):
 	 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>eu.telecomsudparis.csc4102</groupId>
-  <artifactId>csc4102-minisocs-Nom1_Prenom1-Nom2_Prenom2</artifactId>
+  <artifactId>csc4102-minisocs-LafayeDeMicheaux_Luka-Chidiac_Alexandre</artifactId>
   <packaging>jar</packaging>
   <version>1.0-SNAPSHOT</version>
   <name>Mini réseaux sociaux</name>

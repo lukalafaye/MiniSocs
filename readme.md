@@ -218,6 +218,17 @@ NB : l'opération est idempotente.
 
 ### Cas d'utilisation du membre
 
+#### Ajouter un membre a un reseau social (HAUTE)
+- précondition : \
+∧ pseudo bien formé (non null ∧ non vide) \
+∧ l'utilisateur est actif \
+∧ le réseau social existe et est ouvert
+
+- postcondition : \
+∧ l'utilisateur est membre du réseau social
+
+
+
 #### Poster un message (HAUTE)
 - précondition : \
 ∧ pseudo bien formé (non null ∧ non vide) \
@@ -428,6 +439,18 @@ conditions.
 
 
 ## Tests membres
+
+#### Ajouter un membre a un reseau social (HAUTE)
+
+| Décision                                                | 1 | 2 | 3 | 4 |
+|---------------------------------------------------------|---|---|---|---|
+| Pseudo de l'exécuteur bien formé  (non null ∧ non vide) | F | T | T | T |
+| L'utilisateur est actif                                 |   | F | T | T |
+| Le reseau social existe et est ouvert                   |   |   | F | T |
+|                                                         |   |   |   |   |
+| L'utilisateur est membre du reseau social               | F | F | F | T |
+|                                                         |   |   |   |   |
+| nombre de tests dans le jeu de tests                    | 2 | 1 | 1 | 1 |
 
 #### Poster un message (HAUTE)
 
