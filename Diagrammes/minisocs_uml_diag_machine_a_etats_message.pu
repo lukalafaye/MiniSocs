@@ -17,7 +17,8 @@ VerificationPending --> EnDestruction: Message deleted by moderator / delete_mes
 VerificationPending --> Inappropriate: Message marked by moderator / mark_inappropriate()
 VerificationPending --> Hidden: Message hidden by moderator / hide_message()
 VerificationPending --> EnDestruction: Message owner cancels his message / cancel_message()
-
+Hidden              --> EnDestruction: Message deleted by moderator / delete_message()
+Inappropriate       --> EnDestruction: Message deleted by moderator / delete_message()
 Sent --> EnDestruction: Message owner deletes his message / delete_message()
 
 

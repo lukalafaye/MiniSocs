@@ -1,61 +1,82 @@
-@startuml
+	@startuml
 
-'Diagramme de classes (PlantUML)'
+	'Diagramme de classes (PlantUML)'
 
-'Configuration charte graphique'
-hide empty methods
-hide circle
-skinparam class {
-  BackgroundColor White
-  ArrowColor Black
-  BorderColor Black
-}
+	'Configuration charte graphique'
+	hide empty methods
+	hide circle
+	skinparam class {
+	  BackgroundColor White
+	  ArrowColor Black
+	  BorderColor Black
+	}
 
-'Classes, énumérations, etc.'
-class MiniSocs {
-  - nom: String
-}
+	'Classes, énumérations, etc.'
+	class MiniSocs {
+	  - nom: String
+	  - créerUtilisateur(): methode
+	}
 
-class Utilisateur {
-  - pseudonyme: String
-  - nom: String
-  - prénom: String
-  - courriel: String
-  - etatCompte: ÉtatCompte
-}
-enum ÉtatCompte <<enum>> {
-  ACTIF
-  DÉSACTIVÉ
-  BLOQUÉ
-  DÉBLOQUÉ
-}
+	class Utilisateur {
+	  - pseudonyme: String
+	  - nom: String
+	  - prénom: String
+	  - courriel: String
+	  - etatCompte: ÉtatCompte
+	  - créerRS(): methode
+	  - posterMessage(): methode
+	}
 
-class Participation {
-  - pseudoParticulier: String
-  - modérateur: Bool
-  - pseudonyme: String
-}
+	enum ÉtatCompte <<enum>> {
+	  ACTIF
+	  DÉSACTIVÉ
+	  BLOQUÉ
+	  DÉBLOQUÉ
+	}
 
-class ReseauSocial {
-  - nom: String
-}
+	enum ÉtatMessage <<enum>> {
+	  ACCEPTÉ
+	  VERIFICATION_PENDING
+	  INAPPROPRIATE
+	  HIDDEN
+	  SENT
+	}
 
-class Message {
-  - contenu: String
-  - accepté: bool
-  - pseudoParticulier: String
-}
+	class Membre {
+	  - pseudoParticulier: String
+	}
 
-'Associations, etc.'
-MiniSocs *--> "*" Utilisateur
-Utilisateur "1" *--> "*" Participation: possède
-Participation "*" --> "1" ReseauSocial: modère (si modérateur=True)
-Participation "*" --> "1" ReseauSocial: appartient (si modérateur=False)
-Participation "1" *--> "*" Message: Demander (si modérateur=False)
-Participation "1" *--> "*" Message: Poster (si modérateur=True)
-Message "*" <--* "1" ReseauSocial: contient
-MiniSocs *--> "*" ReseauSocial
+	class Moderateur {
+	  - bloquerUtilisateur(): methode
+	  - supprimerMessage(): methode
+	}
 
-'Au besoin, aides pour le positionnement'
+	class ReseauSocial {
+	  - nom: String
+	  - ouvert: bool
+	  - créerParticipation(bool moderateur): methode
+	}
 
-@enduml
+	class Message {
+	  - contenu: String
+	  - etatMessage: ÉtatMessage
+	}
+
+	'Associations, etc.'
+	MiniSocs *--> "*" Utilisateur: Crée
+	Utilisateur "1" --> "*" ReseauSocial: Connait
+        Utilisateur "1" --> "*" Membre: Possède
+	
+	Moderateur "1" *--> "*" Message: Envoyer
+	Membre "1" *--> "*" Message: Demander
+        
+	MiniSocs *--> "*" ReseauSocial
+        ReseauSocial "1"--> "*" Message
+        
+	ReseauSocial "1" *--> "*" Membre
+
+	Moderateur --|> Membre
+	
+	'Au besoin, aides pour le positionnement'
+
+	@enduml

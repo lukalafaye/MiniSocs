@@ -58,19 +58,36 @@ votre modélisation avant de passer à l'implémentation.
 
 
 Diagramme de classes
-[]Quelle différene entre débloqué et actif?
-[] Participation ne doit pas faire apparaître d'attribut pseudonyme
+[X]Quelle différene entre débloqué et actif?
+
+Le blocage/déblocage sont gérés par l'administrateur / modérateur tandis que l'activation/désactivation sont gérés par l'utilisateur.
+
+[X] Participation ne doit pas faire apparaître d'attribut pseudonyme
 car il y a une association avec Utilisateur. D'ailleurs, depuis
 Participation, cela va vous demander du travail de récuperer
 l'Utilsateur depuis son pseudo. Pourquoi ne pas avoir opter pour une
 ref sur l'Utilsiateur?
-[] le fait qu'un message puisse juste être accepté ou non grâce à un
+
+Lien bidirectionnel entre participation et utilisateur (pour récupérérer l'utilisateur à partir d'un message.
+
+Supprimé pseudo_particulier...
+
+[X] le fait qu'un message puisse juste être accepté ou non grâce à un
 booléen n'est pas suffisant. Vous auriez dû vous en rendre compte en
 faisant le diagramme de machine à états de Message.
-[]Même remarque sur le champ pseudoParticulier de Message. Si
+
+J'ai rajouté les attributs manquants.
+
+[X]Même remarque sur le champ pseudoParticulier de Message. Si
 association, cela ne doit pas apparaître sur le diagramme.
-[] Un réseau social doit pouvoir etre fermé par un modérateur.
-[] vous avez deux associations entre Participation et Message qui
+
+Supprimé pseudo_particulier...
+
+[X] Un réseau social doit pouvoir etre fermé par un modérateur.
+
+Rajout d'un booléen attribut de la classe R.S.
+
+[X] vous avez deux associations entre Participation et Message qui
 devrait etre unique; idem entre Participation et ReseauSocial.
 
 
@@ -100,18 +117,27 @@ Utilisateur mais un acteur du système. A revoir donc.
 Raffinement du diagramme de classes
 
 Fiche de la classe « Message »
-[] comment encodez-vous les différents états du Message avec seulement
+[X] comment encodez-vous les différents états du Message avec seulement
 un booléen "accpeté"? il vous faut une énumération.
-[] Un attribut pseudoParticulier vous est-il vraiment utile?
-[] Pareil pour Participation et pourquoi avoir les deux?
-[] Pareil pour reseauSocial. La navigabilité depuis Message est-elle utile?
+
+Fait.
+
+[X] Un attribut pseudoParticulier vous est-il vraiment utile?
+
+Pas nécessaire mais certains utilisateurs veulent un pseudo différent pour chaque réseau social...
+
+[X] Pareil pour Participation et pourquoi avoir les deux?
+Supression de pseudonyme (redondance).
+
+[X] Pareil pour reseauSocial. La navigabilité depuis Message est-elle utile?
+Il n'y a pas de navigabilité depuis message?
 
 
 Diagramme de machine à états et invariant
 Diagramme de machine à états de la classe « Message »
-[] Un message puet aussi passer de l'état inappropirte et hidden vers
+[X] Un message puet aussi passer de l'état inappropirte et hidden vers
 en destruction
-[]
+Implémenté.
 
 
 Invariant de la classe « Message »
