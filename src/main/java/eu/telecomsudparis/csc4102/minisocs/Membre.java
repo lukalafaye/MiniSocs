@@ -2,13 +2,15 @@ package eu.telecomsudparis.csc4102.minisocs;
 
 import java.util.Objects;
 
+import eu.telecomsudparis.csc4102.util.OperationImpossible;
+
 
 
 public class Membre {
 	
 	private String pseudoParticulier;
 	private Utilisateur utilisateur;
-	private ReseauSocial rs;
+	protected ReseauSocial rs;
 	
 	public Membre(final String pseudoParticulier, final Utilisateur utilisateur) {
 		if (pseudoParticulier == null || pseudoParticulier.isBlank()) {
@@ -16,6 +18,26 @@ public class Membre {
 		}
 		this.pseudoParticulier = pseudoParticulier;
 		this.utilisateur = utilisateur;
+	}
+	
+    public void posterMessage(String contenu) throws OperationImpossible {
+        if (contenu == null || contenu.isBlank()) {
+            throw new OperationImpossible("Le contenu du message ne peut pas être null ou vide.");
+        }
+        Message nouveauMessage = new Message(contenu, this, EtatMessage.VERIFICATION_PENDING, rs);
+        rs.ajouterMessage(nouveauMessage);
+    }
+	
+	public void changePseudoParticulier(String pseudoParticulier) {
+		this.pseudoParticulier = pseudoParticulier;
+	}
+	
+	public String getPseudoParticulier() {
+		return pseudoParticulier;
+	}
+	
+	public Utilisateur getUtilisateur() {
+		return utilisateur;
 	}
 	
 	@Override

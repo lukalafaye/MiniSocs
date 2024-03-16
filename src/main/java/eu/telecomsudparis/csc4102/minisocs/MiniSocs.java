@@ -21,7 +21,8 @@ public class MiniSocs {
 	/**
 	 * les utilisateurs.
 	 */
-	private final Map<String, Utilisateur> utilisateurs;
+	private static Map<String, Utilisateur> utilisateurs;
+	private static Map<String, ReseauSocial> reseauxSociaux;
 
 	/**
 	 * construit une instance du système.
@@ -31,6 +32,7 @@ public class MiniSocs {
 	public MiniSocs(final String nomDuSysteme) {
 		this.nomDuSysteme = nomDuSysteme;
 		this.utilisateurs = new HashMap<>();
+		this.reseauxSociaux = new HashMap<>();
 	}
 
 	/**
@@ -75,7 +77,18 @@ public class MiniSocs {
 		utilisateurs.put(pseudo, new Utilisateur(pseudo, nom, prenom, courriel));
 		assert invariant();
 	}
+	
 
+    public static void addReseauSocial(ReseauSocial reseauSocial) throws OperationImpossible {
+        
+		ReseauSocial rs = reseauxSociaux.get(reseauSocial.getNom());
+		if (rs != null) {
+			throw new OperationImpossible("Nom deja pris");
+		}
+
+        reseauxSociaux.put(reseauSocial.getNom(), reseauSocial);
+    }
+	
 	/**
 	 * liste les utilisateurs.
 	 * 

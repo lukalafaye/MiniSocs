@@ -37,5 +37,9 @@ public class Message {
 		Message other = (Message) obj;
 		return Objects.equals(contenu, other.contenu) && Objects.equals(rs, other.rs) && Objects.equals(membre, other.membre);
 	}
+
+	public Membre getMembre() {
+		return membre;
+	}
 	
 }
