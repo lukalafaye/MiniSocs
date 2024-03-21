@@ -73,30 +73,6 @@ public class Utilisateur {
 				&& !prenom.isBlank() && EmailValidator.getInstance().isValid(courriel) && etatCompte != null;
 	}
 	
-    public void creerReseauSocial(String nomReseau, boolean ouvert, String pseudoParticulier) throws OperationImpossible {
-        
-        if (this.getEtatCompte() != EtatCompte.ACTIF) {
-            throw new OperationImpossible("Le compte de l'exécuteur n'est pas actif ou est bloqué.");
-        }
-        if (nomReseau == null || nomReseau.isBlank()) {
-            throw new OperationImpossible("Nom du réseau social non valide.");
-        }
-
-        ReseauSocial nouveauReseau = new ReseauSocial(nomReseau, ouvert);
-
-        Moderateur mod = new Moderateur(this.pseudonyme, this);
-        
-        if (pseudoParticulier != null) {
-        	mod.changePseudoParticulier(pseudoParticulier);
-        }
-        
-        nouveauReseau.ajouterModerateur(mod);
-        nouveauReseau.ajouterMembre(mod); 
-        MiniSocs.addReseauSocial(nouveauReseau);
-        assert invariant();
-    }
-	
-
 	/**
 	 * obtient le pseudonyme.
 	 * 

@@ -78,16 +78,35 @@ public class MiniSocs {
 		assert invariant();
 	}
 	
-
-    public static void addReseauSocial(ReseauSocial reseauSocial) throws OperationImpossible {
-        
-		ReseauSocial rs = reseauxSociaux.get(reseauSocial.getNom());
+    public static void creerReseauSocial(String pseudoExec, String nomReseau, boolean ouvert, String pseudoParticulier) throws OperationImpossible {
+        if (pseudoExec == null || pseudoExec.isBlank()) {
+        	throw new OperationImpossible("Pseudo de l'executeur non valide");
+        }
+        Utilisateur u = utilisateurs.get(pseudoExec);
+        if (u.getEtatCompte() != EtatCompte.ACTIF) {
+            throw new OperationImpossible("Le compte de l'exécuteur n'est pas actif ou est bloqué.");
+        }
+        if (nomReseau == null || nomReseau.isBlank()) {
+            throw new OperationImpossible("Nom du réseau social non valide.");
+        }
+		ReseauSocial rs = reseauxSociaux.get(nomReseau);
 		if (rs != null) {
 			throw new OperationImpossible("Nom deja pris");
 		}
 
-        reseauxSociaux.put(reseauSocial.getNom(), reseauSocial);
+        ReseauSocial nouveauReseau = new ReseauSocial(nomReseau, ouvert);
+
+        Moderateur mod = new Moderateur(pseudoExec, u);
+        
+        if (pseudoParticulier != null) {
+        	mod.changePseudoParticulier(pseudoParticulier);
+        }
+        
+        nouveauReseau.ajouterModerateur(mod);
+        nouveauReseau.ajouterMembre(mod); 
+        reseauxSociaux.put(nouveauReseau.getNom(), nouveauReseau);
     }
+	
 	
 	/**
 	 * liste les utilisateurs.
