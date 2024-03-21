@@ -27,7 +27,6 @@ public class ReseauSocial {
 		this.nom = nom;
 		this.ouvert = ouvert;
 		this.membres = new HashSet<>();
-        this.moderateurs = new HashSet<>();
         this.messages = new ArrayList<>();
 	}
 	
@@ -35,33 +34,30 @@ public class ReseauSocial {
 		return nom;
 	}
 	
-    public void ajouterMembre(Membre membre) throws OperationImpossible {
-    	if (membre.getPseudoParticulier() == null || membre.getPseudoParticulier().isBlank()) {
-            throw new OperationImpossible("Pseudo non valide.");
-        }
-        Utilisateur utilisateur = membre.getUtilisateur();
-        if (utilisateur == null || utilisateur.getEtatCompte() != EtatCompte.ACTIF) {
-            throw new OperationImpossible("L'utilisateur n'est pas actif ou n'existe pas.");
-        }
-        if (!this.ouvert) {
-            throw new OperationImpossible("Le réseau social n'est pas ouvert.");
-        }
-        membres.add(membre);
+	public boolean getOuvert() {
+		return ouvert;
+	}
+	
+	
+    public void ajouterMembre(String pseudo, Utilisateur u, String pseudoParticulier, boolean mod) throws OperationImpossible {
+    	if (mod) {
+            Moderateur m = new Moderateur(pseudo, u);
+            if (pseudoParticulier != null && !pseudoParticulier.isBlank()) {
+            	m.changePseudoParticulier(pseudoParticulier);
+            }
+            membres.add(m);
+    	}
+    	else {
+            Membre m = new Membre(pseudo, u);
+            if (pseudoParticulier != null && !pseudoParticulier.isBlank()) {
+            	m.changePseudoParticulier(pseudoParticulier);
+            }
+            membres.add(m);
+    	}
     }
 
-    public void ajouterModerateur(Moderateur moderateur) throws OperationImpossible {
-    	ajouterMembre(moderateur);
-        moderateurs.add(moderateur);
-    }
 	
     public void ajouterMessage(Message message) throws OperationImpossible {
-        
-        if (message.getMembre().getPseudoParticulier() == null || message.getMembre().getPseudoParticulier().isBlank()) {
-            throw new OperationImpossible("Pseudo non valide.");
-        }
-    	if (!this.ouvert) {
-            throw new OperationImpossible("Le réseau social n'est pas ouvert.");
-        }
         messages.add(message);
     }
     

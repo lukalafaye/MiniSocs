@@ -95,19 +95,47 @@ public class MiniSocs {
 		}
 
         ReseauSocial nouveauReseau = new ReseauSocial(nomReseau, ouvert);
-
-        Moderateur mod = new Moderateur(pseudoExec, u);
-        
-        if (pseudoParticulier != null) {
-        	mod.changePseudoParticulier(pseudoParticulier);
-        }
-        
-        nouveauReseau.ajouterModerateur(mod);
-        nouveauReseau.ajouterMembre(mod); 
+        ajouterMembreRS(pseudoExec, nomReseau, pseudoParticulier, true);
         reseauxSociaux.put(nouveauReseau.getNom(), nouveauReseau);
     }
 	
+    public static void ajouterMembreRS(String pseudo, String nomReseau, String pseudoParticulier, boolean mod) throws OperationImpossible{
+        if (pseudo == null || pseudo.isBlank()) {
+        	throw new OperationImpossible("Pseudo de l'executeur non valide");
+        }
+        if (nomReseau == null || nomReseau.isBlank()) {
+        	throw new OperationImpossible("Nom du Reseau non valide");
+        }
+        Utilisateur u = utilisateurs.get(pseudo);
+        ReseauSocial rs = reseauxSociaux.get(nomReseau);
+        if (u == null || u.getEtatCompte() != EtatCompte.ACTIF) {
+            throw new OperationImpossible("L'utilisateur n'est pas actif ou n'existe pas.");
+        }
+        if (!rs.getOuvert()) {
+            throw new OperationImpossible("Le réseau social n'est pas ouvert.");
+        }
+        rs.ajouterMembre(pseudo, u, pseudoParticulier, mod);
+    }
 	
+    public static void posterMessageRS(String pseudo, String contenu, String nomReseau) throws OperationImpossible {
+        if (pseudo == null || pseudo.isBlank()) {
+        	throw new OperationImpossible("Pseudo de l'executeur non valide");
+        }
+        if (nomReseau == null || nomReseau.isBlank()) {
+        	throw new OperationImpossible("Nom du Reseau non valide");
+        }
+        Utilisateur u = utilisateurs.get(pseudo);
+        ReseauSocial rs = reseauxSociaux.get(nomReseau);
+        if (contenu == null || contenu.isBlank()) {
+            throw new OperationImpossible("Le contenu du message ne peut pas être null ou vide.");
+        }
+        if (u == null || u.getEtatCompte() != EtatCompte.ACTIF) {
+            throw new OperationImpossible("L'utilisateur n'est pas actif ou n'existe pas.");
+        }
+    	if (!rs.getOuvert()) {
+            throw new OperationImpossible("Le réseau social n'est pas ouvert.");
+        }
+    }
 	/**
 	 * liste les utilisateurs.
 	 * 

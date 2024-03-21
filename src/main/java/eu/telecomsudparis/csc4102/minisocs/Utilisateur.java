@@ -1,5 +1,6 @@
 package eu.telecomsudparis.csc4102.minisocs;
 
+import java.util.Map;
 import java.util.Objects;
 
 import org.apache.commons.validator.routines.EmailValidator;
@@ -33,6 +34,7 @@ public class Utilisateur {
 	 * état du compte de l'utilisateur.
 	 */
 	private EtatCompte etatCompte;
+	
 
 	/**
 	 * construit un utilisateur.
@@ -62,6 +64,7 @@ public class Utilisateur {
 		this.etatCompte = EtatCompte.ACTIF;
 		assert invariant();
 	}
+	
 
 	/**
 	 * vérifie l'invariant de la classe.
