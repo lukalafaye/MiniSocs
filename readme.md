@@ -648,9 +648,9 @@ Diagramme ([source](./Diagrammes/minisocs_uml_diag_machine_a_etats_message.pu)).
 Voici tous les attributs de la classe :
 ```
 — String contenu
-— boolean accepte = false
-— pseudoParticulier : String (attribut derive)
-— participation : Participation (association)
+— etatMessage etatMessage
+— membre : Membre (association)
+— moderateur : Moderateur (association)
 — reseauSocial : ReseauSocial (association)
 ```
 
@@ -670,9 +670,11 @@ Voici toutes les operations de la classe :
 
 ```
   contenu != null ∧ !contenu.isBlank()
-∧ accepte == true ∨ accepte == false
-∧ pseudoParticulier != null ∧ !pseudoParticulier.isBlank()
-∧ participation != null
+∧ etatMessage == "accepté" ∨ etatMessage == "verification pending" 
+∨ etatMessage == "inappropriate" ∨ etatMessage == "hidden"
+∨ etatMessage == "sent"
+∧ membre != null
+∧ moderateur != null
 ∧ reseauSocial != null
 
 ```

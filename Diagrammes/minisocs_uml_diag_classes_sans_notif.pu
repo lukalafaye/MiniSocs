@@ -43,6 +43,7 @@
 	}
 
 	class Membre {
+	  / pseudonyme: String
 	  - pseudoParticulier: String
 	}
 
