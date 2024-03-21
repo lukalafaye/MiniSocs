@@ -20,14 +20,6 @@ public class Membre {
 		this.utilisateur = utilisateur;
 	}
 	
-    public void posterMessage(String contenu) throws OperationImpossible {
-        if (contenu == null || contenu.isBlank()) {
-            throw new OperationImpossible("Le contenu du message ne peut pas être null ou vide.");
-        }
-        Message nouveauMessage = new Message(contenu, this, EtatMessage.VERIFICATION_PENDING, rs);
-        rs.ajouterMessage(nouveauMessage);
-    }
-	
 	public void changePseudoParticulier(String pseudoParticulier) {
 		this.pseudoParticulier = pseudoParticulier;
 	}

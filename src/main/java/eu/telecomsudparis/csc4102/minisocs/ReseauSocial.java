@@ -38,6 +38,14 @@ public class ReseauSocial {
 		return ouvert;
 	}
 	
+	public Membre getMembrefromUtilisateur(Utilisateur u) {
+		for (Membre m : this.membres) {
+			if (u.getPseudonyme() == m.getUtilisateur().getPseudonyme()) {
+				return m;
+			}
+		}
+		return null;
+	}
 	
     public void ajouterMembre(String pseudo, Utilisateur u, String pseudoParticulier, boolean mod) throws OperationImpossible {
     	if (mod) {
@@ -57,8 +65,15 @@ public class ReseauSocial {
     }
 
 	
-    public void ajouterMessage(Message message) throws OperationImpossible {
-        messages.add(message);
+    public void ajouterMessage(String contenu, Membre m) throws OperationImpossible {
+    	if (m instanceof Moderateur) {
+    		Message nouveauMessage = new Message(contenu, m, EtatMessage.ACCEPTE, this);
+            messages.add(nouveauMessage);
+    	}
+    	else {
+    		Message nouveauMessage = new Message(contenu, m, EtatMessage.VERIFICATION_PENDING, this);
+            messages.add(nouveauMessage);
+    	}
     }
     
 	@Override

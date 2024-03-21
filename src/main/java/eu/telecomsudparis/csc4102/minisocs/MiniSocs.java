@@ -135,6 +135,14 @@ public class MiniSocs {
     	if (!rs.getOuvert()) {
             throw new OperationImpossible("Le réseau social n'est pas ouvert.");
         }
+    	Membre m = rs.getMembrefromUtilisateur(u);
+		if (m == null) {
+			throw new OperationImpossible("L'utilisateur n'est pas membre du Reseau");
+		}
+        if (m.getPseudoParticulier() == null || m.getPseudoParticulier().isBlank()) {
+        	throw new OperationImpossible("Pseudo de l'executeur non valide");
+        }
+        rs.ajouterMessage(contenu, m);
     }
 	/**
 	 * liste les utilisateurs.
