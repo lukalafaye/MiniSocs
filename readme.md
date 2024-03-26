@@ -634,6 +634,7 @@ Voici tous les attributs de la classe :
 ∧ EmailValidator.getInstance().isValid(courriel)
 ∧ etatCompte != null
 ```
+
 ## 7.2. Classe Message
 
 ### 7.2.1. Diagramme de machine à états
@@ -650,18 +651,13 @@ Voici tous les attributs de la classe :
 — String contenu
 — etatMessage etatMessage
 — membre : Membre (association)
-— moderateur : Moderateur (association)
-— reseauSocial : ReseauSocial (association)
+— moderateur : Moderateur (composition)
+— reseauSocial : ReseauSocial (composition)
 ```
 
 Voici toutes les operations de la classe :
 ```
 — Constructeur
-+envoyerMessage()
-+modifierMessage()
-+modererMessage()
-+supprimerMessage()
-+cacherMessage()
 — Destructeur
 
 ```
@@ -677,6 +673,25 @@ Voici toutes les operations de la classe :
 ∧ moderateur != null
 ∧ reseauSocial != null
 
+```
+
+## 7.3 Classe Membre
+
+### 7.2.1  Diagramme de machine à états
+
+### 7.2.3 Fiche de la classe
+
+```
+— String: pseudoParticulier 
+— utilisateur: Utilisateur (association) 
+— reseauSocial : ReseauSocial (composition)
+— 
+```
+
+### 7.3.3 Invariant de la classe
+
+```
+pseudoParticulier != null ∧ !pseudoParticulier.isBlank()
 ```
 
 # 8 Préparation des tests unitaires
@@ -723,37 +738,89 @@ Deux tests dans le jeu de tests 2 pour l'idempotence.
 
 ### Opération constructeur
 
-|                                                    | 1   | 2   | 3   | 4   | 5   | 6   |
-|:---------------------------------------------------|:----|:----|:----|:----|:----|:----|
-| contenu bien formé (non null ∧ non vide)           | F   | T   | T   | T   | T   | T   |
-| boolean accepte bien defini                        |     | F   | T   | T   | T   | T   |
-| pseudoParticulier bien formé (non null ∧ non vide) |     |     | F   | T   | T   | T   |
-| reseauSocial bien defini                           |     |     |     | F   | T   | T   |
-| participation bien definie                         |     |     |     |     | F   | T   |
-|                                                    |     |     |     |     |     |     |
-| contenu' = contenu                                 | F   | F   | F   | F   | F   | T   |
-| accepte' = accepte                                 | F   | F   | F   | F   | F   | T   |
-| pseudoParticulier' = pseudoParticulier             | F   | F   | F   | F   | F   | T   |
-| reseauSocial' = reseauSocial                       | F   | F   | F   | F   | F   | T   |
-| participation' = participation                     | F   | F   | F   | F   | F   | T   |
-|                                                    |     |     |     |     |     |     |
-| levée d'un exception                               | oui | oui | oui | oui | oui | non |
-|                                                    |     |     |     |     |     |     |
-| nombre de tests dans le jeu de tests               | 2   | 1   | 2   | 1   | 1   | 1   |
+### Message Constructor Unit Test
+
+| Test Case | contenu | accepte | reseauSocial | membre | Expected Exception |
+|-----------|---------|---------|--------------|--------|--------------------|
+| 1         | null    | valid   | valid        | valid  | IllegalArgumentException |
+| 2         | ""      | valid   | valid        | valid  | IllegalArgumentException |
+| 3         | valid   | valid   | null         | valid  | IllegalArgumentException |
+| 4         | valid   | valid   | valid        | null   | IllegalArgumentException |
+| 5         | valid   | valid   | valid        | valid  | No Exception |
+
 
 ## 8.3. Opérations de la classe Participation
 
 ### Opération modererMessage
 
+### Message Constructor Unit Test
+
+|                                                    | 1   | 2   | 3   | 4   | 5   |
+|:---------------------------------------------------|:----|:----|:----|:----|:----|
+| contenu bien formé (non null ∧ non vide)           | F   | T   | T   | T   | T   |
+| boolean accepte bien défini                        |     | F   | T   | T   | T   |
+| pseudoParticulier bien formé (non null ∧ non vide) |     |     | F   | T   | T   |
+| reseauSocial bien défini                          |     |     |     | F   | T   |
+| participation bien définie                         |     |     |     |     | F   |
+|                                                    |     |     |     |     |     |
+| contenu' = contenu                                 | F   | F   | F   | F   | T   |
+| accepte' = accepte                                 | F   | F   | F   | F   | T   |
+| pseudoParticulier' = pseudoParticulier             | F   | F   | F   | F   | T   |
+| reseauSocial' = reseauSocial                       | F   | F   | F   | F   | T   |
+| participation' = participation                     | F   | F   | F   | F   | T   |
+|                                                    |     |     |     |     |     |
+| levée d'une exception                              | oui | oui | oui | oui | non |
+|                                                    |     |     |     |     |     |
+| nombre de tests dans le jeu de tests               | 2   | 1   | 2   | 1   | 1   |
+|                                                    |     |     |     |     |     |
+| Message.moderer() method                           |     |     |     |     |     |
+| Membre est un modérateur                           | F   | F   | F   | T   | T   |
+| Membre n'est pas un modérateur                     |     |     |     | F   | F   |
+|                                                    |     |     |     |     |     |
+| levée d'une exception (rôle incorrect)             | oui | oui | oui | non | non |
+|                                                    |     |     |     |     |     |
+| nombre de tests dans le jeu de tests               | 2   | 2   | 2   | 1   | 1   |
+
+
+
+## Tests validation
+
+### UC1 
+
 |                                      | 1   | 2   |
 |:-------------------------------------|:----|:----|
-| moderateur = true                    | F   | T   |
+| Nom du réseau non valide             | T   | T   |
 |                                      |     |     |
-| message.accepte' = !message.accepte  |     | T   |
+| Lancement d'une exception            | oui | oui |
 |                                      |     |     |
-| levée d'une exception                | oui | non |
-|                                      |     |     |
-| nombre de tests dans le jeu de tests | 1   | 2   |
+| Nombre de tests dans le jeu de tests| 1   | 1   |
+
+### UC2
+
+|                                                       | 1   | 2   | 3   |
+|:------------------------------------------------------|:----|:----|:----|
+| Pseudo non valide                                    | T   | F   | F   |
+| Utilisateur null ou RS null                          | F   | T   | T   |
+| Pseudo du membre non valide                          | F   | F   | F   |
+|                                                      |     |     |     |
+| Lancement d'une exception                            | oui | oui | oui |
+|                                                      |     |     |     |
+| Nombre de tests dans le jeu de tests                 | 1   | 1   | 1   |
+
+### UC3
+
+| Test Case Description                            | Username | Content | Member/Moderator | Social Network | Initial State | Expected Outcome                          |
+|--------------------------------------------------|----------|---------|------------------|----------------|---------------|-------------------------------------------|
+| Valid message for a regular member              | Valid    | Valid   | Member           | Valid          | SENT          | State changes to VERIFICATION_PENDING     |
+| Valid message for a moderator                   | Valid    | Valid   | Moderator        | Valid          | SENT          | State changes to ACCEPTE                 |
+| Null username                                   | Null     | Valid   | Member           | Valid          | SENT          | IllegalArgumentException thrown          |
+| Blank username                                  | Blank    | Valid   | Member           | Valid          | SENT          | IllegalArgumentException thrown          |
+| Null content                                    | Valid    | Null    | Member           | Valid          | SENT          | IllegalArgumentException thrown          |
+| Blank content                                   | Valid    | Blank   | Member           | Valid          | SENT          | IllegalArgumentException thrown          |
+| Null member                                     | Valid    | Valid   | Null             | Valid          | SENT          | IllegalArgumentException thrown          |
+| Null social network                             | Valid    | Valid   | Member           | Null           | SENT          | IllegalArgumentException thrown          |
+| Regular member sends message with null content | Valid    | Null    | Member           | Valid          | SENT          | IllegalArgumentException thrown          |
+| Regular member sends message with blank content| Valid    | Blank   | Member           | Valid          | SENT          | IllegalArgumentException thrown          |
 
 
 ---

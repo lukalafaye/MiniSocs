@@ -14,7 +14,7 @@ public class ReseauSocial {
 	/**
 	 * le nom du RS.
 	 */
-	private final String nom;
+	final String nom;
 	private boolean ouvert;
 	private Set<Membre> membres;
 	private Set<Moderateur> moderateurs; 
@@ -31,10 +31,12 @@ public class ReseauSocial {
 	}
 	
 	public String getNom() {
+    	assert invariant();
 		return nom;
 	}
 	
 	public boolean getOuvert() {
+    	assert invariant();
 		return ouvert;
 	}
 	
@@ -44,25 +46,41 @@ public class ReseauSocial {
 				return m;
 			}
 		}
+    	assert invariant();
 		return null;
 	}
-	
-    public void ajouterMembre(String pseudo, Utilisateur u, String pseudoParticulier, boolean mod) throws OperationImpossible {
-    	if (mod) {
-            Moderateur m = new Moderateur(pseudo, u);
-            if (pseudoParticulier != null && !pseudoParticulier.isBlank()) {
-            	m.changePseudoParticulier(pseudoParticulier);
-            }
-            membres.add(m);
-    	}
-    	else {
-            Membre m = new Membre(pseudo, u);
-            if (pseudoParticulier != null && !pseudoParticulier.isBlank()) {
-            	m.changePseudoParticulier(pseudoParticulier);
-            }
-            membres.add(m);
-    	}
-    }
+    
+	public void ajouterMembre(String pseudo, Utilisateur u, String pseudoParticulier, boolean mod, ReseauSocial rs) throws OperationImpossible {	
+	    // Check preconditions
+	    if (pseudo == null || pseudo.isEmpty() || u == null || rs == null) {
+	        throw new IllegalArgumentException("Pseudo, Utilisateur, and ReseauSocial cannot be null or empty.");
+	    }
+
+	    if (mod && (pseudoParticulier == null || pseudoParticulier.isBlank())) {
+	        throw new IllegalArgumentException("PseudoParticulier cannot be null or empty for a moderator.");
+	    }
+
+	    if (!mod && (pseudoParticulier == null || pseudoParticulier.isBlank())) {
+	        throw new IllegalArgumentException("PseudoParticulier cannot be null or empty for a member.");
+	    }
+
+	    // Function logic
+	    if (mod) {
+	        Moderateur m = new Moderateur(pseudo, u, rs);
+	        if (!pseudoParticulier.isBlank()) {
+	            m.changePseudoParticulier(pseudoParticulier);
+	        }
+	        membres.add(m);
+	    } else {
+	        Membre m = new Membre(pseudo, u, rs);
+	        if (!pseudoParticulier.isBlank()) {
+	            m.changePseudoParticulier(pseudoParticulier);
+	        }
+	        membres.add(m);
+	    }
+	    
+	    assert invariant();
+	}
 
 	
     public void ajouterMessage(String contenu, Membre m) throws OperationImpossible {
@@ -74,6 +92,20 @@ public class ReseauSocial {
     		Message nouveauMessage = new Message(contenu, m, EtatMessage.VERIFICATION_PENDING, this);
             messages.add(nouveauMessage);
     	}
+    	
+    	assert invariant();
+    }
+    
+    public boolean invariant() {
+        if (nom == null || nom.isBlank()) {
+        	throw new IllegalStateException("Invariant : nom rs ne peut pas être null ou vide");
+        }
+
+        Objects.requireNonNull(membres, "Invariant violation: membres ne peut pas être null");
+        Objects.requireNonNull(moderateurs, "Invariant violation: moderateurs ne peut pas être null");
+        Objects.requireNonNull(messages, "Invariant violation: messages ne peut pas être null");
+   
+        return true;
     }
     
 	@Override

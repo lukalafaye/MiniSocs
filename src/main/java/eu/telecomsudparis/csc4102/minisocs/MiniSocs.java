@@ -3,6 +3,7 @@ package eu.telecomsudparis.csc4102.minisocs;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.apache.commons.validator.routines.EmailValidator;
 
@@ -33,15 +34,8 @@ public class MiniSocs {
 		this.nomDuSysteme = nomDuSysteme;
 		this.utilisateurs = new HashMap<>();
 		this.reseauxSociaux = new HashMap<>();
-	}
-
-	/**
-	 * l'invariant de la façade.
-	 * 
-	 * @return {@code true} si l'invariant est respecté.
-	 */
-	public boolean invariant() {
-		return nomDuSysteme != null && !nomDuSysteme.isBlank() && utilisateurs != null;
+		
+		assert invariant();
 	}
 
 	/**
@@ -75,10 +69,11 @@ public class MiniSocs {
 			throw new OperationImpossible(pseudo + "déjà un utilisateur");
 		}
 		utilisateurs.put(pseudo, new Utilisateur(pseudo, nom, prenom, courriel));
+		
 		assert invariant();
 	}
 	
-    public static void creerReseauSocial(String pseudoExec, String nomReseau, boolean ouvert, String pseudoParticulier) throws OperationImpossible {
+    public void creerReseauSocial(String pseudoExec, String nomReseau, boolean ouvert, String pseudoParticulier) throws OperationImpossible {
         if (pseudoExec == null || pseudoExec.isBlank()) {
         	throw new OperationImpossible("Pseudo de l'executeur non valide");
         }
@@ -96,10 +91,12 @@ public class MiniSocs {
 
         ReseauSocial nouveauReseau = new ReseauSocial(nomReseau, ouvert);
         ajouterMembreRS(pseudoExec, nomReseau, pseudoParticulier, true);
-        reseauxSociaux.put(nouveauReseau.getNom(), nouveauReseau);
+        reseauxSociaux.put(nouveauReseau.getNom(), nouveauReseau);        
+        
+	    assert invariant();
     }
 	
-    public static void ajouterMembreRS(String pseudo, String nomReseau, String pseudoParticulier, boolean mod) throws OperationImpossible{
+    public void ajouterMembreRS(String pseudo, String nomReseau, String pseudoParticulier, boolean mod) throws OperationImpossible{
         if (pseudo == null || pseudo.isBlank()) {
         	throw new OperationImpossible("Pseudo de l'executeur non valide");
         }
@@ -114,10 +111,12 @@ public class MiniSocs {
         if (!rs.getOuvert()) {
             throw new OperationImpossible("Le réseau social n'est pas ouvert.");
         }
-        rs.ajouterMembre(pseudo, u, pseudoParticulier, mod);
+        rs.ajouterMembre(pseudo, u, pseudoParticulier, mod, rs);
+        
+        assert invariant();
     }
 	
-    public static void posterMessageRS(String pseudo, String contenu, String nomReseau) throws OperationImpossible {
+    public void posterMessageRS(String pseudo, String contenu, String nomReseau) throws OperationImpossible {
         if (pseudo == null || pseudo.isBlank()) {
         	throw new OperationImpossible("Pseudo de l'executeur non valide");
         }
@@ -143,6 +142,8 @@ public class MiniSocs {
         	throw new OperationImpossible("Pseudo de l'executeur non valide");
         }
         rs.ajouterMessage(contenu, m);
+        
+        assert invariant();
     }
 	/**
 	 * liste les utilisateurs.
@@ -150,6 +151,7 @@ public class MiniSocs {
 	 * @return la liste des pseudonymes des utilisateurs.
 	 */
 	public List<String> listerUtilisateurs() {
+	    assert invariant();
 		return utilisateurs.values().stream().map(Utilisateur::toString).toList();
 	}
 
@@ -171,8 +173,20 @@ public class MiniSocs {
 			throw new OperationImpossible("le compte est bloqué");
 		}
 		u.desactiverCompte();
-		assert invariant();
+	    assert invariant();
 	}
+	
+	
+    public boolean invariant() {
+        if (nomDuSysteme == null || nomDuSysteme.isBlank()) {
+        	throw new IllegalStateException("Invariant violation: contenu ne peut pas être null ou vide");
+        }
+
+        Objects.requireNonNull(utilisateurs, "Invariant violation: membre ne peut pas être null");
+        Objects.requireNonNull(reseauxSociaux, "Invariant violation: reseauSocial ne peut pas être null");
+        
+        return true;
+    }
 
 	/**
 	 * obtient le nom du projet.

@@ -4,12 +4,21 @@ import java.util.Objects;
 
 import eu.telecomsudparis.csc4102.util.OperationImpossible;
 
-
-
 public class Moderateur extends Membre {
 
-	public Moderateur(String pseudoParticulier, Utilisateur utilisateur) {
-		super(pseudoParticulier, utilisateur);
+	public Moderateur(String pseudoParticulier, Utilisateur utilisateur, ReseauSocial rs) {
+		super(pseudoParticulier, utilisateur, rs);
 	}
-
+    
+    public void bloquerUtilisateur() {
+    	
+    }
+    
+    public void supprimerMessage() {
+    	
+    }
+    
+	public void moderer(Message m) {
+		m.send_message();
+	}
 }

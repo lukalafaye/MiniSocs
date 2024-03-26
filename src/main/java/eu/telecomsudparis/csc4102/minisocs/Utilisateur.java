@@ -17,7 +17,7 @@ public class Utilisateur {
 	/**
 	 * le pseudonyme de l'utilisateur.
 	 */
-	private final String pseudonyme;
+	final String pseudonyme;
 	/**
 	 * le nom de l'utilisateur.
 	 */
@@ -44,6 +44,7 @@ public class Utilisateur {
 	 * @param prenom     le prénom.
 	 * @param courriel   l'adresse courriel de l'utilisateur.
 	 */
+		
 	public Utilisateur(final String pseudonyme, final String nom, final String prenom, final String courriel) {
 		if (pseudonyme == null || pseudonyme.isBlank()) {
 			throw new IllegalArgumentException("pseudonyme ne peut pas être null ou vide");
@@ -82,6 +83,7 @@ public class Utilisateur {
 	 * @return le pseudonyme.
 	 */
 	public String getPseudonyme() {
+	    assert invariant();
 		return pseudonyme;
 	}
 
@@ -91,6 +93,7 @@ public class Utilisateur {
 	 * @return l'énumérateur.
 	 */
 	public EtatCompte getEtatCompte() {
+	    assert invariant();
 		return etatCompte;
 	}
 
