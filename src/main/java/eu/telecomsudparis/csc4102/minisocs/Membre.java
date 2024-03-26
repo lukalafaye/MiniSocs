@@ -6,17 +6,14 @@ import java.util.Objects;
 
 import eu.telecomsudparis.csc4102.util.OperationImpossible;
 
-
-
 public class Membre {
 	
 	private String pseudoParticulier;
 	private Utilisateur utilisateur;
 	protected ReseauSocial rs;
 	
-	private static Map<String, Message> messages;
+	private Map<String, Message> messages;
 
-	
 	public Membre(final String pseudoParticulier, final Utilisateur utilisateur, ReseauSocial rs) {
 		if (pseudoParticulier == null || pseudoParticulier.isBlank()) {
 			throw new IllegalArgumentException("pseudoParticulier ne peut pas être null ou vide");

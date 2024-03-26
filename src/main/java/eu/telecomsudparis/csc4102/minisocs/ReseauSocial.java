@@ -42,7 +42,7 @@ public class ReseauSocial {
 	
 	public Membre getMembrefromUtilisateur(Utilisateur u) {
 		for (Membre m : this.membres) {
-			if (u.getPseudonyme() == m.getUtilisateur().getPseudonyme()) {
+			if (u.getPseudonyme().equals(m.getUtilisateur().getPseudonyme())) {
 				return m;
 			}
 		}

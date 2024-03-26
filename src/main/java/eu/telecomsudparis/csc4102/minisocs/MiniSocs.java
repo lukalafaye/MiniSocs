@@ -22,8 +22,8 @@ public class MiniSocs {
 	/**
 	 * les utilisateurs.
 	 */
-	private static Map<String, Utilisateur> utilisateurs;
-	private static Map<String, ReseauSocial> reseauxSociaux;
+	private Map<String, Utilisateur> utilisateurs;
+	private Map<String, ReseauSocial> reseauxSociaux;
 
 	/**
 	 * construit une instance du système.
