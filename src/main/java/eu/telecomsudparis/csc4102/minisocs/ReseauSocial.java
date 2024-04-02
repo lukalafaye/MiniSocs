@@ -115,14 +115,11 @@ public class ReseauSocial {
 
 	@Override
 	public boolean equals(final Object obj) {
-		if (this == obj) {
-			return true;
-		}
 		if (!(obj instanceof ReseauSocial)) {
 			return false;
 		}
 		ReseauSocial other = (ReseauSocial) obj;
-		return Objects.equals(nom, other.nom);
+		return this.hashCode() == other.hashCode();
 	}
 
 }

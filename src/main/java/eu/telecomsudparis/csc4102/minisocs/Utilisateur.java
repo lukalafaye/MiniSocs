@@ -17,7 +17,7 @@ public class Utilisateur {
 	/**
 	 * le pseudonyme de l'utilisateur.
 	 */
-	final String pseudonyme;
+	private final String pseudonyme;
 	/**
 	 * le nom de l'utilisateur.
 	 */
@@ -127,14 +127,11 @@ public class Utilisateur {
 
 	@Override
 	public boolean equals(final Object obj) {
-		if (this == obj) {
-			return true;
-		}
 		if (!(obj instanceof Utilisateur)) {
 			return false;
 		}
 		Utilisateur other = (Utilisateur) obj;
-		return Objects.equals(pseudonyme, other.pseudonyme);
+		return this.hashCode() == other.hashCode();
 	}
 
 	@Override

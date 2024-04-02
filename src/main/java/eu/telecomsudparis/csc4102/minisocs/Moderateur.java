@@ -17,7 +17,7 @@ public class Moderateur extends Membre {
     public void supprimerMessage() {
     	
     }
-    
+     
 	public void moderer(Message m) {
 		m.send_message();
 	}

@@ -9,12 +9,12 @@ import eu.telecomsudparis.csc4102.util.OperationImpossible;
 public class Membre {
 	
 	private String pseudoParticulier;
-	private Utilisateur utilisateur;
-	protected ReseauSocial rs;
+	private final Utilisateur utilisateur;
+	protected final ReseauSocial rs;
 	
 	private Map<String, Message> messages;
 
-	public Membre(final String pseudoParticulier, final Utilisateur utilisateur, ReseauSocial rs) {
+	public Membre(final String pseudoParticulier, final Utilisateur utilisateur, final ReseauSocial rs) {	
 		if (pseudoParticulier == null || pseudoParticulier.isBlank()) {
 			throw new IllegalArgumentException("pseudoParticulier ne peut pas être null ou vide");
 		}
@@ -23,7 +23,7 @@ public class Membre {
 			throw new IllegalArgumentException("utilisateur/rs ne peut pas être null");
 		}
 		
-        if (utilisateur.pseudonyme == null || utilisateur.pseudonyme.isBlank()) {
+        if (utilisateur.getPseudonyme() == null || utilisateur.getPseudonyme().isBlank()) {
         	throw new IllegalArgumentException("Pseudo de l'executeur non valide");
         }
         if (rs.nom == null || rs.nom.isBlank()) {
@@ -37,7 +37,7 @@ public class Membre {
         assert invariant();
 	}
 	
-	public void changePseudoParticulier(String pseudoParticulier) {
+	public void changePseudoParticulier(final String pseudoParticulier) {
 		if (pseudoParticulier == null || pseudoParticulier.isBlank()) {
 			throw new IllegalArgumentException("pseudoParticulier ne peut pas être null ou vide");
 		}
@@ -46,7 +46,7 @@ public class Membre {
 			throw new IllegalArgumentException("utilisateur/rs ne peut pas être null");
 		}
 		
-        if (utilisateur.pseudonyme == null || utilisateur.pseudonyme.isBlank()) {
+        if (utilisateur.getPseudonyme() == null || utilisateur.getPseudonyme().isBlank()) {
         	throw new IllegalArgumentException("Pseudo de l'executeur non valide");
         }
         if (rs.nom == null || rs.nom.isBlank()) {
@@ -81,7 +81,7 @@ public class Membre {
         return true;
 	}
 	
-    public void requestSendMessage(String messageContent) throws OperationImpossible {
+    public void requestSendMessage(final String messageContent) throws OperationImpossible {
         // Create a new message and add it to the messages map
     	this.rs.ajouterMessage(messageContent, this);
 	    assert invariant();
@@ -94,17 +94,19 @@ public class Membre {
 
 	@Override
 	public boolean equals(final Object obj) {
-		if (this == obj) {
-			return true;
-		}
 		if (!(obj instanceof Membre)) {
 			return false;
 		}
 		Membre other = (Membre) obj;
-		return Objects.equals(pseudoParticulier, other.pseudoParticulier);
+		return other.hashCode() == this.hashCode();
 	}
 	
-	public void moderer(Message m) {
+	@Override 
+	public String toString() {
+		return "utilisateur : " + this.utilisateur + "\npseudo membre : " + this.pseudoParticulier + "\nOn socia : " + this.rs;
+	}
+	
+	public void moderer(final Message m) {
 		if (!(this instanceof Moderateur)) {
         	throw new UnsupportedOperationException("membre non mod");
 		}

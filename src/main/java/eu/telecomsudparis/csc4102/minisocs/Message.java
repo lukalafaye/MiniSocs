@@ -3,12 +3,12 @@ package eu.telecomsudparis.csc4102.minisocs;
 import java.util.Objects;
 
 public class Message {
-	
+	private static double id_cpt = 0;
 	private String contenu;
 	EtatMessage etat;
 	private ReseauSocial rs;
 	private Membre membre;
-	private int id;
+	private final double id;
 	
 	public Message(String contenu, Membre membre, EtatMessage etat, ReseauSocial rs) {
 		if (membre == null) {
@@ -31,29 +31,29 @@ public class Message {
 		this.etat = etat;
 		this.rs = rs;
 		this.membre = membre;
-		this.id = 0; // Have an id list and take last + 1 when creating a message...
-		
+		this.id = id_cpt++;
 	    assert invariant();
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(contenu);
+		return Objects.hash(id);
 	}
 
 	@Override
 	public boolean equals(final Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (!(obj instanceof Message)) {
+		if (obj == null || !(obj instanceof Message)) {
 			return false;
 		}
 		Message other = (Message) obj;
-	    assert invariant();
-		return Objects.equals(contenu, other.contenu) && Objects.equals(rs, other.rs) && Objects.equals(membre, other.membre);
+	    return obj.hashCode() == this.hashCode();
 	}
 
+	@Override
+	public String toString() {
+		return "On social : " + this.rs + "\nFrom : " + this.membre + "\nMessage : " + this.contenu + "\nStatus : " + this.etat;
+	}
+	
 	public Membre getMembre() {
 		if (membre == null) {
 			throw new IllegalArgumentException("membre ne peut pas être null");
