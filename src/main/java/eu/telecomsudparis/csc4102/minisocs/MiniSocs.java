@@ -111,7 +111,7 @@ public class MiniSocs {
         if (!rs.getOuvert()) {
             throw new OperationImpossible("Le réseau social n'est pas ouvert.");
         }
-        rs.ajouterMembre(pseudo, u, pseudoParticulier, mod, rs);
+        rs.ajouterMembre(pseudo, u, pseudoParticulier, mod);
         
         assert invariant();
     }
@@ -143,6 +143,36 @@ public class MiniSocs {
         }
         rs.ajouterMessage(contenu, m);
         
+        assert invariant();
+    }
+    
+    public void modererMessage(String pseudo, final double id, String nomReseau, EtatMessage etat) throws OperationImpossible {
+        if (pseudo == null || pseudo.isBlank()) {
+        	throw new OperationImpossible("Pseudo de l'executeur non valide");
+        }
+        if (nomReseau == null || nomReseau.isBlank()) {
+        	throw new OperationImpossible("Nom du Reseau non valide");
+        }
+        Utilisateur u = utilisateurs.get(pseudo);
+        ReseauSocial rs = reseauxSociaux.get(nomReseau);
+        if (u == null || u.getEtatCompte() != EtatCompte.ACTIF) {
+            throw new OperationImpossible("L'utilisateur n'est pas actif ou n'existe pas.");
+        }
+    	if (!rs.getOuvert()) {
+            throw new OperationImpossible("Le réseau social n'est pas ouvert.");
+        }
+    	Membre m = rs.getMembrefromUtilisateur(u);
+		if (m == null) {
+			throw new OperationImpossible("L'utilisateur n'est pas membre du Reseau");
+		}
+        if (m.getPseudoParticulier() == null || m.getPseudoParticulier().isBlank()) {
+        	throw new OperationImpossible("Pseudo de l'executeur non valide");
+        }
+        Message message = rs.getMessageFromId(id);
+		if (message == null) {
+			throw new OperationImpossible("Le message n'appartient pas au reseau ou n'existe pas");
+		}
+        m.moderer(message, etat);
         assert invariant();
     }
 	/**

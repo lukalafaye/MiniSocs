@@ -82,7 +82,6 @@ public class Membre {
 	}
 	
     public void requestSendMessage(final String messageContent) throws OperationImpossible {
-        // Create a new message and add it to the messages map
     	this.rs.ajouterMessage(messageContent, this);
 	    assert invariant();
     }
@@ -106,7 +105,7 @@ public class Membre {
 		return "utilisateur : " + this.utilisateur + "\npseudo membre : " + this.pseudoParticulier + "\nOn socia : " + this.rs;
 	}
 	
-	public void moderer(final Message m) {
+	public void moderer(final Message m, EtatMessage etat) {
 		if (!(this instanceof Moderateur)) {
         	throw new UnsupportedOperationException("membre non mod");
 		}

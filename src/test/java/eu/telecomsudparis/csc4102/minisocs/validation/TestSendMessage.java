@@ -35,7 +35,7 @@ public class TestSendMessage {
         Message message = new Message("Test message", member, EtatMessage.SENT, rs);
 
         // Call send_message() method
-        message.send_message();
+        message.envoyerMessage();
 
         // Verify that the message state is VERIFICATION_PENDING
         assertEquals(EtatMessage.VERIFICATION_PENDING, message.getEtat());
@@ -47,7 +47,7 @@ public class TestSendMessage {
         Message message = new Message("Test message", moderator, EtatMessage.SENT, rs);
 
         // Call send_message() method
-        message.send_message();
+        message.envoyerMessage();
 
         // Verify that the message state is ACCEPTE
         assertEquals(EtatMessage.ACCEPTE, message.getEtat());

@@ -34,6 +34,10 @@ public class Message {
 		this.id = id_cpt++;
 	    assert invariant();
 	}
+	
+    public double getId() {
+        return this.id;
+    }
 
 	@Override
 	public int hashCode() {
@@ -46,7 +50,7 @@ public class Message {
 			return false;
 		}
 		Message other = (Message) obj;
-	    return obj.hashCode() == this.hashCode();
+	    return other.hashCode() == this.hashCode();
 	}
 
 	@Override
@@ -95,7 +99,7 @@ public class Message {
 	}
 	
 	
-	public void hide_message() {
+	public void modifierStatutMessage(EtatMessage etat) {
 		if (membre == null) {
 			throw new IllegalArgumentException("membre ne peut pas être null");
 		}
@@ -112,46 +116,14 @@ public class Message {
 			throw new IllegalArgumentException("membre pseudo null/blank");
 		}
 		
-	    if (membre instanceof Moderateur) {
-	        // Perform action for admin role
-	        this.etat = EtatMessage.HIDDEN;
-	    } else {
-	        throw new UnsupportedOperationException("This operation is not supported for the current role.");
-	    }
-	    
-	    assert invariant();
-	}
-	
-	
-	public void mark_inappropriate() {
-		if (membre == null) {
-			throw new IllegalArgumentException("membre ne peut pas être null");
-		}
-		
-        if (rs == null) {
-        	throw new IllegalArgumentException("RS null");
-        }
-        
-		if (contenu == null || contenu.isBlank()) {
-			throw new IllegalArgumentException("contenu ne peut pas être null ou vide");
-		}
-		
-		if (membre.getPseudoParticulier() == null || membre.getPseudoParticulier().isBlank()) {
-			throw new IllegalArgumentException("membre pseudo null/blank");
-		}
-		
-	    if (membre instanceof Moderateur) {
-	        // Perform action for admin role
-	        this.etat = EtatMessage.INAPPROPRIATE;
-	    } else {
-	        throw new UnsupportedOperationException("This operation is not supported for the current role.");
-	    }
 
+	    this.etat = etat;
 	    assert invariant();
 	}
 	
 	
-	public void send_message() {
+	
+	public void envoyerMessage() {
 		if (membre == null) {
 			throw new IllegalArgumentException("membre ne peut pas être null");
 		}
@@ -169,8 +141,6 @@ public class Message {
 		}
 		
 	    if (membre instanceof Moderateur) {
-	        // Perform action for admin role
-	        System.out.println("Sending message as Moderator...");
 	        this.etat = EtatMessage.ACCEPTE;
 	    } else {
 	        this.etat = EtatMessage.VERIFICATION_PENDING;

@@ -49,12 +49,17 @@ public class ReseauSocial {
     	assert invariant();
 		return null;
 	}
+	
+    public Message getMessageFromId(double id) {
+        for (Message msg : this.messages) {
+            if (msg.getId() == id) { 
+                return msg;
+            }
+        }
+        return null; 
+    }
     
-	public void ajouterMembre(String pseudo, Utilisateur u, String pseudoParticulier, boolean mod, ReseauSocial rs) throws OperationImpossible {	
-	    // Check preconditions
-	    if (pseudo == null || pseudo.isEmpty() || u == null || rs == null) {
-	        throw new IllegalArgumentException("Pseudo, Utilisateur, and ReseauSocial cannot be null or empty.");
-	    }
+	public void ajouterMembre(String pseudo, Utilisateur u, String pseudoParticulier, boolean mod) throws OperationImpossible {	
 
 	    if (mod && (pseudoParticulier == null || pseudoParticulier.isBlank())) {
 	        throw new IllegalArgumentException("PseudoParticulier cannot be null or empty for a moderator.");
@@ -66,13 +71,13 @@ public class ReseauSocial {
 
 	    // Function logic
 	    if (mod) {
-	        Moderateur m = new Moderateur(pseudo, u, rs);
+	        Moderateur m = new Moderateur(pseudo, u, this);
 	        if (!pseudoParticulier.isBlank()) {
 	            m.changePseudoParticulier(pseudoParticulier);
 	        }
 	        membres.add(m);
 	    } else {
-	        Membre m = new Membre(pseudo, u, rs);
+	        Membre m = new Membre(pseudo, u, this);
 	        if (!pseudoParticulier.isBlank()) {
 	            m.changePseudoParticulier(pseudoParticulier);
 	        }
@@ -84,15 +89,9 @@ public class ReseauSocial {
 
 	
     public void ajouterMessage(String contenu, Membre m) throws OperationImpossible {
-    	if (m instanceof Moderateur) {
-    		Message nouveauMessage = new Message(contenu, m, EtatMessage.ACCEPTE, this);
-            messages.add(nouveauMessage);
-    	}
-    	else {
-    		Message nouveauMessage = new Message(contenu, m, EtatMessage.VERIFICATION_PENDING, this);
-            messages.add(nouveauMessage);
-    	}
-    	
+    	Message nouveauMessage = new Message(contenu, m, EtatMessage.VERIFICATION_PENDING, this);
+    	nouveauMessage.envoyerMessage();
+        messages.add(nouveauMessage);
     	assert invariant();
     }
     
@@ -120,6 +119,10 @@ public class ReseauSocial {
 		}
 		ReseauSocial other = (ReseauSocial) obj;
 		return this.hashCode() == other.hashCode();
+	}
+	
+	public String toString() {
+		return "nom : " + this.nom;
 	}
 
 }

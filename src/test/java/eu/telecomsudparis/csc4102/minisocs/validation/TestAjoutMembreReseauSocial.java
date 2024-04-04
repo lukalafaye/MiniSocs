@@ -26,18 +26,18 @@ public class TestAjoutMembreReseauSocial {
     @Test
     void testAjoutMembreReseauSocial1() {
         // Test case 1: Invalid pseudo
-        assertThrows(IllegalArgumentException.class, () -> reseauSocial.ajouterMembre(null, new Utilisateur("test", "Test", "User", "test@test.com"), "pseudoParticulier", true, reseauSocial));
+        assertThrows(IllegalArgumentException.class, () -> reseauSocial.ajouterMembre(null, new Utilisateur("test", "Test", "User", "test@test.com"), "pseudoParticulier", true));
     }
 
     @Test
     void testAjoutMembreReseauSocial2() {
         // Test case 2: Invalid utilisateur or RS null
-        assertThrows(IllegalArgumentException.class, () -> reseauSocial.ajouterMembre("pseudo", null, "pseudoParticulier", true, reseauSocial));
+        assertThrows(IllegalArgumentException.class, () -> reseauSocial.ajouterMembre("pseudo", null, "pseudoParticulier", true));
     }
 
     @Test
     void testAjoutMembreReseauSocial3() {
         // Test case 3: Invalid pseudo of member
-        assertThrows(IllegalArgumentException.class, () -> reseauSocial.ajouterMembre("pseudo", new Utilisateur("test", "Test", "User", "test@test.com"), null, true, reseauSocial));
+        assertThrows(IllegalArgumentException.class, () -> reseauSocial.ajouterMembre("pseudo", new Utilisateur("test", "Test", "User", "test@test.com"), null, true));
     }
 }

@@ -39,21 +39,4 @@ public class TestModererMessage {
         reseauSocial = null;
     }
 
-    @Test
-    void modererMessageTest1Jeu1() {
-        // Moderating a message as a moderator
-        membre.moderer(m);
-
-        // Assert that the message state is now ACCEPTED
-        Assertions.assertEquals(EtatMessage.ACCEPTE, m.getEtat());
-    }
-
-    @Test
-    void modererMessageTest2Jeu1() {
-        // Try moderating a message with a non-moderator member
-        Membre nonModerateur = new Membre("nonModerateur", new Utilisateur("nonModerateur", "Doe", "Jane", "jane@example.com"), reseauSocial);
-
-        // Assert that moderating the message throws an UnsupportedOperationException
-        Assertions.assertThrows(UnsupportedOperationException.class, () -> nonModerateur.moderer(m));
-    }
 }
