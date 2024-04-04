@@ -157,3 +157,24 @@ engendré de test.
 
 
 
+ 
+---
+# Suivi du jeu. 04 avril 2024 10:52:20
+Sophie Chabridon
+ 
+Bon avancement sur les tests, continuez ainsi. Quelques points à améliorer, notamment sur la cohérence entre la conception et le code.	
+
+[] STYLECHECK-03-pb-checkstyle
+	à vérifier sur les classes principales
+	
+[] IDIOM-02-Méthode-toString-manquante
+	cela concerne la classe ReseauSocial
+
+[] STYLECHECK-02-javadoc-manquant
+
+[] JAVA-07-Cohérence-avec-diagramme-de-classes
+	- Le diagramme de classes prévoit une association entre Moderateur et Message, mais cela n'est pas traduit dans le code. Soit vous devez modifier le code, soit le diagramme de classes.
+	
+	- Les associations entre Utilisateur et les classes Membre et ReseauSocial ne sont pas traduites dans le code. Même remarque que précédemment.
+	
+	- Un attribut "moderateurs" existe dans le code de la classe ReseauSocial mais pas dans le diagramme de classes.
