@@ -66,6 +66,7 @@ public class Utilisateur {
 		assert invariant();
 	}
 	
+	
 
 	/**
 	 * vérifie l'invariant de la classe.
@@ -87,6 +88,36 @@ public class Utilisateur {
 		return pseudonyme;
 	}
 
+	/**
+	 * obtient le nom.
+	 * 
+	 * @return le nom.
+	 */
+	public String getNom() {
+	    assert invariant();
+		return nom;
+	}
+	
+	/**
+	 * obtient le prenom.
+	 * 
+	 * @return le *prenom.
+	 */
+	public String getPrenom() {
+	    assert invariant();
+		return prenom;
+	}
+	
+	/**
+	 * obtient le courriel.
+	 * 
+	 * @return le *courriel.
+	 */
+	public String getCourriel() {
+	    assert invariant();
+		return courriel;
+	}
+	
 	/**
 	 * l'état du compte.
 	 * 
