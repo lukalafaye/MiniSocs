@@ -23,6 +23,9 @@ public class MiniSocs {
 	 * les utilisateurs.
 	 */
 	private Map<String, Utilisateur> utilisateurs;
+	/**
+	 * les reseaux sociaux.
+	 */
 	private Map<String, ReseauSocial> reseauxSociaux;
 
 	/**
@@ -73,7 +76,16 @@ public class MiniSocs {
 		assert invariant();
 	}
 	
-    public void creerReseauSocial(String pseudoExec, String nomReseau, boolean ouvert, String pseudoParticulier) throws OperationImpossible {
+	/**
+	 * cree un reseau social.
+	 * 
+	 * @param pseudoExec   le pseudo de l'utilisateur.
+	 * @param nomReseau      le nom du reseau social.
+	 * @param ouvert   l etat initial du RS.
+	 * @param pseudoParticulier le pseudo du membre particulier au reseau social.
+	 * @throws OperationImpossible en cas de problème sur les pré-conditions.
+	 */
+    public void creerReseauSocial(final String pseudoExec, final String nomReseau, final boolean ouvert, final String pseudoParticulier) throws OperationImpossible {
         if (pseudoExec == null || pseudoExec.isBlank()) {
         	throw new OperationImpossible("Pseudo de l'executeur non valide");
         }
@@ -96,7 +108,16 @@ public class MiniSocs {
 	    assert invariant();
     }
 	
-    public void ajouterMembreRS(String pseudo, String nomReseau, String pseudoParticulier, boolean mod) throws OperationImpossible{
+	/**
+	 * ajoute un membre a un reseau social.
+	 * 
+	 * @param pseudo   le pseudo de l'utilisateur.
+	 * @param nomReseau      le nom du reseau social.
+	 * @param mod   boolean indiquant si le membre est moderateur.
+	 * @param pseudoParticulier le pseudo du membre particulier au reseau social.
+	 * @throws OperationImpossible en cas de problème sur les pré-conditions.
+	 */
+    public void ajouterMembreRS(final String pseudo, final String nomReseau, final String pseudoParticulier, final boolean mod) throws OperationImpossible {
         if (pseudo == null || pseudo.isBlank()) {
         	throw new OperationImpossible("Pseudo de l'executeur non valide");
         }
@@ -116,7 +137,15 @@ public class MiniSocs {
         assert invariant();
     }
 	
-    public void posterMessageRS(String pseudo, String contenu, String nomReseau) throws OperationImpossible {
+	/**
+	 * post un message.
+	 * 
+	 * @param pseudo   le pseudo de l'utilisateur.
+	 * @param nomReseau      le nom du reseau social.
+	 * @param contenu   le contenu du message.
+	 * @throws OperationImpossible en cas de problème sur les pré-conditions.
+	 */
+    public void posterMessageRS(final String pseudo, final String contenu, final String nomReseau) throws OperationImpossible {
         if (pseudo == null || pseudo.isBlank()) {
         	throw new OperationImpossible("Pseudo de l'executeur non valide");
         }
@@ -146,7 +175,16 @@ public class MiniSocs {
         assert invariant();
     }
     
-    public void modererMessage(String pseudo, final double id, String nomReseau, EtatMessage etat) throws OperationImpossible {
+	/**
+	 * modere un message.
+	 * 
+	 * @param pseudo   le pseudo de l'utilisateur.
+	 * @param nomReseau      le nom du reseau social.
+	 * @param id   le id du message.
+	 * @param etat l etat du message attendu apres moderation.
+	 * @throws OperationImpossible en cas de problème sur les pré-conditions.
+	 */
+    public void modererMessage(final String pseudo, final double id, final String nomReseau, final EtatMessage etat) throws OperationImpossible {
         if (pseudo == null || pseudo.isBlank()) {
         	throw new OperationImpossible("Pseudo de l'executeur non valide");
         }
@@ -181,8 +219,15 @@ public class MiniSocs {
 	 * @return la liste des pseudonymes des utilisateurs.
 	 */
 	public List<String> listerUtilisateurs() {
-	    assert invariant();
 		return utilisateurs.values().stream().map(Utilisateur::toString).toList();
+	}
+	/**
+	 * liste les reseaux sociaux.
+	 * 
+	 * @return la liste des pseudonymes des reseaux sociaux.
+	 */
+	public List<String> listerRS() {
+		return reseauxSociaux.values().stream().map(ReseauSocial::toString).toList();
 	}
 
 	/**
@@ -206,7 +251,10 @@ public class MiniSocs {
 	    assert invariant();
 	}
 	
-	
+	/**
+	 * invariant de classe.
+	 * @return true si invariant est respecte
+	 */
     public boolean invariant() {
         if (nomDuSysteme == null || nomDuSysteme.isBlank()) {
         	throw new IllegalStateException("Invariant violation: contenu ne peut pas être null ou vide");
@@ -227,6 +275,10 @@ public class MiniSocs {
 		return nomDuSysteme;
 	}
 
+	/**
+	 * toString.
+	 * @return le string correspondant.
+	 */
 	@Override
 	public String toString() {
 		return "MiniSocs [nomDuSysteme=" + nomDuSysteme + ", utilisateurs=" + utilisateurs + "]";

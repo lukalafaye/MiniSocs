@@ -54,7 +54,7 @@ public class Membre {
         }
 		
 		this.pseudoParticulier = pseudoParticulier;
-        invariant();
+		assert invariant();
 	}
 	
 	public String getPseudoParticulier() {

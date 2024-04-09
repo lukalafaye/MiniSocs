@@ -2,15 +2,46 @@ package eu.telecomsudparis.csc4102.minisocs;
 
 import java.util.Objects;
 
+/**
+ * Cette classe represente les messages.
+ * 
+ * @author Alexandre Chidiac et Luka Lafaye de Micheaux
+ */
 public class Message {
-	private static double id_cpt = 0;
+	/**
+	 * id initial.
+	 */
+	private static double idcpt = 0;
+	/**
+	 * le contenu du message.
+	 */
 	private String contenu;
-	EtatMessage etat;
+	/**
+	 * l etat du message.
+	 */
+	private EtatMessage etat;
+	/**
+	 * le reseau social.
+	 */
 	private ReseauSocial rs;
+	/**
+	 * le membre.
+	 */
 	private Membre membre;
+	/**
+	 * l id du message.
+	 */
 	private final double id;
 	
-	public Message(String contenu, Membre membre, EtatMessage etat, ReseauSocial rs) {
+	/**
+	 * construit une instance de la classe message.
+	 * 
+	 * @param contenu le contenu du message.
+	 * @param membre le membre qui publie le message.
+	 * @param etat l'etat du message.
+	 * @param rs le reseau social.
+	 */
+	public Message(final String contenu, final Membre membre, final EtatMessage etat, final ReseauSocial rs) {
 		if (membre == null) {
 			throw new IllegalArgumentException("membre ne peut pas être null");
 		}
@@ -31,19 +62,29 @@ public class Message {
 		this.etat = etat;
 		this.rs = rs;
 		this.membre = membre;
-		this.id = id_cpt++;
+		this.id = idcpt++;
 	    assert invariant();
 	}
 	
+	/**
+	 * getter pour le id.
+	 * @return le id du message
+	 */
     public double getId() {
         return this.id;
     }
 
+	/**
+	 * methode hashCode.
+	 */
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
 	}
 
+	/**
+	 * methode equals. 
+	 */
 	@Override
 	public boolean equals(final Object obj) {
 		if (obj == null || !(obj instanceof Message)) {
@@ -53,53 +94,29 @@ public class Message {
 	    return other.hashCode() == this.hashCode();
 	}
 
+	/**
+	 * methode toString.
+	 */
 	@Override
 	public String toString() {
 		return "On social : " + this.rs + "\nFrom : " + this.membre + "\nMessage : " + this.contenu + "\nStatus : " + this.etat;
 	}
 	
+	/**
+	 * getter pour le membre.
+	 * @return le membre
+	 */
 	public Membre getMembre() {
-		if (membre == null) {
-			throw new IllegalArgumentException("membre ne peut pas être null");
-		}
-		
-        if (rs == null) {
-        	throw new IllegalArgumentException("RS null");
-        }
-        
-		if (contenu == null || contenu.isBlank()) {
-			throw new IllegalArgumentException("contenu ne peut pas être null ou vide");
-		}
-		
-		if (membre.getPseudoParticulier() == null || membre.getPseudoParticulier().isBlank()) {
-			throw new IllegalArgumentException("membre pseudo null/blank");
-		}
-	    assert invariant();
 		return membre;
 	}
 	
-	public void delete_message() {
-		if (membre == null) {
-			throw new IllegalArgumentException("membre ne peut pas être null");
-		}
-		
-        if (rs == null) {
-        	throw new IllegalArgumentException("RS null");
-        }
-        
-		if (contenu == null || contenu.isBlank()) {
-			throw new IllegalArgumentException("contenu ne peut pas être null ou vide");
-		}
-		
-		if (membre.getPseudoParticulier() == null || membre.getPseudoParticulier().isBlank()) {
-			throw new IllegalArgumentException("membre pseudo null/blank");
-		}
-		
-		//
-	}
-	
-	
-	public void modifierStatutMessage(EtatMessage etat) {
+	/**
+	 * modifie l etat du message.
+	 * 
+	 * @param etat l etat du message desire
+	 * 
+	 */
+	public void modifierStatutMessage(final EtatMessage etat) {
 		if (membre == null) {
 			throw new IllegalArgumentException("membre ne peut pas être null");
 		}
@@ -122,7 +139,11 @@ public class Message {
 	}
 	
 	
-	
+	/**
+	 * accepte le message si celui qui le poste est moderateur. 
+	 * 
+	 * 
+	 */
 	public void envoyerMessage() {
 		if (membre == null) {
 			throw new IllegalArgumentException("membre ne peut pas être null");
@@ -149,13 +170,19 @@ public class Message {
 	    assert invariant();
 	}
 	
+	/**
+	 * invariant.
+	 * @return true si l'invariant est respecte
+	 */
     public boolean invariant() {
         if (contenu == null || contenu.isBlank()) {
             throw new IllegalStateException("Invariant violation: contenu ne peut pas être null ou vide");
         }
 
-        if (!(etat == EtatMessage.ACCEPTE || etat == EtatMessage.VERIFICATION_PENDING ||
-              etat == EtatMessage.INAPPROPRIATE || etat == EtatMessage.HIDDEN ||
+        if (!(etat == EtatMessage.ACCEPTE || etat == EtatMessage.VERIFICATION_PENDING 
+        		||
+              etat == EtatMessage.INAPPROPRIATE || etat == EtatMessage.HIDDEN 
+              ||
               etat == EtatMessage.SENT)) {
             throw new IllegalStateException("Invariant violation: état du message invalide");
         }
@@ -166,66 +193,25 @@ public class Message {
         return true;
     }
 
+	/**
+	 * getter du contenu.
+	 * @return contenu
+	 */
 	public String getContenu() {
-		if (membre == null) {
-			throw new IllegalArgumentException("membre ne peut pas être null");
-		}
-		
-        if (rs == null) {
-        	throw new IllegalArgumentException("RS null");
-        }
-        
-		if (contenu == null || contenu.isBlank()) {
-			throw new IllegalArgumentException("contenu ne peut pas être null ou vide");
-		}
-		
-		if (membre.getPseudoParticulier() == null || membre.getPseudoParticulier().isBlank()) {
-			throw new IllegalArgumentException("membre pseudo null/blank");
-		}
-		
-	    assert invariant();
 		return contenu;
 	}
-
+	/**
+	 * getter de l etat du message.
+	 * @return l'etat du message
+	 */
 	public EtatMessage getEtat() {
-		if (membre == null) {
-			throw new IllegalArgumentException("membre ne peut pas être null");
-		}
-		
-        if (rs == null) {
-        	throw new IllegalArgumentException("RS null");
-        }
-        
-		if (contenu == null || contenu.isBlank()) {
-			throw new IllegalArgumentException("contenu ne peut pas être null ou vide");
-		}
-		
-		if (membre.getPseudoParticulier() == null || membre.getPseudoParticulier().isBlank()) {
-			throw new IllegalArgumentException("membre pseudo null/blank");
-		}
-		
-	    assert invariant();
 		return etat;
 	}
-
+	/**
+	 * getter du reseau social.
+	 * @return le reseau social
+	 */
 	public ReseauSocial getReseauSocial() {
-		if (membre == null) {
-			throw new IllegalArgumentException("membre ne peut pas être null");
-		}
-		
-        if (rs == null) {
-        	throw new IllegalArgumentException("RS null");
-        }
-        
-		if (contenu == null || contenu.isBlank()) {
-			throw new IllegalArgumentException("contenu ne peut pas être null ou vide");
-		}
-		
-		if (membre.getPseudoParticulier() == null || membre.getPseudoParticulier().isBlank()) {
-			throw new IllegalArgumentException("membre pseudo null/blank");
-		}
-		
-	    assert invariant();
 		return rs;
 	}
 }

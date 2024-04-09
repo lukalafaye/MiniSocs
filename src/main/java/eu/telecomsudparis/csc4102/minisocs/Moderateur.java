@@ -10,14 +10,6 @@ public class Moderateur extends Membre {
 		super(pseudoParticulier, utilisateur, rs);
 	}
     
-    public void bloquerUtilisateur() {
-    	
-    }
-    
-    public void supprimerMessage() {
-    	
-    }
-    
     @Override 
 	public void moderer(Message m, EtatMessage etat) {
 		m.modifierStatutMessage(etat);
