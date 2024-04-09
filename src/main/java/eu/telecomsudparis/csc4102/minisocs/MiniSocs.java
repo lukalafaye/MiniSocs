@@ -181,8 +181,11 @@ public class MiniSocs {
 	 * @return la liste des pseudonymes des utilisateurs.
 	 */
 	public List<String> listerUtilisateurs() {
-	    assert invariant();
 		return utilisateurs.values().stream().map(Utilisateur::toString).toList();
+	}
+	
+	public List<String> listerRS() {
+		return reseauxSociaux.values().stream().map(ReseauSocial::toString).toList();
 	}
 
 	/**

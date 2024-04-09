@@ -59,43 +59,7 @@ public class Message {
 	}
 	
 	public Membre getMembre() {
-		if (membre == null) {
-			throw new IllegalArgumentException("membre ne peut pas être null");
-		}
-		
-        if (rs == null) {
-        	throw new IllegalArgumentException("RS null");
-        }
-        
-		if (contenu == null || contenu.isBlank()) {
-			throw new IllegalArgumentException("contenu ne peut pas être null ou vide");
-		}
-		
-		if (membre.getPseudoParticulier() == null || membre.getPseudoParticulier().isBlank()) {
-			throw new IllegalArgumentException("membre pseudo null/blank");
-		}
-	    assert invariant();
 		return membre;
-	}
-	
-	public void delete_message() {
-		if (membre == null) {
-			throw new IllegalArgumentException("membre ne peut pas être null");
-		}
-		
-        if (rs == null) {
-        	throw new IllegalArgumentException("RS null");
-        }
-        
-		if (contenu == null || contenu.isBlank()) {
-			throw new IllegalArgumentException("contenu ne peut pas être null ou vide");
-		}
-		
-		if (membre.getPseudoParticulier() == null || membre.getPseudoParticulier().isBlank()) {
-			throw new IllegalArgumentException("membre pseudo null/blank");
-		}
-		
-		//
 	}
 	
 	
@@ -167,65 +131,14 @@ public class Message {
     }
 
 	public String getContenu() {
-		if (membre == null) {
-			throw new IllegalArgumentException("membre ne peut pas être null");
-		}
-		
-        if (rs == null) {
-        	throw new IllegalArgumentException("RS null");
-        }
-        
-		if (contenu == null || contenu.isBlank()) {
-			throw new IllegalArgumentException("contenu ne peut pas être null ou vide");
-		}
-		
-		if (membre.getPseudoParticulier() == null || membre.getPseudoParticulier().isBlank()) {
-			throw new IllegalArgumentException("membre pseudo null/blank");
-		}
-		
-	    assert invariant();
 		return contenu;
 	}
 
 	public EtatMessage getEtat() {
-		if (membre == null) {
-			throw new IllegalArgumentException("membre ne peut pas être null");
-		}
-		
-        if (rs == null) {
-        	throw new IllegalArgumentException("RS null");
-        }
-        
-		if (contenu == null || contenu.isBlank()) {
-			throw new IllegalArgumentException("contenu ne peut pas être null ou vide");
-		}
-		
-		if (membre.getPseudoParticulier() == null || membre.getPseudoParticulier().isBlank()) {
-			throw new IllegalArgumentException("membre pseudo null/blank");
-		}
-		
-	    assert invariant();
 		return etat;
 	}
 
 	public ReseauSocial getReseauSocial() {
-		if (membre == null) {
-			throw new IllegalArgumentException("membre ne peut pas être null");
-		}
-		
-        if (rs == null) {
-        	throw new IllegalArgumentException("RS null");
-        }
-        
-		if (contenu == null || contenu.isBlank()) {
-			throw new IllegalArgumentException("contenu ne peut pas être null ou vide");
-		}
-		
-		if (membre.getPseudoParticulier() == null || membre.getPseudoParticulier().isBlank()) {
-			throw new IllegalArgumentException("membre pseudo null/blank");
-		}
-		
-	    assert invariant();
 		return rs;
 	}
 }

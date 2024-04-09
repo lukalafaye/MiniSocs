@@ -31,12 +31,10 @@ public class ReseauSocial {
 	}
 	
 	public String getNom() {
-    	assert invariant();
 		return nom;
 	}
 	
 	public boolean getOuvert() {
-    	assert invariant();
 		return ouvert;
 	}
 	
@@ -46,7 +44,6 @@ public class ReseauSocial {
 				return m;
 			}
 		}
-    	assert invariant();
 		return null;
 	}
 	
@@ -69,7 +66,6 @@ public class ReseauSocial {
 	        throw new IllegalArgumentException("PseudoParticulier cannot be null or empty for a member.");
 	    }
 
-	    // Function logic
 	    if (mod) {
 	        Moderateur m = new Moderateur(pseudo, u, this);
 	        if (!pseudoParticulier.isBlank()) {

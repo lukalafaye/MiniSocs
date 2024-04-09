@@ -83,7 +83,6 @@ public class Utilisateur {
 	 * @return le pseudonyme.
 	 */
 	public String getPseudonyme() {
-	    assert invariant();
 		return pseudonyme;
 	}
 
@@ -93,7 +92,6 @@ public class Utilisateur {
 	 * @return l'énumérateur.
 	 */
 	public EtatCompte getEtatCompte() {
-	    assert invariant();
 		return etatCompte;
 	}
 
