@@ -8,23 +8,39 @@ skinparam sequenceParticipantBackgroundColor White
 skinparam sequenceActorBackgroundColor White
 
 'Déclaration des acteurs et des participants (déjà existants avant la séquence)'
-actor "__u:Utilisateur__" as u
-participant "__compteParticipation__" as p
-participant "__r:ReseauSocial__" as r
+actor "__:Utilisateur__" as user
+participant "__m:MiniSocs__" as m
 
 'Séquence avec les messages, les créations de participants, etc.'
-u -> p ++ : "writeMessage(contenu:String)"
-opt u.etatCompte = Actif, contenu non nul ^ non vide
-create "__m:Message__" as m
-alt p.moderateur = true
-p -> m ++ : "creationMessage(contenu, r, true)"
-return
-else
-p -> m ++ : "creationMessage(contenu, r, false)"
-return
+user -> m ++ : posterMessageRS(pseudo, contenu, nomReseau)
+opt pseudo non null ∧ non vide
+  m -> m ++ : u=chercherUtilisateur(pseudo): Utilisateur
+  return
+  opt nomReseau non null ∧ non vide
+    m -> m ++ : rs=chercherReseauSocial(nomReseau): ReseauSocial
+    return
+    opt contenu non null ∧ non vide
+      opt u != null et u.getEtatCompte() == ACTIF
+        opt rs != null et rs.getOuvert() == true
+          m -> "__rs:ReseauSocial__" as rs ++ : m=getMembrefromUtilisateur(u): Membre
+          return
+          opt m != null et m.getPseudoParticulier() non null ∧ non vide
+            m -> "__rs:ReseauSocial__" as rs ++ : ajouterMessage(contenu, m)
+            	create "__msg:Message__" as msg
+        	"__rs:ReseauSocial__" as rs  -> "__msg:Message__" as msg ++ : msg=<<create(contenu, m, Verification_Pending, rs)>>
+        	return
+        		"__msg:Message__" as msg -> "__msg:Message__" as msg ++ : definirEtatInitial()
+        		return
+        	"__rs:ReseauSocial__" as rs  -> "__rs:ReseauSocial__" as rs ++ : add(msg)
+        	return
+            return
+          end
+        end
+      end
+    end
+  end
 end
-p -> r ++ : "posterMessage(m)"
 return
-return
-end
+
 @enduml
+
