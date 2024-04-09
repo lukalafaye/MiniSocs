@@ -69,6 +69,7 @@ public class ReseauSocial {
 			if (pseudoParticulier.equals(m.getPseudoParticulier())) {
 		        throw new IllegalArgumentException("PseudoParticulie deja pris.");
 			}
+		}
 	    if (mod) {
 	        Moderateur m = new Moderateur(pseudo, u, this);
 	        if (!pseudoParticulier.isBlank()) {
