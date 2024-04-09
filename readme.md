@@ -707,13 +707,15 @@ pseudoParticulier != null ∧ !pseudoParticulier.isBlank()
 | prénom bien formé  (non null ∧ non vide)     |     |     | F   | T   | T   |
 | courriel bien formé selon le standard RFC822 |     |     |     | F   | T   |
 |                                              |     |     |     |     |     |
+|                                              |     |     |     |     |     |
+| utilisateur (non null)                       | F   | F   | F   | F   | T   |
 | pseudonyme' = pseudonyme                     | F   | F   | F   | F   | T   |
 | nom' = nom                                   | F   | F   | F   | F   | T   |
 | prénom' = prénom                             | F   | F   | F   | F   | T   |
 | courriel' = courriel                         | F   | F   | F   | F   | T   |
 | étatCompte' = actif                          | F   | F   | F   | F   | T   |
 |                                              |     |     |     |     |     |
-| levée d'un exception                         | oui | oui | oui | oui | non |
+| levée d'une exception                        | oui | oui | oui | oui | non |
 |                                              |     |     |     |     |     |
 | nombre de tests dans le jeu de tests         | 2   | 2   | 2   | 3   | 1   |
 
@@ -760,7 +762,7 @@ Deux tests dans le jeu de tests 2 pour l'idempotence.
 | contenu bien formé (non null ∧ non vide)           | F   | T   | T   | T   | T   |
 | boolean accepte bien défini                        |     | F   | T   | T   | T   |
 | pseudoParticulier bien formé (non null ∧ non vide) |     |     | F   | T   | T   |
-| reseauSocial bien défini                          |     |     |     | F   | T   |
+| reseauSocial bien défini                           |     |     |     | F   | T   |
 | participation bien définie                         |     |     |     |     | F   |
 |                                                    |     |     |     |     |     |
 | contenu' = contenu                                 | F   | F   | F   | F   | T   |
@@ -793,34 +795,34 @@ Deux tests dans le jeu de tests 2 pour l'idempotence.
 |                                      |     |     |
 | Lancement d'une exception            | oui | oui |
 |                                      |     |     |
-| Nombre de tests dans le jeu de tests| 1   | 1   |
+| Nombre de tests dans le jeu de tests | 1   | 1   |
 
 ### UC2
 
-|                                                       | 1   | 2   | 3   |
-|:------------------------------------------------------|:----|:----|:----|
-| Pseudo non valide                                    | T   | F   | F   |
-| Utilisateur null ou RS null                          | F   | T   | T   |
-| Pseudo du membre non valide                          | F   | F   | F   |
-|                                                      |     |     |     |
-| Lancement d'une exception                            | oui | oui | oui |
-|                                                      |     |     |     |
-| Nombre de tests dans le jeu de tests                 | 1   | 1   | 1   |
+|                                      | 1   | 2   | 3   |
+|:-------------------------------------|:----|:----|:----|
+| Pseudo non valide                    | T   | F   | F   |
+| Utilisateur null ou RS null          | F   | T   | T   |
+| Pseudo du membre non valide          | F   | F   | F   |
+|                                      |     |     |     |
+| Lancement d'une exception            | oui | oui | oui |
+|                                      |     |     |     |
+| Nombre de tests dans le jeu de tests | 1   | 1   | 1   |
 
 ### UC3
 
-| Test Case Description                            | Username | Content | Member/Moderator | Social Network | Initial State | Expected Outcome                          |
-|--------------------------------------------------|----------|---------|------------------|----------------|---------------|-------------------------------------------|
-| Valid message for a regular member              | Valid    | Valid   | Member           | Valid          | SENT          | State changes to VERIFICATION_PENDING     |
-| Valid message for a moderator                   | Valid    | Valid   | Moderator        | Valid          | SENT          | State changes to ACCEPTE                 |
-| Null username                                   | Null     | Valid   | Member           | Valid          | SENT          | IllegalArgumentException thrown          |
-| Blank username                                  | Blank    | Valid   | Member           | Valid          | SENT          | IllegalArgumentException thrown          |
-| Null content                                    | Valid    | Null    | Member           | Valid          | SENT          | IllegalArgumentException thrown          |
-| Blank content                                   | Valid    | Blank   | Member           | Valid          | SENT          | IllegalArgumentException thrown          |
-| Null member                                     | Valid    | Valid   | Null             | Valid          | SENT          | IllegalArgumentException thrown          |
-| Null social network                             | Valid    | Valid   | Member           | Null           | SENT          | IllegalArgumentException thrown          |
-| Regular member sends message with null content | Valid    | Null    | Member           | Valid          | SENT          | IllegalArgumentException thrown          |
-| Regular member sends message with blank content| Valid    | Blank   | Member           | Valid          | SENT          | IllegalArgumentException thrown          |
+| Test Case Description                           | Username | Content | Member/Moderator | Social Network | Initial State | Expected Outcome                      |
+|-------------------------------------------------|----------|---------|------------------|----------------|---------------|---------------------------------------|
+| Valid message for a regular member              | Valid    | Valid   | Member           | Valid          | SENT          | State changes to VERIFICATION_PENDING |
+| Valid message for a moderator                   | Valid    | Valid   | Moderator        | Valid          | SENT          | State changes to ACCEPTE              |
+| Null username                                   | Null     | Valid   | Member           | Valid          | SENT          | IllegalArgumentException thrown       |
+| Blank username                                  | Blank    | Valid   | Member           | Valid          | SENT          | IllegalArgumentException thrown       |
+| Null content                                    | Valid    | Null    | Member           | Valid          | SENT          | IllegalArgumentException thrown       |
+| Blank content                                   | Valid    | Blank   | Member           | Valid          | SENT          | IllegalArgumentException thrown       |
+| Null member                                     | Valid    | Valid   | Null             | Valid          | SENT          | IllegalArgumentException thrown       |
+| Null social network                             | Valid    | Valid   | Member           | Null           | SENT          | IllegalArgumentException thrown       |
+| Regular member sends message with null content  | Valid    | Null    | Member           | Valid          | SENT          | IllegalArgumentException thrown       |
+| Regular member sends message with blank content | Valid    | Blank   | Member           | Valid          | SENT          | IllegalArgumentException thrown       |
 
 
 ---

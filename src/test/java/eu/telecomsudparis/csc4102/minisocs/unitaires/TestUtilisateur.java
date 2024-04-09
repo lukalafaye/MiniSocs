@@ -70,19 +70,21 @@ class TestUtilisateur {
 	}
 
 	@Test
-	void constructeurUtilisateurTest6Puis5() {
+	void constructeurUtilisateurTest5Jeu1() {
 		Utilisateur utilisateur = new Utilisateur("pseudo", "nom", "prénom", "bon@courriel.fr");
 		Assertions.assertNotNull(utilisateur);
 		Assertions.assertEquals("pseudo", utilisateur.getPseudonyme());
+		Assertions.assertEquals("nom", utilisateur.getNom());
+		Assertions.assertEquals("prénom", utilisateur.getPrenom());
+		Assertions.assertEquals("bon@courriel.fr", utilisateur.getCourriel());
 		Assertions.assertEquals(EtatCompte.ACTIF, utilisateur.getEtatCompte());
 	}
 	
 	@Test
 	void desactiverTest1() {
 		Utilisateur utilisateur = new Utilisateur("pseudo", "nom", "prénom", "bon@courriel.fr");
-		Assertions.assertEquals(EtatCompte.ACTIF, utilisateur.getEtatCompte());
-		utilisateur.bloquerCompte();
-		Assertions.assertEquals(EtatCompte.BLOQUE, utilisateur.getEtatCompte());
+		utilisateur.etatCompte = EtatCompte.DESACTIVE;
+		Assertions.assertEquals(EtatCompte.DESACTIVE, utilisateur.getEtatCompte());
 		Assertions.assertThrows(IllegalStateException.class, () -> utilisateur.desactiverCompte());
 	}
 
