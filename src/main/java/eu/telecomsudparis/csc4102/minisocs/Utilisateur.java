@@ -1,8 +1,11 @@
 package eu.telecomsudparis.csc4102.minisocs;
 
+import java.util.Map;
 import java.util.Objects;
 
 import org.apache.commons.validator.routines.EmailValidator;
+
+import eu.telecomsudparis.csc4102.util.OperationImpossible;
 
 /**
  * Cette classe réalise le concept d'utilisateur du système, à ne pas confondre
@@ -31,6 +34,7 @@ public class Utilisateur {
 	 * état du compte de l'utilisateur.
 	 */
 	private EtatCompte etatCompte;
+	
 
 	/**
 	 * construit un utilisateur.
@@ -40,6 +44,7 @@ public class Utilisateur {
 	 * @param prenom     le prénom.
 	 * @param courriel   l'adresse courriel de l'utilisateur.
 	 */
+		
 	public Utilisateur(final String pseudonyme, final String nom, final String prenom, final String courriel) {
 		if (pseudonyme == null || pseudonyme.isBlank()) {
 			throw new IllegalArgumentException("pseudonyme ne peut pas être null ou vide");
@@ -60,6 +65,8 @@ public class Utilisateur {
 		this.etatCompte = EtatCompte.ACTIF;
 		assert invariant();
 	}
+	
+	
 
 	/**
 	 * vérifie l'invariant de la classe.
@@ -70,7 +77,7 @@ public class Utilisateur {
 		return pseudonyme != null && !pseudonyme.isBlank() && nom != null && !nom.isBlank() && prenom != null
 				&& !prenom.isBlank() && EmailValidator.getInstance().isValid(courriel) && etatCompte != null;
 	}
-
+	
 	/**
 	 * obtient le pseudonyme.
 	 * 
@@ -81,6 +88,36 @@ public class Utilisateur {
 	}
 
 	/**
+	 * obtient le nom.
+	 * 
+	 * @return le nom.
+	 */
+	public String getNom() {
+	    assert invariant();
+		return nom;
+	}
+	
+	/**
+	 * obtient le prenom.
+	 * 
+	 * @return le *prenom.
+	 */
+	public String getPrenom() {
+	    assert invariant();
+		return prenom;
+	}
+	
+	/**
+	 * obtient le courriel.
+	 * 
+	 * @return le *courriel.
+	 */
+	public String getCourriel() {
+	    assert invariant();
+		return courriel;
+	}
+	
+	/**
 	 * l'état du compte.
 	 * 
 	 * @return l'énumérateur.
@@ -88,24 +125,31 @@ public class Utilisateur {
 	public EtatCompte getEtatCompte() {
 		return etatCompte;
 	}
+	
+	/**
+	 * set l'état du compte.
+	 */
+	public void setEtatCompte(EtatCompte etat) {
+	    assert invariant();
+	    this.etatCompte = etat;
+	}
 
 	/**
 	 * rend inactif le compte de l'utilisateur. L'opération est
 	 * idempotente. L'opération est refusée si le compte n'est pas actif.
 	 */
 	public void desactiverCompte() {
-		if (etatCompte.equals(EtatCompte.DESACTIVE)) {
-			return;
+		if (this.etatCompte.equals(EtatCompte.BLOQUE)) {
+			throw new IllegalStateException("le compte est bloqué");
+		} else {
+			this.etatCompte = EtatCompte.DESACTIVE;
 		}
-		if (!etatCompte.equals(EtatCompte.ACTIF)) {
-			throw new IllegalStateException("le compte n'est pas actif");
-		}
-		this.etatCompte = EtatCompte.DESACTIVE;
+		
 		assert invariant();
 	}
 
 	/**
-	 * bloque le comte de l'utilisateur. L'opération est idempotente.
+	 * bloque le compte de l'utilisateur. L'opération est idempotente.
 	 */
 	public void bloquerCompte() {
 		this.etatCompte = EtatCompte.BLOQUE;
@@ -119,14 +163,11 @@ public class Utilisateur {
 
 	@Override
 	public boolean equals(final Object obj) {
-		if (this == obj) {
-			return true;
-		}
 		if (!(obj instanceof Utilisateur)) {
 			return false;
 		}
 		Utilisateur other = (Utilisateur) obj;
-		return Objects.equals(pseudonyme, other.pseudonyme);
+		return this.hashCode() == other.hashCode();
 	}
 
 	@Override

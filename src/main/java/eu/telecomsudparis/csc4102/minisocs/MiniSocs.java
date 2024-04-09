@@ -3,6 +3,7 @@ package eu.telecomsudparis.csc4102.minisocs;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.apache.commons.validator.routines.EmailValidator;
 
@@ -21,7 +22,11 @@ public class MiniSocs {
 	/**
 	 * les utilisateurs.
 	 */
-	private final Map<String, Utilisateur> utilisateurs;
+	private Map<String, Utilisateur> utilisateurs;
+	/**
+	 * les reseaux sociaux.
+	 */
+	private Map<String, ReseauSocial> reseauxSociaux;
 
 	/**
 	 * construit une instance du système.
@@ -31,15 +36,9 @@ public class MiniSocs {
 	public MiniSocs(final String nomDuSysteme) {
 		this.nomDuSysteme = nomDuSysteme;
 		this.utilisateurs = new HashMap<>();
-	}
-
-	/**
-	 * l'invariant de la façade.
-	 * 
-	 * @return {@code true} si l'invariant est respecté.
-	 */
-	public boolean invariant() {
-		return nomDuSysteme != null && !nomDuSysteme.isBlank() && utilisateurs != null;
+		this.reseauxSociaux = new HashMap<>();
+		
+		assert invariant();
 	}
 
 	/**
@@ -73,9 +72,147 @@ public class MiniSocs {
 			throw new OperationImpossible(pseudo + "déjà un utilisateur");
 		}
 		utilisateurs.put(pseudo, new Utilisateur(pseudo, nom, prenom, courriel));
+		
 		assert invariant();
 	}
+	
+	/**
+	 * cree un reseau social.
+	 * 
+	 * @param pseudoExec   le pseudo de l'utilisateur.
+	 * @param nomReseau      le nom du reseau social.
+	 * @param ouvert   l etat initial du RS.
+	 * @param pseudoParticulier le pseudo du membre particulier au reseau social.
+	 * @throws OperationImpossible en cas de problème sur les pré-conditions.
+	 */
+    public void creerReseauSocial(final String pseudoExec, final String nomReseau, final boolean ouvert, final String pseudoParticulier) throws OperationImpossible {
+        if (pseudoExec == null || pseudoExec.isBlank()) {
+        	throw new OperationImpossible("Pseudo de l'executeur non valide");
+        }
+        Utilisateur u = utilisateurs.get(pseudoExec);
+        if (u.getEtatCompte() != EtatCompte.ACTIF) {
+            throw new OperationImpossible("Le compte de l'exécuteur n'est pas actif ou est bloqué.");
+        }
+        if (nomReseau == null || nomReseau.isBlank()) {
+            throw new OperationImpossible("Nom du réseau social non valide.");
+        }
+		ReseauSocial rs = reseauxSociaux.get(nomReseau);
+		if (rs != null) {
+			throw new OperationImpossible("Nom deja pris");
+		}
 
+        ReseauSocial nouveauReseau = new ReseauSocial(nomReseau, ouvert);
+        ajouterMembreRS(pseudoExec, nomReseau, pseudoParticulier, true);
+        reseauxSociaux.put(nouveauReseau.getNom(), nouveauReseau);        
+        
+	    assert invariant();
+    }
+	
+	/**
+	 * ajoute un membre a un reseau social.
+	 * 
+	 * @param pseudo   le pseudo de l'utilisateur.
+	 * @param nomReseau      le nom du reseau social.
+	 * @param mod   boolean indiquant si le membre est moderateur.
+	 * @param pseudoParticulier le pseudo du membre particulier au reseau social.
+	 * @throws OperationImpossible en cas de problème sur les pré-conditions.
+	 */
+    public void ajouterMembreRS(final String pseudo, final String nomReseau, final String pseudoParticulier, final boolean mod) throws OperationImpossible {
+        if (pseudo == null || pseudo.isBlank()) {
+        	throw new OperationImpossible("Pseudo de l'executeur non valide");
+        }
+        if (nomReseau == null || nomReseau.isBlank()) {
+        	throw new OperationImpossible("Nom du Reseau non valide");
+        }
+        Utilisateur u = utilisateurs.get(pseudo);
+        ReseauSocial rs = reseauxSociaux.get(nomReseau);
+        if (u == null || u.getEtatCompte() != EtatCompte.ACTIF) {
+            throw new OperationImpossible("L'utilisateur n'est pas actif ou n'existe pas.");
+        }
+        if (!rs.getOuvert()) {
+            throw new OperationImpossible("Le réseau social n'est pas ouvert.");
+        }
+        rs.ajouterMembre(pseudo, u, pseudoParticulier, mod);
+        
+        assert invariant();
+    }
+	
+	/**
+	 * post un message.
+	 * 
+	 * @param pseudo   le pseudo de l'utilisateur.
+	 * @param nomReseau      le nom du reseau social.
+	 * @param contenu   le contenu du message.
+	 * @throws OperationImpossible en cas de problème sur les pré-conditions.
+	 */
+    public void posterMessageRS(final String pseudo, final String contenu, final String nomReseau) throws OperationImpossible {
+        if (pseudo == null || pseudo.isBlank()) {
+        	throw new OperationImpossible("Pseudo de l'executeur non valide");
+        }
+        if (nomReseau == null || nomReseau.isBlank()) {
+        	throw new OperationImpossible("Nom du Reseau non valide");
+        }
+        Utilisateur u = utilisateurs.get(pseudo);
+        ReseauSocial rs = reseauxSociaux.get(nomReseau);
+        if (contenu == null || contenu.isBlank()) {
+            throw new OperationImpossible("Le contenu du message ne peut pas être null ou vide.");
+        }
+        if (u == null || u.getEtatCompte() != EtatCompte.ACTIF) {
+            throw new OperationImpossible("L'utilisateur n'est pas actif ou n'existe pas.");
+        }
+    	if (!rs.getOuvert()) {
+            throw new OperationImpossible("Le réseau social n'est pas ouvert.");
+        }
+    	Membre m = rs.getMembrefromUtilisateur(u);
+		if (m == null) {
+			throw new OperationImpossible("L'utilisateur n'est pas membre du Reseau");
+		}
+        if (m.getPseudoParticulier() == null || m.getPseudoParticulier().isBlank()) {
+        	throw new OperationImpossible("Pseudo de l'executeur non valide");
+        }
+        rs.ajouterMessage(contenu, m);
+        
+        assert invariant();
+    }
+    
+	/**
+	 * modere un message.
+	 * 
+	 * @param pseudo   le pseudo de l'utilisateur.
+	 * @param nomReseau      le nom du reseau social.
+	 * @param id   le id du message.
+	 * @param etat l etat du message attendu apres moderation.
+	 * @throws OperationImpossible en cas de problème sur les pré-conditions.
+	 */
+    public void modererMessage(final String pseudo, final double id, final String nomReseau, final EtatMessage etat) throws OperationImpossible {
+        if (pseudo == null || pseudo.isBlank()) {
+        	throw new OperationImpossible("Pseudo de l'executeur non valide");
+        }
+        if (nomReseau == null || nomReseau.isBlank()) {
+        	throw new OperationImpossible("Nom du Reseau non valide");
+        }
+        Utilisateur u = utilisateurs.get(pseudo);
+        ReseauSocial rs = reseauxSociaux.get(nomReseau);
+        if (u == null || u.getEtatCompte() != EtatCompte.ACTIF) {
+            throw new OperationImpossible("L'utilisateur n'est pas actif ou n'existe pas.");
+        }
+    	if (!rs.getOuvert()) {
+            throw new OperationImpossible("Le réseau social n'est pas ouvert.");
+        }
+    	Membre m = rs.getMembrefromUtilisateur(u);
+		if (m == null) {
+			throw new OperationImpossible("L'utilisateur n'est pas membre du Reseau");
+		}
+        if (m.getPseudoParticulier() == null || m.getPseudoParticulier().isBlank()) {
+        	throw new OperationImpossible("Pseudo de l'executeur non valide");
+        }
+        Message message = rs.getMessageFromId(id);
+		if (message == null) {
+			throw new OperationImpossible("Le message n'appartient pas au reseau ou n'existe pas");
+		}
+        m.moderer(message, etat);
+        assert invariant();
+    }
 	/**
 	 * liste les utilisateurs.
 	 * 
@@ -83,6 +220,14 @@ public class MiniSocs {
 	 */
 	public List<String> listerUtilisateurs() {
 		return utilisateurs.values().stream().map(Utilisateur::toString).toList();
+	}
+	/**
+	 * liste les reseaux sociaux.
+	 * 
+	 * @return la liste des pseudonymes des reseaux sociaux.
+	 */
+	public List<String> listerRS() {
+		return reseauxSociaux.values().stream().map(ReseauSocial::toString).toList();
 	}
 
 	/**
@@ -103,8 +248,23 @@ public class MiniSocs {
 			throw new OperationImpossible("le compte est bloqué");
 		}
 		u.desactiverCompte();
-		assert invariant();
+	    assert invariant();
 	}
+	
+	/**
+	 * invariant de classe.
+	 * @return true si invariant est respecte
+	 */
+    public boolean invariant() {
+        if (nomDuSysteme == null || nomDuSysteme.isBlank()) {
+        	throw new IllegalStateException("Invariant violation: contenu ne peut pas être null ou vide");
+        }
+
+        Objects.requireNonNull(utilisateurs, "Invariant violation: membre ne peut pas être null");
+        Objects.requireNonNull(reseauxSociaux, "Invariant violation: reseauSocial ne peut pas être null");
+        
+        return true;
+    }
 
 	/**
 	 * obtient le nom du projet.
@@ -115,6 +275,10 @@ public class MiniSocs {
 		return nomDuSysteme;
 	}
 
+	/**
+	 * toString.
+	 * @return le string correspondant.
+	 */
 	@Override
 	public String toString() {
 		return "MiniSocs [nomDuSysteme=" + nomDuSysteme + ", utilisateurs=" + utilisateurs + "]";

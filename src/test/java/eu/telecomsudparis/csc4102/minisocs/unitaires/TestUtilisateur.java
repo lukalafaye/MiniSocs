@@ -9,6 +9,8 @@ import org.junit.jupiter.api.Test;
 import eu.telecomsudparis.csc4102.minisocs.EtatCompte;
 import eu.telecomsudparis.csc4102.minisocs.Utilisateur;
 
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+
 class TestUtilisateur {
 
 	@BeforeEach
@@ -70,29 +72,36 @@ class TestUtilisateur {
 	}
 
 	@Test
-	void constructeurUtilisateurTest6Puis5() {
+	void constructeurUtilisateurTest5Jeu1() {
 		Utilisateur utilisateur = new Utilisateur("pseudo", "nom", "prénom", "bon@courriel.fr");
+		
 		Assertions.assertNotNull(utilisateur);
 		Assertions.assertEquals("pseudo", utilisateur.getPseudonyme());
+		Assertions.assertEquals("nom", utilisateur.getNom());
+		Assertions.assertEquals("prénom", utilisateur.getPrenom());
+		Assertions.assertEquals("bon@courriel.fr", utilisateur.getCourriel());
 		Assertions.assertEquals(EtatCompte.ACTIF, utilisateur.getEtatCompte());
 	}
 	
 	@Test
 	void desactiverTest1() {
 		Utilisateur utilisateur = new Utilisateur("pseudo", "nom", "prénom", "bon@courriel.fr");
-		Assertions.assertEquals(EtatCompte.ACTIF, utilisateur.getEtatCompte());
-		utilisateur.bloquerCompte();
+		utilisateur.setEtatCompte(EtatCompte.BLOQUE);
+
 		Assertions.assertEquals(EtatCompte.BLOQUE, utilisateur.getEtatCompte());
+		
 		Assertions.assertThrows(IllegalStateException.class, () -> utilisateur.desactiverCompte());
 	}
 
 	@Test
 	void desactiverTest2Jeu1Puis2() {
 		Utilisateur utilisateur = new Utilisateur("pseudo", "nom", "prénom", "bon@courriel.fr");
-		Assertions.assertEquals(EtatCompte.ACTIF, utilisateur.getEtatCompte());
+		Assertions.assertNotEquals(EtatCompte.BLOQUE, utilisateur.getEtatCompte());
+		
 		utilisateur.desactiverCompte();
 		Assertions.assertEquals(EtatCompte.DESACTIVE, utilisateur.getEtatCompte());
-		utilisateur.desactiverCompte();
+		
+		utilisateur.desactiverCompte(); // idempotence
 		Assertions.assertEquals(EtatCompte.DESACTIVE, utilisateur.getEtatCompte());
 	}
 }

@@ -1,0 +1,30 @@
+@startuml
+
+'Diagramme de séquence (PlantUML)'
+
+'Configuration charte graphique'
+hide footbox
+skinparam sequenceParticipantBackgroundColor White
+skinparam sequenceActorBackgroundColor White
+
+'Déclaration des acteurs et des participants (déjà existants avant la séquence)'
+actor "__u:Utilisateur__" as u
+participant "__compteParticipation__" as p
+participant "__r:ReseauSocial__" as r
+
+'Séquence avec les messages, les créations de participants, etc.'
+u -> p ++ : "writeMessage(contenu:String)"
+opt u.etatCompte = Actif, contenu non nul ^ non vide
+create "__m:Message__" as m
+alt p.moderateur = true
+p -> m ++ : "creationMessage(contenu, r, true)"
+return
+else
+p -> m ++ : "creationMessage(contenu, r, false)"
+return
+end
+p -> r ++ : "posterMessage(m)"
+return
+return
+end
+@enduml

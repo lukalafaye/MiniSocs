@@ -1,36 +1,89 @@
-@startuml
+	@startuml
 
-'Diagramme de classes (PlantUML)'
+	'Diagramme de classes (PlantUML)'
 
-'Configuration charte graphique'
-hide empty methods
-hide circle
-skinparam class {
-  BackgroundColor White
-  ArrowColor Black
-  BorderColor Black
-}
+	'Configuration charte graphique'
+	hide empty methods
+	hide circle
+	skinparam class {
+	  BackgroundColor White
+	  ArrowColor Black
+	  BorderColor Black
+	}
 
-'Classes, énumérations, etc.'
-class MiniSocs {
-  - nom: String
-}
-class Utilisateur {
-  - pseudonyme: String
-  - nom: String
-  - prénom: String
-  - courriel: String
-  - etatCompte: ÉtatCompte
-}
-enum ÉtatCompte <<enum>> {
-  ACTIF
-  DÉSACTIVÉ
-  BLOQUÉ
-}
+	'Classes, énumérations, etc.'
+	class MiniSocs {
+	  - nom: String
+	  - créerUtilisateur(): methode
+	  - créerRS(nom): methode
+	  - rejoindreRS(): methode
+	}
 
-'Associations, etc.'
-MiniSocs *--> "*" Utilisateur
+	class Utilisateur {
+	  - pseudonyme: String
+	  - nom: String
+	  - prénom: String
+	  - courriel: String
+	  - etatCompte: ÉtatCompte
+	  - posterMessage(): methode
+	}
 
-'Au besoin, aides pour le positionnement'
+	enum ÉtatCompte <<enum>> {
+	  ACTIF
+	  DÉSACTIVÉ
+	  BLOQUÉ
+	  DÉBLOQUÉ
+	}
 
-@enduml
+	enum ÉtatMessage <<enum>> {
+	  ACCEPTÉ
+	  VERIFICATION_PENDING
+	  INAPPROPRIATE
+	  HIDDEN
+	  SENT
+	}
+
+	class Membre {
+	  / pseudonyme: String
+	  - pseudoParticulier: String
+	  - requestSendMessage(): method
+	}
+
+	class Moderateur {
+	  - bloquerUtilisateur(): methode
+	  - supprimerMessage(): methode
+	}
+
+	class ReseauSocial {
+	  - nom: String
+	  - ouvert: bool
+	  - créerParticipation(bool moderateur): methode
+	}
+
+	class Message {
+	  - contenu: String
+	  - etatMessage: ÉtatMessage
+	  - delete_message(): methode
+	  - hide_message(): methode
+	  - mark_inappropriate(): method
+	  - send_message(): method
+	}
+
+	'Associations, etc.'
+	MiniSocs *--> "*" Utilisateur: Crée
+	Utilisateur "1" --> "*" ReseauSocial: Connait
+        Utilisateur "1" --> "*" Membre: Possède
+	
+	Moderateur "1" *--> "*" Message: Envoyer
+	Membre "1" *--> "*" Message: Demander
+        
+	MiniSocs *--> "*" ReseauSocial
+        ReseauSocial "1"--> "*" Message
+        
+	ReseauSocial "1" *--> "*" Membre
+
+	Moderateur --|> Membre
+	
+	'Au besoin, aides pour le positionnement'
+
+	@enduml
