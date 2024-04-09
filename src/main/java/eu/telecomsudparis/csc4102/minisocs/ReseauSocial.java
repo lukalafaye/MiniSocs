@@ -17,7 +17,6 @@ public class ReseauSocial {
 	final String nom;
 	private boolean ouvert;
 	private Set<Membre> membres;
-	private Set<Moderateur> moderateurs; 
 	private List<Message> messages;
 	
 	public ReseauSocial(final String nom, boolean ouvert) {
@@ -66,6 +65,10 @@ public class ReseauSocial {
 	        throw new IllegalArgumentException("PseudoParticulier cannot be null or empty for a member.");
 	    }
 
+		for (Membre m : this.membres) {
+			if (pseudoParticulier.equals(m.getPseudoParticulier())) {
+		        throw new IllegalArgumentException("PseudoParticulie deja pris.");
+			}
 	    if (mod) {
 	        Moderateur m = new Moderateur(pseudo, u, this);
 	        if (!pseudoParticulier.isBlank()) {
@@ -97,7 +100,6 @@ public class ReseauSocial {
         }
 
         Objects.requireNonNull(membres, "Invariant violation: membres ne peut pas être null");
-        Objects.requireNonNull(moderateurs, "Invariant violation: moderateurs ne peut pas être null");
         Objects.requireNonNull(messages, "Invariant violation: messages ne peut pas être null");
    
         return true;

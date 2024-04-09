@@ -32,7 +32,6 @@
 	  ACTIF
 	  DÉSACTIVÉ
 	  BLOQUÉ
-	  DÉBLOQUÉ
 	}
 
 	enum ÉtatMessage <<enum>> {
@@ -44,7 +43,6 @@
 	}
 
 	class Membre {
-	  / pseudonyme: String
 	  - pseudoParticulier: String
 	  - requestSendMessage(): method
 	}
@@ -71,10 +69,8 @@
 
 	'Associations, etc.'
 	MiniSocs *--> "*" Utilisateur: Crée
-	Utilisateur "1" --> "*" ReseauSocial: Connait
-        Utilisateur "1" --> "*" Membre: Possède
-	
-	Moderateur "1" *--> "*" Message: Envoyer
+	Membre "*" --> "1" Utilisateur: Lie a
+
 	Membre "1" *--> "*" Message: Demander
         
 	MiniSocs *--> "*" ReseauSocial
