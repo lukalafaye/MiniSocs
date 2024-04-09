@@ -708,12 +708,12 @@ pseudoParticulier != null ∧ !pseudoParticulier.isBlank()
 | courriel bien formé selon le standard RFC822 |     |     |     | F   | T   |
 |                                              |     |     |     |     |     |
 |                                              |     |     |     |     |     |
-| utilisateur (non null)                       | F   | F   | F   | F   | T   |
-| pseudonyme' = pseudonyme                     | F   | F   | F   | F   | T   |
-| nom' = nom                                   | F   | F   | F   | F   | T   |
-| prénom' = prénom                             | F   | F   | F   | F   | T   |
-| courriel' = courriel                         | F   | F   | F   | F   | T   |
-| étatCompte' = actif                          | F   | F   | F   | F   | T   |
+| utilisateur (non null)                       |     |     |     |     | T   |
+| pseudonyme' = pseudonyme                     |     |     |     |     | T   |
+| nom' = nom                                   |     |     |     |     | T   |
+| prénom' = prénom                             |     |     |     |     | T   |
+| courriel' = courriel                         |     |     |     |     | T   |
+| étatCompte' = actif                          |     |     |     |     | T   |
 |                                              |     |     |     |     |     |
 | levée d'une exception                        | oui | oui | oui | oui | non |
 |                                              |     |     |     |     |     |
@@ -726,7 +726,7 @@ enfin une chaîne de caractères qui n'est pas une adresse courriel.
 
 |                                      | 1   | 2   |
 |:-------------------------------------|:----|:----|
-| étatCompte = actif                   | F   | T   |
+| étatCompte non bloqué                | F   | T   |
 |                                      |     |     |
 | étatCompte' = désactivé              |     | T   |
 |                                      |     |     |
@@ -741,6 +741,30 @@ Deux tests dans le jeu de tests 2 pour l'idempotence.
 ### Opération constructeur
 
 ### Message Constructor Unit Test
+
+|                                         | 1 | 2 | 3 | 4 | 5 |
+|:----------------------------------------|:--|:--|:--|:--|:--|
+| contenu (non null ∧ non vide)           | F | T | T | T | T |
+| membre (non null)                       |   | F | T | T | T |
+| pseudo particulier non null ∧ non vide) |   |   | F | T | T |
+|                                         |   |   |   |   |   |
+)                            |     | F   | T   | T   |     |
+| prénom bien formé  (non null ∧ non vide)     |     |     | F   | T   | T   |
+| courriel bien formé selon le standard RFC822 |     |     |     | F   | T   |
+|                                              |     |     |     |     |     |
+|                                              |     |     |     |     |     |
+| utilisateur (non null)                       |     |     |     |     | T   |
+| pseudonyme' = pseudonyme                     |     |     |     |     | T   |
+| nom' = nom                                   |     |     |     |     | T   |
+| prénom' = prénom                             |     |     |     |     | T   |
+| courriel' = courriel                         |     |     |     |     | T   |
+| étatCompte' = actif                          |     |     |     |     | T   |
+|                                              |     |     |     |     |     |
+| levée d'une exception                        | oui | oui | oui | oui | non |
+|                                              |     |     |     |     |     |
+| nombre de tests dans le jeu de tests         | 2   | 2   | 2   | 3   | 1   |
+
+"Test content", membre, EtatMessage.ACCEPTE, rs)
 
 | Test Case | contenu | accepte | reseauSocial | membre | Expected Exception |
 |-----------|---------|---------|--------------|--------|--------------------|

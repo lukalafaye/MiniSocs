@@ -127,24 +127,31 @@ public class Utilisateur {
 	    assert invariant();
 		return etatCompte;
 	}
+	
+	/**
+	 * set l'état du compte.
+	 */
+	public void setEtatCompte(EtatCompte etat) {
+	    assert invariant();
+	    this.etatCompte = etat;
+	}
 
 	/**
 	 * rend inactif le compte de l'utilisateur. L'opération est
 	 * idempotente. L'opération est refusée si le compte n'est pas actif.
 	 */
 	public void desactiverCompte() {
-		if (etatCompte.equals(EtatCompte.DESACTIVE)) {
-			return;
+		if (this.etatCompte.equals(EtatCompte.BLOQUE)) {
+			throw new IllegalStateException("le compte est bloqué");
+		} else {
+			this.etatCompte = EtatCompte.DESACTIVE;
 		}
-		if (!etatCompte.equals(EtatCompte.ACTIF)) {
-			throw new IllegalStateException("le compte n'est pas actif");
-		}
-		this.etatCompte = EtatCompte.DESACTIVE;
+		
 		assert invariant();
 	}
 
 	/**
-	 * bloque le comte de l'utilisateur. L'opération est idempotente.
+	 * bloque le compte de l'utilisateur. L'opération est idempotente.
 	 */
 	public void bloquerCompte() {
 		this.etatCompte = EtatCompte.BLOQUE;
