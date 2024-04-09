@@ -91,6 +91,7 @@ public class ReseauSocial {
     public void ajouterMessage(String contenu, Membre m) throws OperationImpossible {
     	Message nouveauMessage = new Message(contenu, m, EtatMessage.VERIFICATION_PENDING, this);
     	nouveauMessage.envoyerMessage();
+    	m.addMessage(nouveauMessage, contenu);
         messages.add(nouveauMessage);
     	assert invariant();
     }
