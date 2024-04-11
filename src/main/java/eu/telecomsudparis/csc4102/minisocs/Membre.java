@@ -62,7 +62,11 @@ public class Membre {
 	}
 	
 	public Utilisateur getUtilisateur() {
-		return utilisateur;
+		return this.utilisateur;
+	}
+	
+	public ReseauSocial getReseauSocial() {
+		return this.rs;
 	}
 	
 	public boolean invariant() {
@@ -107,7 +111,7 @@ public class Membre {
 	
 	public void moderer(final Message m, EtatMessage etat) {
 		if (!(this instanceof Moderateur)) {
-        	throw new UnsupportedOperationException("membre non mod");
+        	throw new IllegalArgumentException("membre non mod");
 		}
 	    assert invariant();
 	}

@@ -50,6 +50,10 @@ public class Message {
         	throw new IllegalArgumentException("RS null");
         }
         
+        if (etat == null) {
+        	throw new IllegalArgumentException("etat null");
+        }
+        
 		if (contenu == null || contenu.isBlank()) {
 			throw new IllegalArgumentException("contenu ne peut pas être null ou vide");
 		}
@@ -117,22 +121,25 @@ public class Message {
 	 * 
 	 */
 	public void modifierStatutMessage(final EtatMessage etat) {
-		if (membre == null) {
+		if (this.membre == null) {
 			throw new IllegalArgumentException("membre ne peut pas être null");
 		}
 		
-        if (rs == null) {
+        if (this.rs == null) {
         	throw new IllegalArgumentException("RS null");
         }
         
-		if (contenu == null || contenu.isBlank()) {
+		if (this.contenu == null || contenu.isBlank()) {
 			throw new IllegalArgumentException("contenu ne peut pas être null ou vide");
 		}
 		
-		if (membre.getPseudoParticulier() == null || membre.getPseudoParticulier().isBlank()) {
+		if (this.membre.getPseudoParticulier() == null || membre.getPseudoParticulier().isBlank()) {
 			throw new IllegalArgumentException("membre pseudo null/blank");
 		}
 		
+		if (etat == null) {
+        	throw new IllegalArgumentException("etat null");
+        }
 
 	    this.etat = etat;
 	    assert invariant();
@@ -163,8 +170,6 @@ public class Message {
 		
 	    if (membre instanceof Moderateur) {
 	        this.etat = EtatMessage.ACCEPTE;
-	    } else {
-	        this.etat = EtatMessage.VERIFICATION_PENDING;
 	    }
 	    
 	    assert invariant();
@@ -198,20 +203,20 @@ public class Message {
 	 * @return contenu
 	 */
 	public String getContenu() {
-		return contenu;
+		return this.contenu;
 	}
 	/**
 	 * getter de l etat du message.
 	 * @return l'etat du message
 	 */
 	public EtatMessage getEtat() {
-		return etat;
+		return this.etat;
 	}
 	/**
 	 * getter du reseau social.
 	 * @return le reseau social
 	 */
 	public ReseauSocial getReseauSocial() {
-		return rs;
+		return this.rs;
 	}
 }

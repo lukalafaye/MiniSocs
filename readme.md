@@ -698,7 +698,9 @@ pseudoParticulier != null ∧ !pseudoParticulier.isBlank()
 
 ## 8.1. Opérations de la classe Utilisateur
 
-### Opération constructeur
+### Opération constructeur OK
+
+public Utilisateur(final String pseudonyme, final String nom, final String prenom, final String courriel)
 
 |                                              | 1   | 2   | 3   | 4   | 5   |
 |:---------------------------------------------|:----|:----|:----|:----|:----|
@@ -722,7 +724,9 @@ pseudoParticulier != null ∧ !pseudoParticulier.isBlank()
 Trois tests dans le jeu de tests 5 pour non null, puis non vide, et
 enfin une chaîne de caractères qui n'est pas une adresse courriel.
 
-### Opération désactiverCompte
+### Opération désactiverCompte OK
+
+public void desactiverCompte()
 
 |                                      | 1   | 2   |
 |:-------------------------------------|:----|:----|
@@ -736,76 +740,173 @@ enfin une chaîne de caractères qui n'est pas une adresse courriel.
 
 Deux tests dans le jeu de tests 2 pour l'idempotence.
 
+### 
+
 ## 8.2. Opérations de la classe Message
 
-### Opération constructeur
+### Opération constructeur OK
 
-### Message Constructor Unit Test
+public Message(final String contenu, final Membre membre, final EtatMessage etat, final ReseauSocial rs)
 
-|                                         | 1 | 2 | 3 | 4 | 5 |
-|:----------------------------------------|:--|:--|:--|:--|:--|
-| contenu (non null ∧ non vide)           | F | T | T | T | T |
-| membre (non null)                       |   | F | T | T | T |
-| pseudo particulier non null ∧ non vide) |   |   | F | T | T |
-|                                         |   |   |   |   |   |
-)                            |     | F   | T   | T   |     |
-| prénom bien formé  (non null ∧ non vide)     |     |     | F   | T   | T   |
-| courriel bien formé selon le standard RFC822 |     |     |     | F   | T   |
-|                                              |     |     |     |     |     |
-|                                              |     |     |     |     |     |
-| utilisateur (non null)                       |     |     |     |     | T   |
-| pseudonyme' = pseudonyme                     |     |     |     |     | T   |
-| nom' = nom                                   |     |     |     |     | T   |
-| prénom' = prénom                             |     |     |     |     | T   |
-| courriel' = courriel                         |     |     |     |     | T   |
-| étatCompte' = actif                          |     |     |     |     | T   |
-|                                              |     |     |     |     |     |
-| levée d'une exception                        | oui | oui | oui | oui | non |
-|                                              |     |     |     |     |     |
-| nombre de tests dans le jeu de tests         | 2   | 2   | 2   | 3   | 1   |
-
-"Test content", membre, EtatMessage.ACCEPTE, rs)
-
-| Test Case | contenu | accepte | reseauSocial | membre | Expected Exception |
-|-----------|---------|---------|--------------|--------|--------------------|
-| 1         | null    | valid   | valid        | valid  | IllegalArgumentException |
-| 2         | ""      | valid   | valid        | valid  | IllegalArgumentException |
-| 3         | valid   | valid   | null         | valid  | IllegalArgumentException |
-| 4         | valid   | valid   | valid        | null   | IllegalArgumentException |
-| 5         | valid   | valid   | valid        | valid  | No Exception |
+|                                      | 1   | 2   | 3   | 4   | 5   |
+|:-------------------------------------|:----|:----|:----|:----|-----|
+| contenu (non null ∧ non vide)        | F   | T   | T   | T   | T   |
+| membre (non null)                    |     | F   | T   | T   | T   |
+| etat (non null)                      |     |     | F   | T   | T   |
+| rs non null                          |     |     |     | F   | T   |
+|                                      |     |     |     |     |     |
+| message non null                     |     |     |     |     | T   |
+| contenu' = contenu                   |     |     |     |     | T   |
+| etat' = etat                         |     |     |     |     | T   |
+| rs' = rs                             |     |     |     |     | T   |
+| membre' = membre                     |     |     |     |     | T   |
+|                                      |     |     |     |     |     |
+| levée d'une exception                | oui | oui | oui | oui | non |
+|                                      |     |     |     |     |     |
+| nombre de tests dans le jeu de tests | 2   | 1   | 1   | 1   | 1   |
 
 
-## 8.3. Opérations de la classe Participation
+### Opération modifierStatutMessage OK
 
-### Opération modererMessage
+public void modifierStatutMessage(final EtatMessage etat)
 
-### Message Constructor Unit Test
+|                                      | 1   | 2   |
+|:-------------------------------------|:----|-----|
+| etat (non null)                      | F   | T   |
+|                                      |     |     |
+| etat' = etat                         |     | T   |
+|                                      |     |     |
+| levée d'une exception                | oui | non |
+|                                      |     |     |
+| nombre de tests dans le jeu de tests | 1   |     |
+	
+### Opération envoyerMessage OK
 
-|                                                    | 1   | 2   | 3   | 4   | 5   |
-|:---------------------------------------------------|:----|:----|:----|:----|:----|
-| contenu bien formé (non null ∧ non vide)           | F   | T   | T   | T   | T   |
-| boolean accepte bien défini                        |     | F   | T   | T   | T   |
-| pseudoParticulier bien formé (non null ∧ non vide) |     |     | F   | T   | T   |
-| reseauSocial bien défini                           |     |     |     | F   | T   |
-| participation bien définie                         |     |     |     |     | F   |
-|                                                    |     |     |     |     |     |
-| contenu' = contenu                                 | F   | F   | F   | F   | T   |
-| accepte' = accepte                                 | F   | F   | F   | F   | T   |
-| pseudoParticulier' = pseudoParticulier             | F   | F   | F   | F   | T   |
-| reseauSocial' = reseauSocial                       | F   | F   | F   | F   | T   |
-| participation' = participation                     | F   | F   | F   | F   | T   |
-|                                                    |     |     |     |     |     |
-| levée d'une exception                              | oui | oui | oui | oui | non |
-|                                                    |     |     |     |     |     |
-| nombre de tests dans le jeu de tests               | 2   | 1   | 2   | 1   | 1   |
-|                                                    |     |     |     |     |     |
-| Message.moderer() method                           |     |     |     |     |     |
-| Membre est un modérateur                           | F   | F   | F   | T   | T   |
-| Membre n'est pas un modérateur                     |     |     |     | F   | F   |
-|                                                    |     |     |     |     |     |
-| levée d'une exception (rôle incorrect)             | oui | oui | oui | non | non |
-|                                                    |     |     |     |     |     |
-| nombre de tests dans le jeu de tests               | 2   | 2   | 2   | 1   | 1   |
+|                                      | 1   | 2   |
+|:-------------------------------------|:----|-----|
+| message membre modérateur            | F   | T   |
+|                                      |     |     |
+| etat' = ACCEPTE                      | F   | T   |
+|                                      |     |     |
+| levée d'une exception                | non | non |
+|                                      |     |     |
+| nombre de tests dans le jeu de tests | 1   | 1   |
+
+
+## 8.3. Opérations de la classe Membre
+
+### Opération constructeur OK
+
+public Membre(final String pseudoParticulier, final Utilisateur utilisateur, final ReseauSocial rs)
+
+|                                                    | 1   | 2   | 3   | 4   |
+|:---------------------------------------------------|:----|:----|:----|:----|
+| pseudoParticulier bien formé (non null ∧ non vide) | F   | T   | T   | T   |
+| utilisateur (non null)                             |     | F   | T   | T   |
+| rs (non null)                                      |     |     | F   | T   |
+|                                                    |     |     |     |     |
+| membre not null                                    |     |     |     |     |
+| pseudoParticulier' = pseudoParticulier             |     |     |     |     |
+| utilisateur' = utilisateur                         |     |     |     |     |
+| rs' = rs                                           |     |     |     |     |
+|                                                    |     |     |     |     |
+| levée d'une exception                              | oui | oui | oui | non |
+|                                                    |     |     |     |     |
+| nombre de tests dans le jeu de tests               | 2   | 1   | 1   | 1   |
+
+### Opéation modérer OK
+
+public void moderer(final Message m, EtatMessage etat)
+
+|                                      | 1   | 2   | 3   | 4   |
+|:-------------------------------------|:----|:----|:----|:----|
+| m (non null)                         | F   | T   | T   | T   |
+| etat (non null)                      |     | F   | T   | T   |
+| exécutant de type Modérateur         |     |     | F   | T   |
+|                                      |     |     |     |     |
+| etat non null                        |     |     |     | T   |
+| etat' = etat                         |     |     |     | T   |
+|                                      |     |     |     |     |
+| levée d'une exception                | oui | oui | oui | non |
+|                                      |     |     |     |     |
+| nombre de tests dans le jeu de tests | 1   | 1   | 1   | 1   |
+
+## Opérations de la classe Reseau Social
+
+### Opération constructeur OK
+
+public ReseauSocial(final String nom, boolean ouvert)
+
+|                                      | 1   | 2   | 3   |
+|:-------------------------------------|:----|:----|:----|
+| nom (non null  ∧ non vide)           | F   | T   | T   |
+| ouvert                               |     | F   | T   |
+|                                      |     |     |     |
+| rs (non null)                        |     |     |     |
+| nom' = nom                           |     | T   | T   |
+| ouvert' = ouvert                     |     | T   | T   |
+| membres' (non null)                  |     | T   | T   |
+| messages' (non null)                 |     | T   | T   |
+|                                      |     |     |     |
+| levée d'une exception                | oui | non | non |
+|                                      |     |     |     |
+| nombre de tests dans le jeu de tests | 2   | 1   | 1   |
+
+### Opération getMembrefromUtilisateur OK
+
+public Membre getMembrefromUtilisateur(Utilisateur u)
+
+|                                           | 1   | 2   | 3   |
+|:------------------------------------------|:----|:----|:----|
+| u positif                                 | F   | T   | T   |
+| utilisateur associé à un membre sur le rs |     | F   | T   |
+|                                           |     |     |     |
+|                                           |     |     |     |
+| renvoie null                              |     | T   | F   |
+| renvoie membre                            |     |     | T   |
+|                                           |     |     |     |
+| levée d'une exception                     | oui | non | non |
+|                                           |     |     |     |
+| nombre de tests dans le jeu de tests      | 1   | 1   | 1   |
+
+// Pb : deux membres peuvent avoir le mm rs
+
+### Opération getMessageFromId
+
+public Message getMessageFromId(double id)
+
+|                                      | 1   | 2   | 3   |
+|:-------------------------------------|:----|:----|:----|
+| id (non null)                        | F   | T   | T   |
+| message avec id existe sur le rs     |     | F   | T   |
+|                                      |     |     |     |
+|                                      |     |     |     |
+| renvoie null                         |     | T   | F   |
+| renvoie message                      |     |     | T   |
+|                                      |     |     |     |
+| levée d'une exception                | oui | non | non |
+|                                      |     |     |     |
+| nombre de tests dans le jeu de tests | 1   | 1   | 1   |
+
+On vérifie aussi que l'id est incrémenté de 1 à chaque nouveau message... OK
+
+### Opération ajouterMembre
+
+public ajouterMembre(Utilisateur u, String pseudoParticulier, boolean mod)
+
+|                                         | 1   | 2   | 3   | 4   |
+|:----------------------------------------|:----|:----|:----|:----|
+| utilisateur (non null)                  | F   | T   | T   | T   |
+| pseudoParticulier (non null ∧ non vide) |     | F   | T   | T   |
+| mod                                     |     |     | F   | T   |
+|                                         |     |     |     |     |
+| membre non null                         |     |     | T   | T   |
+| membre dans rs                          |     |     | T   | T   |
+| membre est modérateur                   |     |     | F   | T   |
+|                                         |     |     |     |     |
+| levée d'une exception                   | oui | oui | non | non |
+|                                         |     |     |     |     |
+| nombre de tests dans le jeu de tests    | 1   | 2   | 1   | 1   |
 
 
 
@@ -851,3 +952,12 @@ Deux tests dans le jeu de tests 2 pour l'idempotence.
 
 ---
 FIN DU DOCUMENT
+
+machine a etats msg
+
+val
+- creer rs
+- ajouter utilisateur (done)
+- ajouter membre a rs 
+- poster msg
+- moderer msg

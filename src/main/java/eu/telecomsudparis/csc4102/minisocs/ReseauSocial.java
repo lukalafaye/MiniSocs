@@ -17,7 +17,6 @@ public class ReseauSocial {
 	final String nom;
 	private boolean ouvert;
 	private Set<Membre> membres;
-	private Set<Moderateur> moderateurs; 
 	private List<Message> messages;
 	
 	public ReseauSocial(final String nom, boolean ouvert) {
@@ -31,15 +30,30 @@ public class ReseauSocial {
 	}
 	
 	public String getNom() {
-		return nom;
+		return this.nom;
 	}
 	
 	public boolean getOuvert() {
-		return ouvert;
+		return this.ouvert;
+	}
+	
+	public Set<Membre> getMembres() {
+		return this.membres;
+	}
+	
+	public List<Message> getMessages() {
+		return this.messages;
 	}
 	
 	public Membre getMembrefromUtilisateur(Utilisateur u) {
+		if (u == null) {
+			throw new IllegalArgumentException("utilisateur null");
+		}
+		System.out.println("POH\n");
 		for (Membre m : this.membres) {
+			System.out.println(u.getPseudonyme());
+			System.out.println(m.getUtilisateur().getPseudonyme());
+			System.out.println("POH\n");
 			if (u.getPseudonyme().equals(m.getUtilisateur().getPseudonyme())) {
 				return m;
 			}
@@ -48,6 +62,9 @@ public class ReseauSocial {
 	}
 	
     public Message getMessageFromId(double id) {
+    	if (id < 0) {
+	        throw new IllegalArgumentException("Id doit être positif");
+	    }
         for (Message msg : this.messages) {
             if (msg.getId() == id) { 
                 return msg;
@@ -56,39 +73,32 @@ public class ReseauSocial {
         return null; 
     }
     
-	public void ajouterMembre(String pseudo, Utilisateur u, String pseudoParticulier, boolean mod) throws OperationImpossible {	
+	public Membre ajouterMembre(Utilisateur u, String pseudoParticulier, boolean mod) {	
 
-	    if (mod && (pseudoParticulier == null || pseudoParticulier.isBlank())) {
-	        throw new IllegalArgumentException("PseudoParticulier cannot be null or empty for a moderator.");
+	    if ((pseudoParticulier == null) || (pseudoParticulier.isBlank())) {
+	        throw new IllegalArgumentException("PseudoParticulier cannot be null or empty");
 	    }
 
-	    if (!mod && (pseudoParticulier == null || pseudoParticulier.isBlank())) {
-	        throw new IllegalArgumentException("PseudoParticulier cannot be null or empty for a member.");
-	    }
-
+	    Membre m;
 	    if (mod) {
-	        Moderateur m = new Moderateur(pseudo, u, this);
-	        if (!pseudoParticulier.isBlank()) {
-	            m.changePseudoParticulier(pseudoParticulier);
-	        }
+	        m = new Moderateur(pseudoParticulier, u, this);
 	        membres.add(m);
 	    } else {
-	        Membre m = new Membre(pseudo, u, this);
-	        if (!pseudoParticulier.isBlank()) {
-	            m.changePseudoParticulier(pseudoParticulier);
-	        }
+	        m = new Membre(pseudoParticulier, u, this);
 	        membres.add(m);
 	    }
-	    
 	    assert invariant();
+
+	    return m;
 	}
 
 	
-    public void ajouterMessage(String contenu, Membre m) throws OperationImpossible {
+    public Message ajouterMessage(String contenu, Membre m) {
     	Message nouveauMessage = new Message(contenu, m, EtatMessage.VERIFICATION_PENDING, this);
     	nouveauMessage.envoyerMessage();
         messages.add(nouveauMessage);
     	assert invariant();
+    	return nouveauMessage;
     }
     
     public boolean invariant() {
@@ -97,7 +107,6 @@ public class ReseauSocial {
         }
 
         Objects.requireNonNull(membres, "Invariant violation: membres ne peut pas être null");
-        Objects.requireNonNull(moderateurs, "Invariant violation: moderateurs ne peut pas être null");
         Objects.requireNonNull(messages, "Invariant violation: messages ne peut pas être null");
    
         return true;
@@ -120,5 +129,4 @@ public class ReseauSocial {
 	public String toString() {
 		return "nom : " + this.nom;
 	}
-
 }

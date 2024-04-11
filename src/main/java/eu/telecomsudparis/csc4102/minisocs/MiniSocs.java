@@ -126,13 +126,14 @@ public class MiniSocs {
         }
         Utilisateur u = utilisateurs.get(pseudo);
         ReseauSocial rs = reseauxSociaux.get(nomReseau);
+        
         if (u == null || u.getEtatCompte() != EtatCompte.ACTIF) {
             throw new OperationImpossible("L'utilisateur n'est pas actif ou n'existe pas.");
         }
         if (!rs.getOuvert()) {
             throw new OperationImpossible("Le réseau social n'est pas ouvert.");
         }
-        rs.ajouterMembre(pseudo, u, pseudoParticulier, mod);
+        rs.ajouterMembre(u, pseudoParticulier, mod);
         
         assert invariant();
     }
