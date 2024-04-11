@@ -47,19 +47,19 @@ public class TestMessage {
     @Test
 	void constructeurMessageTest1Jeu1() {
 		Assertions.assertThrows(IllegalArgumentException.class,
-				() -> new Message(null, membre, EtatMessage.ACCEPTE, rs));
+				() -> new Message(null, membre, EtatMessage.SENT, rs));
 	}
     
     @Test
    	void constructeurMessageTest1Jeu2() {
    		Assertions.assertThrows(IllegalArgumentException.class,
-   				() -> new Message("", membre, EtatMessage.ACCEPTE, rs));
+   				() -> new Message("", membre, EtatMessage.SENT, rs));
    	}
     
     @Test
    	void constructeurMessageTest2Jeu1() {
    		Assertions.assertThrows(IllegalArgumentException.class,
-   				() -> new Message("content", null, EtatMessage.ACCEPTE, rs));
+   				() -> new Message("content", null, EtatMessage.SENT, rs));
    	}
     
     @Test
@@ -71,15 +71,15 @@ public class TestMessage {
     @Test
    	void constructeurMessageTest4Jeu1() {
    		Assertions.assertThrows(IllegalArgumentException.class,
-   				() -> new Message("content", membre, EtatMessage.ACCEPTE, null));
+   				() -> new Message("content", membre, EtatMessage.SENT, null));
    	}
     
     @Test
     public void constructeurMessageTest5Jeu1() {
-        Message message = new Message("content", membre, EtatMessage.ACCEPTE, rs);
+        Message message = new Message("content", membre, EtatMessage.SENT, rs);
         assertNotNull(message);
         assertEquals("content", message.getContenu());
-        assertEquals(EtatMessage.ACCEPTE, message.getEtat());
+        assertEquals(EtatMessage.SENT, message.getEtat());
         assertEquals(rs, message.getReseauSocial());
         assertEquals(membre, message.getMembre());
     }
@@ -92,8 +92,8 @@ public class TestMessage {
     
     @Test
    	void modifierStatutMessageTest2Jeu1() {
-   		m.modifierStatutMessage(EtatMessage.ACCEPTE);
-   		assertEquals(EtatMessage.ACCEPTE, m.getEtat());
+   		m.modifierStatutMessage(EtatMessage.SENT);
+   		assertEquals(EtatMessage.SENT, m.getEtat());
    	}
     
     @Test
@@ -107,6 +107,6 @@ public class TestMessage {
     	Moderateur moderateur = new Moderateur("pseudo", utilisateur, rs);
         Message msg2 = new Message("Test content", moderateur, EtatMessage.VERIFICATION_PENDING, rs);
     	msg2.envoyerMessage();
-    	assertEquals(EtatMessage.ACCEPTE, msg2.getEtat());
+    	assertEquals(EtatMessage.SENT, msg2.getEtat());
    	}
 }

@@ -145,6 +145,10 @@ public class Message {
 	    assert invariant();
 	}
 	
+	public void deleteMessage() {
+		this.etat = EtatMessage.DELETED;
+		// Supprimer de la liste du rs?
+	}
 	
 	/**
 	 * accepte le message si celui qui le poste est moderateur. 
@@ -169,7 +173,7 @@ public class Message {
 		}
 		
 	    if (membre instanceof Moderateur) {
-	        this.etat = EtatMessage.ACCEPTE;
+	        this.etat = EtatMessage.SENT;
 	    }
 	    
 	    assert invariant();
@@ -184,7 +188,7 @@ public class Message {
             throw new IllegalStateException("Invariant violation: contenu ne peut pas être null ou vide");
         }
 
-        if (!(etat == EtatMessage.ACCEPTE || etat == EtatMessage.VERIFICATION_PENDING 
+        if (!(etat == EtatMessage.SENT || etat == EtatMessage.VERIFICATION_PENDING 
         		||
               etat == EtatMessage.INAPPROPRIATE || etat == EtatMessage.HIDDEN 
               ||

@@ -858,7 +858,7 @@ public Membre getMembrefromUtilisateur(Utilisateur u)
 
 |                                           | 1   | 2   | 3   |
 |:------------------------------------------|:----|:----|:----|
-| u positif                                 | F   | T   | T   |
+| u non null                                | F   | T   | T   |
 | utilisateur associé à un membre sur le rs |     | F   | T   |
 |                                           |     |     |     |
 |                                           |     |     |     |
@@ -894,25 +894,48 @@ On vérifie aussi que l'id est incrémenté de 1 à chaque nouveau message... OK
 
 public ajouterMembre(Utilisateur u, String pseudoParticulier, boolean mod)
 
-|                                         | 1   | 2   | 3   | 4   |
-|:----------------------------------------|:----|:----|:----|:----|
-| utilisateur (non null)                  | F   | T   | T   | T   |
-| pseudoParticulier (non null ∧ non vide) |     | F   | T   | T   |
-| mod                                     |     |     | F   | T   |
-|                                         |     |     |     |     |
-| membre non null                         |     |     | T   | T   |
-| membre dans rs                          |     |     | T   | T   |
-| membre est modérateur                   |     |     | F   | T   |
-|                                         |     |     |     |     |
-| levée d'une exception                   | oui | oui | non | non |
-|                                         |     |     |     |     |
-| nombre de tests dans le jeu de tests    | 1   | 2   | 1   | 1   |
+|                                         | 1   | 2   | 3   | 4   | 5   |
+|                                         |     |     |     |     |     |
+|:----------------------------------------|:----|:----|:----|:----|-----|
+| utilisateur (non null)                  | F   | T   | T   | T   | T   |
+| pseudoParticulier (non null ∧ non vide) |     | F   | T   | T   | T   |
+| pseudoParticulier disponible            |     |     | F   | T   | T   |
+| mod                                     |     |     |     | F   | T   |
+|                                         |     |     |     |     |     |
+| membre non null                         |     |     |     | T   | T   |
+| membre dans rs                          |     |     |     | T   | T   |
+| membre est modérateur                   |     |     |     | F   | T   |
+|                                         |     |     |     |     |     |
+| levée d'une exception                   | oui | oui | oui | non | non |
+|                                         |     |     |     |     |     |
+| nombre de tests dans le jeu de tests    | 1   | 2   | 1   | 1   | 1   |
 
+### Opération ajouterMessage
+
+public Message ajouterMessage(String contenu, Membre m)
+
+|                                      | 1   | 2   | 3   | 4   |
+|                                      |     |     |     |     |
+|:-------------------------------------|:----|:----|:----|-----|
+| contenu (non null ∧ non vide)        | F   | T   | T   | T   |
+| membre non null                      |     | F   | T   | T   |
+| membre modérateur                    |     |     | F   | T   |
+|                                      |     |     |     |     |
+| message' non null                    |     |     | T   | T   |
+| rs contient message'                 |     |     | T   | T   |
+| contenu' = contenu                   |     |     | T   | T   |
+| etat' = SENT                         |     |     | F   | T   |
+| etat' = VERIFICATION_PENDING         |     |     | T   | F   |
+|                                      |     |     |     |     |
+| levée d'une exception                | oui | oui | non | non |
+|                                      |     |     |     |     |
+| nombre de tests dans le jeu de tests | 2   | 1   | 1   | 1   |
 
 
 ## Tests validation
 
-### UC1 
+### UC1 : Créer un réseau social
+
 
 |                                      | 1   | 2   |
 |:-------------------------------------|:----|:----|
@@ -952,8 +975,6 @@ public ajouterMembre(Utilisateur u, String pseudoParticulier, boolean mod)
 
 ---
 FIN DU DOCUMENT
-
-machine a etats msg
 
 val
 - creer rs

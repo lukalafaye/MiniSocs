@@ -3,15 +3,15 @@ package eu.telecomsudparis.csc4102.minisocs;
 
 public enum EtatMessage {
 
-	ACCEPTE("accepté"),
-
 	VERIFICATION_PENDING("en attente"),
 	
 	HIDDEN("caché"),
 	
 	SENT("envoyé"),
 
-	INAPPROPRIATE("inapproprié");
+	INAPPROPRIATE("inapproprié"),
+	
+	DELETED("supprimé");
 
 	/**
 	 * le nom de l'état à afficher.

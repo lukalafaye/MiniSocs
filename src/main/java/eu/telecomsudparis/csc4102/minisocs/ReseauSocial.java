@@ -101,6 +101,9 @@ public class ReseauSocial {
 
 	
     public Message ajouterMessage(String contenu, Membre m) {
+    	if ((contenu == null) || (contenu.isBlank())) {
+	        throw new IllegalArgumentException("Contenu cannot be null or empty");
+	    }
     	Message nouveauMessage = new Message(contenu, m, EtatMessage.VERIFICATION_PENDING, this);
     	nouveauMessage.envoyerMessage();
     	m.addMessage(nouveauMessage, contenu);

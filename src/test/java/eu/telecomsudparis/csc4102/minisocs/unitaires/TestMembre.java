@@ -77,7 +77,7 @@ public class TestMembre {
    	void modererTest1Jeu1() {
     	m = new Membre("pseudoParticulier", utilisateur, rs);
    		Assertions.assertThrows(IllegalArgumentException.class,
-   				() -> m.moderer(null, EtatMessage.ACCEPTE));
+   				() -> m.moderer(null, EtatMessage.SENT));
    	}
     
     @Test
@@ -95,7 +95,7 @@ public class TestMembre {
         msg = new Message("content", m, EtatMessage.VERIFICATION_PENDING, rs);
 
    		Assertions.assertThrows(IllegalArgumentException.class,
-   				() -> m.moderer(msg, EtatMessage.ACCEPTE));
+   				() -> m.moderer(msg, EtatMessage.SENT));
    	}
     
     @Test
@@ -103,8 +103,8 @@ public class TestMembre {
     	m = new Moderateur("pseudoParticulier", utilisateur, rs);
         msg = new Message("content", m, EtatMessage.VERIFICATION_PENDING, rs);
 
-        m.moderer(msg, EtatMessage.ACCEPTE);
+        m.moderer(msg, EtatMessage.SENT);
         assertNotNull(msg);
-        assertEquals(EtatMessage.ACCEPTE, msg.getEtat());
+        assertEquals(EtatMessage.SENT, msg.getEtat());
    	}  
 }
