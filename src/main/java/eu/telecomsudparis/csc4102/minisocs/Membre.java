@@ -85,8 +85,8 @@ public class Membre {
         return true;
 	}
 	
-    public void requestSendMessage(final String messageContent) throws OperationImpossible {
-    	this.rs.ajouterMessage(messageContent, this);
+    public void addMessage(Message message, final String contenu) {
+    	this.messages.put(contenu, message);
 	    assert invariant();
     }
 	

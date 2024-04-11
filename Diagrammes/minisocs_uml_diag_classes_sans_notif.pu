@@ -13,10 +13,15 @@
 
 	'Classes, énumérations, etc.'
 	class MiniSocs {
-	  - nom: String
-	  - créerUtilisateur(): methode
-	  - créerRS(nom): methode
-	  - rejoindreRS(): methode
+	  - nomDuSysteme: String
+	  - ajouterUtilisateur(): methode
+	  - creerReseauSocial(): methode
+	  - ajouterMembreRS(): methode
+	  - posterMessageRS(): methode
+	  - modererMessage(): methode
+	  - desactiverCompteUtilisateur(): methode
+	  - listerUtilisateurs(): methode
+	  - listerRS(): methode
 	}
 
 	class Utilisateur {
@@ -25,14 +30,15 @@
 	  - prénom: String
 	  - courriel: String
 	  - etatCompte: ÉtatCompte
-	  - posterMessage(): methode
+	  - setEtatCompte(): methode
+	  - bloquerCompte(): methode
+	  - desactiverCompte(): methode
 	}
 
 	enum ÉtatCompte <<enum>> {
 	  ACTIF
 	  DÉSACTIVÉ
 	  BLOQUÉ
-	  DÉBLOQUÉ
 	}
 
 	enum ÉtatMessage <<enum>> {
@@ -44,43 +50,42 @@
 	}
 
 	class Membre {
-	  / pseudonyme: String
 	  - pseudoParticulier: String
-	  - requestSendMessage(): method
+	  - addMessage(): method
+	  - changePseudoParticulier(): method
 	}
 
 	class Moderateur {
-	  - bloquerUtilisateur(): methode
-	  - supprimerMessage(): methode
+	  - moderer(): methode
 	}
 
 	class ReseauSocial {
 	  - nom: String
 	  - ouvert: bool
-	  - créerParticipation(bool moderateur): methode
+	  - ajouterMembre(): methode
+	  - ajouterMessage(): methode
+	  - getMembrefromUtilisateur() : methode
+	  - getMessagefromId() : methode
 	}
 
 	class Message {
 	  - contenu: String
 	  - etatMessage: ÉtatMessage
-	  - delete_message(): methode
-	  - hide_message(): methode
-	  - mark_inappropriate(): method
-	  - send_message(): method
+	  - id: double
+	  - modifierStatutMessage(): methode
+	  - envoyerMessage(): methode
 	}
 
 	'Associations, etc.'
 	MiniSocs *--> "*" Utilisateur: Crée
-	Utilisateur "1" --> "*" ReseauSocial: Connait
-        Utilisateur "1" --> "*" Membre: Possède
-	
-	Moderateur "1" *--> "*" Message: Envoyer
-	Membre "1" *--> "*" Message: Demander
+	Membre "*" --> "1" Utilisateur: Lie a
+
+	Membre "1" *-- "*" Message: Demander
         
 	MiniSocs *--> "*" ReseauSocial
-        ReseauSocial "1"--> "*" Message
+        ReseauSocial "1"-- "*" Message
         
-	ReseauSocial "1" *--> "*" Membre
+	ReseauSocial "1" *-- "*" Membre
 
 	Moderateur --|> Membre
 	

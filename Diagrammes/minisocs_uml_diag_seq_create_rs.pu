@@ -8,24 +8,29 @@ skinparam sequenceParticipantBackgroundColor White
 skinparam sequenceActorBackgroundColor White
 
 'Déclaration des acteurs et des participants (déjà existants avant la séquence)'
-actor "__u:Utilisateur__" as u
-participant "__app:MiniSocs__" as m
+actor "__:Administrateur__" as admin
+participant "__m:MiniSocs__" as m
 
 'Séquence avec les messages, les créations de participants, etc.'
-u -> m ++ : createReseau(nom:String)
-opt u.EtatCompte = Actif
-  m -> m ++ : r=searchReseau(nom): ReseauSocial
+admin -> m ++ : creerReseauSocial(pseudoExec, nomReseau, ouvert, pseudoParticulier)
+opt pseudoExec non null ∧ non vide
+  m -> m ++ : u=chercherUtilisateur(pseudoExec): Utilisateur
   return
-  create "__r:ReseauSocial__" as r
-  opt r == null
-    m -> "__r=ReseauSocial__" as r ++ : r=createReseau(nom)
-        create "__compteParticipation__" as compte
-        r -> compte ++ : createParticipation(u.pseudo, true)
+  opt u != null et u.getEtatCompte() == ACTIF
+    opt nomReseau non null ∧ non vide
+      m -> m ++ : rs=chercherReseauSocial(nomReseau): ReseauSocial
+      return
+      opt rs == null
+        create "__rs:ReseauSocial__" as rs
+        m -> "__rs:ReseauSocial__" as rs ++ : rs=<<create(nomReseau, ouvert)>>
         return
-        r -> u ++ : linkCompte(u, compte)
-    return
+        m -> m ++ : ajouterMembreRS(pseudoExec, nomReseau, pseudoParticulier, true)
+        return
+      end
+    end
   end
 end
 return
-return
+
 @enduml
+

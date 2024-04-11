@@ -79,8 +79,15 @@ public class ReseauSocial {
 	        throw new IllegalArgumentException("PseudoParticulier cannot be null or empty");
 	    }
 
-	    Membre m;
-	    if (mod) {
+		for (Membre m : this.membres) {
+			if (pseudoParticulier.equals(m.getPseudoParticulier())) {
+		        throw new IllegalArgumentException("PseudoParticulie deja pris.");
+			}
+		}
+
+		Membre m;
+		
+		if (mod) {
 	        m = new Moderateur(pseudoParticulier, u, this);
 	        membres.add(m);
 	    } else {
@@ -96,6 +103,7 @@ public class ReseauSocial {
     public Message ajouterMessage(String contenu, Membre m) {
     	Message nouveauMessage = new Message(contenu, m, EtatMessage.VERIFICATION_PENDING, this);
     	nouveauMessage.envoyerMessage();
+    	m.addMessage(nouveauMessage, contenu);
         messages.add(nouveauMessage);
     	assert invariant();
     	return nouveauMessage;
