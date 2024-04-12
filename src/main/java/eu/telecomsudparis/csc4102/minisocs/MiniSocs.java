@@ -49,6 +49,7 @@ public class MiniSocs {
 	 * @param prenom   le prénom de l'utilisateur.
 	 * @param courriel le courriel de l'utilisateur.
 	 * @throws OperationImpossible en cas de problème sur les pré-conditions.
+	 * @return utilisateur ajoute
 	 */
 	public Utilisateur ajouterUtilisateur(final String pseudo, final String nom, final String prenom, final String courriel)
 			throws OperationImpossible {
@@ -86,6 +87,7 @@ public class MiniSocs {
 	 * @param ouvert   l etat initial du RS.
 	 * @param pseudoParticulier le pseudo du membre particulier au reseau social.
 	 * @throws IllegalArgumentException en cas de problème sur les pré-conditions.
+	 * @return reseau social cree
 	 */
     public ReseauSocial creerReseauSocial(final String pseudoExec, final String nomReseau, final boolean ouvert, final String pseudoParticulier) throws OperationImpossible {
         if (pseudoExec == null || pseudoExec.isBlank()) {
@@ -130,6 +132,7 @@ public class MiniSocs {
 	 * @param mod   boolean indiquant si le membre est moderateur.
 	 * @param pseudoParticulier le pseudo du membre particulier au reseau social.
 	 * @throws OperationImpossible en cas de problème sur les pré-conditions.
+	 * @return Membre ajoute
 	 */
     public Membre ajouterMembreRS(final String pseudo, final String nomReseau, final String pseudoParticulier, final boolean mod) throws OperationImpossible {
         if (pseudo == null || pseudo.isBlank()) {
@@ -171,6 +174,7 @@ public class MiniSocs {
 	 * @param nomReseau      le nom du reseau social.
 	 * @param contenu   le contenu du message.
 	 * @throws OperationImpossible en cas de problème sur les pré-conditions.
+	 * @return message poste
 	 */
     public Message posterMessageRS(final String pseudo, final String contenu, final String nomReseau) throws OperationImpossible {
         if (pseudo == null || pseudo.isBlank()) {
