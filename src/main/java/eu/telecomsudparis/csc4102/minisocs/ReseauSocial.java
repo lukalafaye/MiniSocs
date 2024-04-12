@@ -53,11 +53,7 @@ public class ReseauSocial {
 		if (u == null) {
 			throw new IllegalArgumentException("utilisateur null");
 		}
-		System.out.println("POH\n");
 		for (Membre m : this.membres) {
-			System.out.println(u.getPseudonyme());
-			System.out.println(m.getUtilisateur().getPseudonyme());
-			System.out.println("POH\n");
 			if (u.getPseudonyme().equals(m.getUtilisateur().getPseudonyme())) {
 				return m;
 			}
@@ -112,6 +108,7 @@ public class ReseauSocial {
     	nouveauMessage.envoyerMessage();
     	m.addMessage(nouveauMessage, contenu);
         messages.add(nouveauMessage);
+
     	assert invariant();
     	return nouveauMessage;
     }

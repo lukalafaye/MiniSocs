@@ -962,31 +962,75 @@ Nous avons aussi testé avec ouvert = false... OK
 
 public Membre ajouterMembreRS(final String pseudo, final String nomReseau, final String pseudoParticulier, final boolean mod) 
 
-|                                          | 1   | 2   | 3   | 4   | 5   | 6   | 7   |
-|:-----------------------------------------|:----|:----|:----|-----|-----|-----|-----|
-| pseudo  (non null ∧ non vide)            | F   | T   | T   | T   | T   | T   | T   |
-| nomReseau  (non null ∧ non vide)         |     | F   | T   | T   | T   | T   | T   |
-| pseudoParticulier  (non null ∧ non vide) |     |     | F   | T   | T   | T   | T   |
-| Compte exec actif                        |     |     |     | F   | T   | T   | T   |
-| rs non null                              |     |     |     |     | F   | T   | T   |
-| rs ouvert                                |     |     |     |     |     | F   | T   |
-|                                          |     |     |     |     |     |     |     |
-| pseudoParticulier' = pseudoParticulier   |     |     |     |     |     |     | T   |
-| rs contient membre pseudoParticlier      |     |     |     |     |     |     | T   |
-| mod' = mod                               |     |     |     |     |     |     | T   |
-|                                          |     |     |     |     |     |     |     |
-| Lancement d'une exception                | oui | oui | oui | oui | oui | oui | non |
-|                                          |     |     |     |     |     |     |     |
-| Nombre de tests dans le jeu de tests     | 2   | 2   | 2   | 1   | 1   | 1   | 1   |
+|                                           | 1   | 2   | 3   | 4   | 5   | 6   | 7   | 8   |
+|:------------------------------------------|:----|:----|:----|-----|-----|-----|-----|-----|
+| pseudo  (non null ∧ non vide)             | F   | T   | T   | T   | T   | T   | T   | T   |
+| nomReseau  (non null ∧ non vide)          |     | F   | T   | T   | T   | T   | T   | T   |
+| pseudoParticulier  (non null ∧ non vide)  |     |     | F   | T   | T   | T   | T   | T   |
+| Compte exec actif                         |     |     |     | F   | T   | T   | T   | T   |
+| rs non null                               |     |     |     |     | F   | T   | T   | T   |
+| rs ouvert                                 |     |     |     |     |     | F   | T   | T   |
+| l'utilisateur n'a pas de membre sur le rs |     |     |     |     |     |     | F   | T   |
+|                                           |     |     |     |     |     |     |     |     |
+| pseudoParticulier' = pseudoParticulier    |     |     |     |     |     |     |     | T   |
+| rs contient membre pseudoParticlier       |     |     |     |     |     |     |     | T   |
+| mod' = mod                                |     |     |     |     |     |     |     | T   |
+|                                           |     |     |     |     |     |     |     |     |
+| Lancement d'une exception                 | oui | oui | oui | oui | oui | oui | oui | non |
+|                                           |     |     |     |     |     |     |     |     |
+| Nombre de tests dans le jeu de tests      | 2   | 2   | 2   | 1   | 1   | 1   | 1   | 1   |
 
 ### UC3 : Poster un message
 
+public void posterMessageRS(final String pseudo, final String contenu, final String nomReseau) 
 
-
+|                                                | 1   | 2   | 3   | 4   | 5   | 6   | 7   | 8   | 9   |
+|:-----------------------------------------------|:----|:----|:----|-----|-----|-----|-----|-----|-----|
+| pseudo  (non null ∧ non vide)                  | F   | T   | T   | T   | T   | T   | T   | T   | T   |
+| contenu  (non null ∧ non vide)                 |     | F   | T   | T   | T   | T   | T   | T   | T   |
+| nomReseau  (non null ∧ non vide)               |     |     | F   | T   | T   | T   | T   | T   | T   |
+| Compte exec actif                              |     |     |     | F   | T   | T   | T   | T   | T   |
+| rs non null                                    |     |     |     |     | F   | T   | T   | T   | T   |
+| rs ouvert                                      |     |     |     |     |     | F   | T   | T   | T   |
+| utilisateur pseudo possède un membre sur le rs |     |     |     |     |     |     | F   | T   | T   |
+| membre possédé est modérateur sur le rs        |     |     |     |     |     |     |     | F   | T   |
+|                                                |     |     |     |     |     |     |     |     |     |
+| message non null                               |     |     |     |     |     |     |     | T   | T   |
+| message posté dans rs                          |     |     |     |     |     |     |     | T   | T   |
+| contenu' = contenu                             |     |     |     |     |     |     |     | T   | T   |
+| etat' = SENT                                   |     |     |     |     |     |     |     | F   | T   |
+| etat' = VERIFICATION_PENDING                   |     |     |     |     |     |     |     | T   | F   |
+|                                                |     |     |     |     |     |     |     |     |     |
+| Lancement d'une exception                      | oui | oui | oui | oui | oui | oui | oui | non | non |
+|                                                |     |     |     |     |     |     |     |     |     |
+| Nombre de tests dans le jeu de tests           | 2   | 2   | 2   | 1   | 1   | 1   | 1   | 1   | 1   |
 
 ### UC4 : Modérer un message
 
-### Créer un utilisateur
+public void modererMessage(final String pseudo, final double id, final String nomReseau, final EtatMessage etat)
+
+|                                                | 1   | 2   | 3   | 4   | 5   | 6   | 7   | 8   | 9   | 10  |
+|:-----------------------------------------------|:----|:----|:----|-----|-----|-----|-----|-----|-----|-----|
+| pseudo  (non null ∧ non vide)                  | F   | T   | T   | T   | T   | T   | T   | T   | T   | T   |
+| id positif                                     |     | F   | T   | T   | T   | T   | T   | T   | T   | T   |
+| nomReseau  (non null ∧ non vide)               |     |     | F   | T   | T   | T   | T   | T   | T   | T   |
+| Compte exec actif                              |     |     |     | F   | T   | T   | T   | T   | T   | T   |
+| rs non null                                    |     |     |     |     | F   | T   | T   | T   | T   | T   |
+| rs ouvert                                      |     |     |     |     |     | F   | T   | T   | T   | T   |
+| message avec id existe                         |     |     |     |     |     |     | F   | T   | T   | T   |
+| utilisateur pseudo possède un membre sur le rs |     |     |     |     |     |     |     | F   | T   | T   |
+| membre possédé est modérateur sur le rs        |     |     |     |     |     |     |     |     | F   | T   |
+|                                                |     |     |     |     |     |     |     |     |     |     |
+| message non null                               |     |     |     |     |     |     |     |     |     | T   |
+| message reste posté dans rs                    |     |     |     |     |     |     |     |     |     | T   |
+| etat' = etat                                   |     |     |     |     |     |     |     |     |     | T   |
+|                                                |     |     |     |     |     |     |     |     |     |     |
+| Lancement d'une exception                      | oui | oui | oui | oui | oui | oui | oui | oui | oui | non |
+|                                                |     |     |     |     |     |     |     |     |     |     |
+| Nombre de tests dans le jeu de tests           | 2   | 1   | 2   | 1   | 1   | 1   | 1   | 1   | 1   | 1   |
+
+
+### UC5 : Ajouter un utilisateur à MiniSocs
 
 public Utilisateur ajouterUtilisateur(final String pseudo, final String nom, final String prenom, final String courriel)
 

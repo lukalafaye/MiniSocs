@@ -25,7 +25,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class TestAjouterMembreRS {
+class TestPosterMessageRS {
 	
 	private Utilisateur user;
 	private String pseudoExec;
@@ -34,8 +34,8 @@ class TestAjouterMembreRS {
 	private String pseudoParticulier;
 	private MiniSocs minisocs;
 	private ReseauSocial rs;
-	private boolean mod;
-	private Utilisateur user2;
+	private String contenu;
+	private Message msg;
 
 	@BeforeEach
 	void setUp() {
@@ -50,7 +50,8 @@ class TestAjouterMembreRS {
 		nomReseau = "nomRS";
 		ouvert = true;
 		pseudoParticulier = "pseudo particulier";
-		mod = true;
+		contenu = "contenu";
+		
 	}
 
 	@AfterEach
@@ -61,12 +62,11 @@ class TestAjouterMembreRS {
 		user = null;
 		minisocs = null;
 		rs = null;
-		user2 = null;
+		contenu = null;
 	}
 
 	@Test
-	
-	void  ajouterMembreRSTest1Jeu1() {
+	void posterMessageRSTest1Jeu1() {
 		try {
 			rs = minisocs.creerReseauSocial(pseudoExec, nomReseau, ouvert, pseudoParticulier);
 		} catch (OperationImpossible e) {
@@ -75,11 +75,11 @@ class TestAjouterMembreRS {
 		}
 		
 		Assertions.assertThrows(OperationImpossible.class,
-				() -> minisocs.ajouterMembreRS(null, nomReseau, pseudoParticulier, mod));
+				() -> minisocs.posterMessageRS(null, contenu, nomReseau));
 	}
-
+	
 	@Test
-	void ajouterMembreRSTest1Jeu2() {
+	void posterMessageRSTest1Jeu2() {
 		try {
 			rs = minisocs.creerReseauSocial(pseudoExec, nomReseau, ouvert, pseudoParticulier);
 		} catch (OperationImpossible e) {
@@ -88,12 +88,63 @@ class TestAjouterMembreRS {
 		}
 		
 		Assertions.assertThrows(OperationImpossible.class,
-				() -> minisocs.ajouterMembreRS("", nomReseau, pseudoParticulier, mod));
+				() -> minisocs.posterMessageRS("", contenu, nomReseau));
 	}
 	
+	@Test
+	void posterMessageRSTest2Jeu1() {
+		try {
+			rs = minisocs.creerReseauSocial(pseudoExec, nomReseau, ouvert, pseudoParticulier);
+		} catch (OperationImpossible e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		Assertions.assertThrows(OperationImpossible.class,
+				() -> minisocs.posterMessageRS(pseudoExec, null, nomReseau));
+	}
 	
 	@Test
-	void ajouterMembreRSTest2Jeu1() {
+	void posterMessageRSTest2Jeu2() {
+		try {
+			rs = minisocs.creerReseauSocial(pseudoExec, nomReseau, ouvert, pseudoParticulier);
+		} catch (OperationImpossible e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		Assertions.assertThrows(OperationImpossible.class,
+				() -> minisocs.posterMessageRS(pseudoExec, "", nomReseau));
+	}
+	
+	@Test
+	void posterMessageRSTest3Jeu1() {
+		try {
+			rs = minisocs.creerReseauSocial(pseudoExec, nomReseau, ouvert, pseudoParticulier);
+		} catch (OperationImpossible e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		Assertions.assertThrows(OperationImpossible.class,
+				() -> minisocs.posterMessageRS(pseudoExec, contenu, null));
+	}
+	
+	@Test
+	void posterMessageRSTest3Jeu2() {
+		try {
+			rs = minisocs.creerReseauSocial(pseudoExec, nomReseau, ouvert, pseudoParticulier);
+		} catch (OperationImpossible e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		Assertions.assertThrows(OperationImpossible.class,
+				() -> minisocs.posterMessageRS(pseudoExec, contenu, ""));
+	}
+	
+	@Test
+	void posterMessageRSTest4Jeu1() {
 		try {
 			rs = minisocs.creerReseauSocial(pseudoExec, nomReseau, ouvert, pseudoParticulier);
 		} catch (OperationImpossible e) {
@@ -103,139 +154,112 @@ class TestAjouterMembreRS {
 		
 		user.desactiverCompte();
 		Assertions.assertThrows(OperationImpossible.class,
-				() -> minisocs.ajouterMembreRS(pseudoExec, nomReseau, pseudoParticulier, mod));
-	}
-
-	
-	@Test
-	void ajouterMembreRSTest3Jeu1() {
-		try {
-			rs = minisocs.creerReseauSocial(pseudoExec, nomReseau, ouvert, pseudoParticulier);
-		} catch (OperationImpossible e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		user.desactiverCompte();
-		Assertions.assertThrows(OperationImpossible.class,
-				() -> minisocs.ajouterMembreRS(pseudoExec, null, pseudoParticulier, mod));
-	}
-
-	@Test
-	void ajouterMembreRSTest3Jeu2() {
-		try {
-			rs = minisocs.creerReseauSocial(pseudoExec, nomReseau, ouvert, pseudoParticulier);
-		} catch (OperationImpossible e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		Assertions.assertThrows(OperationImpossible.class,
-				() -> minisocs.ajouterMembreRS(pseudoExec, "", pseudoParticulier, mod));
+				() -> minisocs.posterMessageRS(pseudoExec, contenu, nomReseau));
 	}
 	
 	@Test
-	void ajouterMembreRSTest4Jeu1() {
-		try {
-			rs = minisocs.creerReseauSocial(pseudoExec, nomReseau, ouvert, pseudoParticulier);
-		} catch (OperationImpossible e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+	void posterMessageRSTest5Jeu1() {
+		// rs n'existe pas
 		Assertions.assertThrows(OperationImpossible.class,
-				() -> minisocs.ajouterMembreRS(pseudoExec, nomReseau, null, mod));
+				() -> minisocs.posterMessageRS(pseudoExec, contenu, nomReseau));
 	}
 	
 	@Test
-	void ajouterMembreRSTest4Jeu2() {
-		try {
-			rs = minisocs.creerReseauSocial(pseudoExec, nomReseau, ouvert, pseudoParticulier);
-		} catch (OperationImpossible e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		Assertions.assertThrows(OperationImpossible.class,
-				() -> minisocs.ajouterMembreRS(pseudoExec, nomReseau, "", mod));
-	}
-	
-	@Test
-	void ajouterMembreRSTest5Jeu1() { // rs n'existe pas
-		Assertions.assertThrows(OperationImpossible.class,
-				() -> minisocs.ajouterMembreRS(pseudoExec, nomReseau, pseudoParticulier, mod));
-	}
-	
-	@Test
-	void ajouterMembreRSTest6Jeu1() {
-		
+	void posterMessageRSTest6Jeu1() {
 		try {
 			rs = minisocs.creerReseauSocial(pseudoExec, nomReseau, false, pseudoParticulier);
 		} catch (OperationImpossible e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} // rs fermé
+		}
 		
 		Assertions.assertThrows(OperationImpossible.class,
-				() -> minisocs.ajouterMembreRS(pseudoExec, nomReseau, "nouveau", mod));
+				() -> minisocs.posterMessageRS(pseudoExec, contenu, nomReseau));
 	}
 	
 	@Test
-	void ajouterMembreRSTest7Jeu1() {
+	void posterMessageRSTest7Jeu1() {
 		try {
 			rs = minisocs.creerReseauSocial(pseudoExec, nomReseau, false, pseudoParticulier);
 		} catch (OperationImpossible e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} // rs fermé
+		}
+		Utilisateur user2;
+		try {
+			user2 = minisocs.ajouterUtilisateur("nouveau", "nom", "prenom", "abc@xyz.com");
+		} catch (OperationImpossible e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		// user2 pas sur rs
 		
 		Assertions.assertThrows(OperationImpossible.class,
-				() -> minisocs.ajouterMembreRS(pseudoExec, nomReseau, "nouveau", mod));
+				() -> minisocs.posterMessageRS("nouveau", contenu, nomReseau));
 	}
 	
+	@Test
+	void posterMessageRSTest8Jeu1() {
+		try {
+			rs = minisocs.creerReseauSocial(pseudoExec, nomReseau, ouvert, pseudoParticulier);
+		} catch (OperationImpossible e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		Utilisateur user2;
+		try {
+			user2 = minisocs.ajouterUtilisateur("nouveau", "nom", "prenom", "abc@xyz.com");
+		} catch (OperationImpossible e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		// user2 membre simple sur le rs
+		
+		try {
+			minisocs.ajouterMembreRS("nouveau", nomReseau, "user2", false);
+		} catch (OperationImpossible e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		try {
+			msg = minisocs.posterMessageRS("nouveau", contenu, nomReseau);
+		} catch (OperationImpossible e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} // user pseudoExec est modérateur par construction du rs
+		
+		assertNotNull(msg);
+		assertTrue(rs.getMessages().contains(msg));
+		assertEquals(msg.getContenu(), contenu);
+		assertEquals(msg.getEtat(), EtatMessage.VERIFICATION_PENDING);
+	}
+	
+	@Test
+	void posterMessageRSTest9Jeu1() {
+		try {
+			rs = minisocs.creerReseauSocial(pseudoExec, nomReseau, ouvert, pseudoParticulier);
+		} catch (OperationImpossible e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 
-	@Test
-	void creerReseauSocialTest7Jeu1() {
+		// user modérateur sur le rs
+		
 		try {
-			rs = minisocs.creerReseauSocial(pseudoExec, nomReseau, ouvert, pseudoParticulier);
+			msg = minisocs.posterMessageRS(pseudoExec, contenu, nomReseau);
 		} catch (OperationImpossible e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		} // user pseudoExec est modérateur par construction du rs
 		
-		Assertions.assertThrows(OperationImpossible.class,
-				() -> minisocs.ajouterMembreRS(pseudoExec, nomReseau, "2eme membre pour même utilisateur", mod));
-	}
-	
-	@Test
-	void creerReseauSocialTest8Jeu1() {
-		try {
-			rs = minisocs.creerReseauSocial(pseudoExec, nomReseau, ouvert, pseudoParticulier);
-		} catch (OperationImpossible e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		try {
-			user2 = minisocs.ajouterUtilisateur("nouvel utilisateur", "nom", "prenom", "abc@xyz.com");
-		} catch (OperationImpossible e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		try {
-			minisocs.ajouterMembreRS("nouvel utilisateur", nomReseau, "nouveau membre", mod);
-		} catch (OperationImpossible e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	
-		Membre m = rs.getMembrefromUtilisateur(user2);
-		assertEquals(m.getPseudoParticulier(), "nouveau membre");
-		assertTrue(rs.getMembres().contains(m));
-		
-		if (mod) {
-			assertTrue(m instanceof Moderateur);
-		}
+		assertNotNull(msg);
+		assertTrue(rs.getMessages().contains(msg));
+		assertEquals(msg.getContenu(), contenu);
+		assertEquals(msg.getEtat(), EtatMessage.SENT);
 	}
 }

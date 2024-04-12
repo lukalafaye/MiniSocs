@@ -98,8 +98,6 @@ public class TestReseauSocial{
     
     @Test
    	void getMessageFromIdTest1Jeu1() {
-    	System.out.println("Rs");
-    	System.out.println(rs.getNom());
    		Assertions.assertThrows(IllegalArgumentException.class,
    				() -> rs.getMessageFromId(-1));
    	}

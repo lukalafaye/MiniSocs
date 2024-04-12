@@ -63,43 +63,43 @@ class TestCeationReseauSocial {
 
 	@Test
 	void creerReseauSocialTest1Jeu1() {
-		Assertions.assertThrows(IllegalArgumentException.class,
+		Assertions.assertThrows(OperationImpossible.class,
 				() -> minisocs.creerReseauSocial(null, nomReseau, ouvert, pseudoParticulier));
 	}
 
 	@Test
 	void creerReseauSocialTest1Jeu2() {
-		Assertions.assertThrows(IllegalArgumentException.class,
+		Assertions.assertThrows(OperationImpossible.class,
 				() -> minisocs.creerReseauSocial("", nomReseau, ouvert, pseudoParticulier));	}
 
 	@Test
 	void creerReseauSocialTest2Jeu1() {
 		user.desactiverCompte();
-		Assertions.assertThrows(IllegalArgumentException.class,
+		Assertions.assertThrows(OperationImpossible.class,
 				() -> minisocs.creerReseauSocial(pseudoExec, nomReseau, ouvert, pseudoParticulier));
 	}
 
 	@Test
 	void creerReseauSocialTest3Jeu1() {
-		Assertions.assertThrows(IllegalArgumentException.class,
+		Assertions.assertThrows(OperationImpossible.class,
 				() -> minisocs.creerReseauSocial(pseudoExec, null, ouvert, pseudoParticulier));
 	}
 
 	@Test
 	void creerReseauSocialTest3Jeu2() {
-		Assertions.assertThrows(IllegalArgumentException.class,
+		Assertions.assertThrows(OperationImpossible.class,
 				() -> minisocs.creerReseauSocial(pseudoExec, "", ouvert, pseudoParticulier));
 	}
 	
 	@Test
 	void creerReseauSocialTest4Jeu1() {
-		Assertions.assertThrows(IllegalArgumentException.class,
+		Assertions.assertThrows(OperationImpossible.class,
 				() -> minisocs.creerReseauSocial(pseudoExec, nomReseau, ouvert, null));
 	}
 	
 	@Test
 	void creerReseauSocialTest4Jeu2() {
-		Assertions.assertThrows(IllegalArgumentException.class,
+		Assertions.assertThrows(OperationImpossible.class,
 				() -> minisocs.creerReseauSocial(pseudoExec, nomReseau, ouvert, ""));
 	}
 	

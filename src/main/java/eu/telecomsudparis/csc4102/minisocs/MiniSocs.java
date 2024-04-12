@@ -89,40 +89,34 @@ public class MiniSocs {
 	 */
     public ReseauSocial creerReseauSocial(final String pseudoExec, final String nomReseau, final boolean ouvert, final String pseudoParticulier) throws OperationImpossible {
         if (pseudoExec == null || pseudoExec.isBlank()) {
-        	throw new IllegalArgumentException("Pseudo de l'executeur non valide");
+        	throw new OperationImpossible("Pseudo de l'executeur non valide");
         }
         Utilisateur u = utilisateurs.get(pseudoExec);
         if (u == null) {
-        	throw new IllegalArgumentException("Le compte de l'exécuteur n'existe pas");
+        	throw new OperationImpossible("Le compte de l'exécuteur n'existe pas");
         }
         if (u.getEtatCompte() != EtatCompte.ACTIF) {
-            throw new IllegalArgumentException("Le compte de l'exécuteur n'est pas actif ou est bloqué.");
+            throw new OperationImpossible("Le compte de l'exécuteur n'est pas actif ou est bloqué.");
         }
         if (nomReseau == null || nomReseau.isBlank()) {
-            throw new IllegalArgumentException("Nom du réseau social non valide.");
+            throw new OperationImpossible("Nom du réseau social non valide.");
         }
         
         if (pseudoParticulier == null || pseudoParticulier.isBlank()) {
-            throw new IllegalArgumentException("pseudoParticulier du réseau social non valide.");
+            throw new OperationImpossible("pseudoParticulier du réseau social non valide.");
         }
         
 		ReseauSocial rs = reseauxSociaux.get(nomReseau);
 		if (rs != null) {
 			throw new OperationImpossible("Nom deja pris");
-		} else {
-			System.out.println("nom rs dispo");
 		}
 
         ReseauSocial nouveauReseau = new ReseauSocial(nomReseau, ouvert);
         reseauxSociaux.put(nouveauReseau.getNom(), nouveauReseau);      
         
-        System.out.println(" rs créé avec");
-        System.out.println(nouveauReseau.getNom());
         nouveauReseau.setOuvert(true);
         Membre m = ajouterMembreRS(pseudoExec, nomReseau, pseudoParticulier, true);
         nouveauReseau.setOuvert(ouvert);
-        System.out.println("Membre sur rs créé avec : ");
-        System.out.println(m.getPseudoParticulier());
           
 	    assert invariant();
 	    return nouveauReseau;
@@ -139,27 +133,32 @@ public class MiniSocs {
 	 */
     public Membre ajouterMembreRS(final String pseudo, final String nomReseau, final String pseudoParticulier, final boolean mod) throws OperationImpossible {
         if (pseudo == null || pseudo.isBlank()) {
-        	throw new IllegalArgumentException("Pseudo de l'executeur non valide");
+        	throw new OperationImpossible("Pseudo de l'executeur non valide");
         }
         if (nomReseau == null || nomReseau.isBlank()) {
-        	throw new IllegalArgumentException("Nom du Reseau non valide");
+        	throw new OperationImpossible("Nom du Reseau non valide");
         }
         Utilisateur u = utilisateurs.get(pseudo);
         ReseauSocial rs = reseauxSociaux.get(nomReseau);
         
         if (rs == null) {
-        	throw new IllegalArgumentException("Aucun rs possèdenomReseau");
+        	throw new OperationImpossible("Aucun rs possède nomReseau");
         }
-        System.out.println("OK 146");
         if (u == null || u.getEtatCompte() != EtatCompte.ACTIF) {
-            throw new IllegalArgumentException("L'utilisateur n'est pas actif ou n'existe pas.");
+            throw new OperationImpossible("L'utilisateur n'est pas actif ou n'existe pas.");
         }
-        System.out.println("OK 150");
         if (!rs.getOuvert()) {
-            throw new IllegalArgumentException("Le réseau social n'est pas ouvert.");
+            throw new OperationImpossible("Le réseau social n'est pas ouvert.");
         }
-        System.out.println("OK 154");
-        Membre m = rs.ajouterMembre(u, pseudoParticulier, mod);
+        
+        Membre m = rs.getMembrefromUtilisateur(u);
+        
+        if (m != null) {
+        	// un membre est déjà créé pour cet utilisateur sur le rs
+        	throw new OperationImpossible("membre est déjà créé pour cet utilisateur sur le rs");
+        } else {
+        	m = rs.ajouterMembre(u, pseudoParticulier, mod);
+        }
         
         assert invariant();
         return m;
@@ -173,7 +172,7 @@ public class MiniSocs {
 	 * @param contenu   le contenu du message.
 	 * @throws OperationImpossible en cas de problème sur les pré-conditions.
 	 */
-    public void posterMessageRS(final String pseudo, final String contenu, final String nomReseau) throws OperationImpossible {
+    public Message posterMessageRS(final String pseudo, final String contenu, final String nomReseau) throws OperationImpossible {
         if (pseudo == null || pseudo.isBlank()) {
         	throw new OperationImpossible("Pseudo de l'executeur non valide");
         }
@@ -188,6 +187,11 @@ public class MiniSocs {
         if (u == null || u.getEtatCompte() != EtatCompte.ACTIF) {
             throw new OperationImpossible("L'utilisateur n'est pas actif ou n'existe pas.");
         }
+        
+        if (rs == null) {
+            throw new OperationImpossible("Le réseau social n'existe pas.");
+        }
+        
     	if (!rs.getOuvert()) {
             throw new OperationImpossible("Le réseau social n'est pas ouvert.");
         }
@@ -198,9 +202,11 @@ public class MiniSocs {
         if (m.getPseudoParticulier() == null || m.getPseudoParticulier().isBlank()) {
         	throw new OperationImpossible("Pseudo de l'executeur non valide");
         }
-        rs.ajouterMessage(contenu, m);
+        Message msg = rs.ajouterMessage(contenu, m);
         
         assert invariant();
+        
+        return msg;
     }
     
 	/**
@@ -216,6 +222,11 @@ public class MiniSocs {
         if (pseudo == null || pseudo.isBlank()) {
         	throw new OperationImpossible("Pseudo de l'executeur non valide");
         }
+        
+        if (id < 0) {
+        	throw new OperationImpossible("Id doit être positif");
+        }
+        
         if (nomReseau == null || nomReseau.isBlank()) {
         	throw new OperationImpossible("Nom du Reseau non valide");
         }
@@ -224,6 +235,10 @@ public class MiniSocs {
         if (u == null || u.getEtatCompte() != EtatCompte.ACTIF) {
             throw new OperationImpossible("L'utilisateur n'est pas actif ou n'existe pas.");
         }
+        if (rs == null) {
+        	throw new OperationImpossible("Le réseau social n'existe pas.");
+        }
+        
     	if (!rs.getOuvert()) {
             throw new OperationImpossible("Le réseau social n'est pas ouvert.");
         }
