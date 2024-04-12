@@ -145,9 +145,13 @@ public class Message {
 	    assert invariant();
 	}
 	
+	/**
+	 * supprime le message.
+	 * 
+	 * 
+	 */
 	public void deleteMessage() {
 		this.etat = EtatMessage.DELETED;
-		// Supprimer de la liste du rs?
 	}
 	
 	/**
