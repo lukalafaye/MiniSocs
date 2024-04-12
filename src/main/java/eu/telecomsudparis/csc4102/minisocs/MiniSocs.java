@@ -50,7 +50,7 @@ public class MiniSocs {
 	 * @param courriel le courriel de l'utilisateur.
 	 * @throws OperationImpossible en cas de problème sur les pré-conditions.
 	 */
-	public void ajouterUtilisateur(final String pseudo, final String nom, final String prenom, final String courriel)
+	public Utilisateur ajouterUtilisateur(final String pseudo, final String nom, final String prenom, final String courriel)
 			throws OperationImpossible {
 		if (pseudo == null || pseudo.isBlank()) {
 			throw new OperationImpossible("pseudo ne peut pas être null ou vide");
@@ -71,9 +71,11 @@ public class MiniSocs {
 		if (u != null) {
 			throw new OperationImpossible(pseudo + "déjà un utilisateur");
 		}
-		utilisateurs.put(pseudo, new Utilisateur(pseudo, nom, prenom, courriel));
+		Utilisateur user = new Utilisateur(pseudo, nom, prenom, courriel);
+		utilisateurs.put(pseudo, user);
 		
 		assert invariant();
+		return user;
 	}
 	
 	/**
@@ -83,29 +85,47 @@ public class MiniSocs {
 	 * @param nomReseau      le nom du reseau social.
 	 * @param ouvert   l etat initial du RS.
 	 * @param pseudoParticulier le pseudo du membre particulier au reseau social.
-	 * @throws OperationImpossible en cas de problème sur les pré-conditions.
+	 * @throws IllegalArgumentException en cas de problème sur les pré-conditions.
 	 */
-    public void creerReseauSocial(final String pseudoExec, final String nomReseau, final boolean ouvert, final String pseudoParticulier) throws OperationImpossible {
+    public ReseauSocial creerReseauSocial(final String pseudoExec, final String nomReseau, final boolean ouvert, final String pseudoParticulier) throws OperationImpossible {
         if (pseudoExec == null || pseudoExec.isBlank()) {
-        	throw new OperationImpossible("Pseudo de l'executeur non valide");
+        	throw new IllegalArgumentException("Pseudo de l'executeur non valide");
         }
         Utilisateur u = utilisateurs.get(pseudoExec);
+        if (u == null) {
+        	throw new IllegalArgumentException("Le compte de l'exécuteur n'existe pas");
+        }
         if (u.getEtatCompte() != EtatCompte.ACTIF) {
-            throw new OperationImpossible("Le compte de l'exécuteur n'est pas actif ou est bloqué.");
+            throw new IllegalArgumentException("Le compte de l'exécuteur n'est pas actif ou est bloqué.");
         }
         if (nomReseau == null || nomReseau.isBlank()) {
-            throw new OperationImpossible("Nom du réseau social non valide.");
+            throw new IllegalArgumentException("Nom du réseau social non valide.");
         }
+        
+        if (pseudoParticulier == null || pseudoParticulier.isBlank()) {
+            throw new IllegalArgumentException("pseudoParticulier du réseau social non valide.");
+        }
+        
 		ReseauSocial rs = reseauxSociaux.get(nomReseau);
 		if (rs != null) {
 			throw new OperationImpossible("Nom deja pris");
+		} else {
+			System.out.println("nom rs dispo");
 		}
 
         ReseauSocial nouveauReseau = new ReseauSocial(nomReseau, ouvert);
-        ajouterMembreRS(pseudoExec, nomReseau, pseudoParticulier, true);
-        reseauxSociaux.put(nouveauReseau.getNom(), nouveauReseau);        
+        reseauxSociaux.put(nouveauReseau.getNom(), nouveauReseau);      
         
+        System.out.println(" rs créé avec");
+        System.out.println(nouveauReseau.getNom());
+        nouveauReseau.setOuvert(true);
+        Membre m = ajouterMembreRS(pseudoExec, nomReseau, pseudoParticulier, true);
+        nouveauReseau.setOuvert(ouvert);
+        System.out.println("Membre sur rs créé avec : ");
+        System.out.println(m.getPseudoParticulier());
+          
 	    assert invariant();
+	    return nouveauReseau;
     }
 	
 	/**
@@ -117,25 +137,32 @@ public class MiniSocs {
 	 * @param pseudoParticulier le pseudo du membre particulier au reseau social.
 	 * @throws OperationImpossible en cas de problème sur les pré-conditions.
 	 */
-    public void ajouterMembreRS(final String pseudo, final String nomReseau, final String pseudoParticulier, final boolean mod) throws OperationImpossible {
+    public Membre ajouterMembreRS(final String pseudo, final String nomReseau, final String pseudoParticulier, final boolean mod) throws OperationImpossible {
         if (pseudo == null || pseudo.isBlank()) {
-        	throw new OperationImpossible("Pseudo de l'executeur non valide");
+        	throw new IllegalArgumentException("Pseudo de l'executeur non valide");
         }
         if (nomReseau == null || nomReseau.isBlank()) {
-        	throw new OperationImpossible("Nom du Reseau non valide");
+        	throw new IllegalArgumentException("Nom du Reseau non valide");
         }
         Utilisateur u = utilisateurs.get(pseudo);
         ReseauSocial rs = reseauxSociaux.get(nomReseau);
         
+        if (rs == null) {
+        	throw new IllegalArgumentException("Aucun rs possèdenomReseau");
+        }
+        System.out.println("OK 146");
         if (u == null || u.getEtatCompte() != EtatCompte.ACTIF) {
-            throw new OperationImpossible("L'utilisateur n'est pas actif ou n'existe pas.");
+            throw new IllegalArgumentException("L'utilisateur n'est pas actif ou n'existe pas.");
         }
+        System.out.println("OK 150");
         if (!rs.getOuvert()) {
-            throw new OperationImpossible("Le réseau social n'est pas ouvert.");
+            throw new IllegalArgumentException("Le réseau social n'est pas ouvert.");
         }
-        rs.ajouterMembre(u, pseudoParticulier, mod);
+        System.out.println("OK 154");
+        Membre m = rs.ajouterMembre(u, pseudoParticulier, mod);
         
         assert invariant();
+        return m;
     }
 	
 	/**

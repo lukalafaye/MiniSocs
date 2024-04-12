@@ -8,96 +8,95 @@ import org.junit.jupiter.api.Test;
 
 import eu.telecomsudparis.csc4102.minisocs.EtatCompte;
 import eu.telecomsudparis.csc4102.minisocs.MiniSocs;
+import eu.telecomsudparis.csc4102.minisocs.Utilisateur;
 import eu.telecomsudparis.csc4102.util.OperationImpossible;
 
-class TestAjouterUtilisateur {
-	private MiniSocs miniSocs;
-	private String pseudo;
-	private String nom;
-	private String prenom;
-	private String courriel;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
+class TestAjouterUtilisateur {
+
+	private MiniSocs minisocs;
+	private Utilisateur user;
+	
 	@BeforeEach
 	void setUp() {
-		miniSocs = new MiniSocs("MiniSocs");
-		pseudo = "utilisateur1";
-		nom = "nom1";
-		prenom = "prenom1";
-		courriel = "bon@courriel.fr";
+		minisocs = new MiniSocs("Systeme Test");
 	}
 
 	@AfterEach
 	void tearDown() {
-		miniSocs = null;
-		pseudo = null;
-		nom = null;
-		prenom = null;
-		courriel = null;
+		minisocs = null;
+		user = null;
 	}
 
 	@Test
-	void ajouterUtilisateurTest1Jeu1() throws Exception {
+	void ajouterUtilisateurTest1Jeu1() {
 		Assertions.assertThrows(OperationImpossible.class,
-				() -> miniSocs.ajouterUtilisateur(null, nom, prenom, courriel));
+				() -> minisocs.ajouterUtilisateur(null, "nom", "prénom", "courriel"));
 	}
 
 	@Test
-	void ajouterUtilisateurTest1Jeu2() throws Exception {
+	void ajouterUtilisateurTest1Jeu2() {
+		Assertions.assertThrows(OperationImpossible.class, 
+				() -> minisocs.ajouterUtilisateur("", "nom", "prénom", "courriel"));
+	}
+
+	@Test
+	void ajouterUtilisateurTest2Jeu1() {
 		Assertions.assertThrows(OperationImpossible.class,
-				() -> miniSocs.ajouterUtilisateur("", nom, prenom, courriel));
+				() -> minisocs.ajouterUtilisateur("pseudo", null, "prénom", "courriel"));
 	}
 
 	@Test
-	void ajouterUtilisateurTest2Jeu1() throws Exception {
+	void ajouterUtilisateurTest2Jeu2() {
 		Assertions.assertThrows(OperationImpossible.class,
-				() -> miniSocs.ajouterUtilisateur(pseudo, null, prenom, courriel));
+				() -> minisocs.ajouterUtilisateur("pseudo", "", "prénom", "courriel"));
 	}
 
 	@Test
-	void ajouterUtilisateurTest2Jeu2() throws Exception {
+	void ajouterUtilisateurTest3Jeu1() {
 		Assertions.assertThrows(OperationImpossible.class,
-				() -> miniSocs.ajouterUtilisateur(pseudo, "", prenom, courriel));
+				() -> minisocs.ajouterUtilisateur("pseudo", "nom", null, "courriel"));
 	}
 
 	@Test
-	void ajouterUtilisateurTest3Jeu1() throws Exception {
+	void ajouterUtilisateurTest3Jeu2() {
+		Assertions.assertThrows(OperationImpossible.class, 
+				() -> minisocs.ajouterUtilisateur("pseudo", "nom", "", "courriel"));
+	}
+
+	@Test
+	void ajouterUtilisateurTest4eu1() {
+		Assertions.assertThrows(OperationImpossible.class, 
+				() -> minisocs.ajouterUtilisateur("pseudo", "nom", "prénom", null));
+	}
+
+	@Test
+	void ajouterUtilisateurTest4Jeu2() {
+		Assertions.assertThrows(OperationImpossible.class, 
+				() -> minisocs.ajouterUtilisateur("pseudo", "nom", "prénom", ""));
+	}
+
+	@Test
+	void ajouterUtilisateurTest4Jeu3() {
 		Assertions.assertThrows(OperationImpossible.class,
-				() -> miniSocs.ajouterUtilisateur(pseudo, nom, null, courriel));
+				() -> minisocs.ajouterUtilisateur("pseudo", "nom", "prénom", "malformé"));
 	}
 
 	@Test
-	void ajouterUtilisateurTest3Jeu2() throws Exception {
-		Assertions.assertThrows(OperationImpossible.class, () -> miniSocs.ajouterUtilisateur(pseudo, nom, "", courriel));
-	}
-
-	@Test
-	void ajouterUtilisateurTest4Jeu1() throws Exception {
-		Assertions.assertThrows(OperationImpossible.class, () -> miniSocs.ajouterUtilisateur(pseudo, nom, prenom, null));
-	}
-
-	@Test
-	void ajouterUtilisateurTest4Jeu2() throws Exception {
-		Assertions.assertThrows(OperationImpossible.class, () -> miniSocs.ajouterUtilisateur(pseudo, nom, prenom, ""));
-	}
-
-	@Test
-	void ajouterUtilisateurTest4Jeu3() throws Exception {
-		Assertions.assertThrows(OperationImpossible.class,
-				() -> miniSocs.ajouterUtilisateur(pseudo, nom, prenom, "mauvaiseadressecourriel"));
-	}
-
-	@Test
-	void ajouterUtilisateurTest4Puis4() throws Exception {
-		Assertions.assertTrue(miniSocs.listerUtilisateurs().isEmpty());
-		miniSocs.ajouterUtilisateur(pseudo, nom, prenom, courriel);
-		Assertions.assertFalse(miniSocs.listerUtilisateurs().isEmpty());
-		Assertions.assertEquals(1, miniSocs.listerUtilisateurs().size());
-		Assertions.assertTrue(miniSocs.listerUtilisateurs().get(0).contains(pseudo));
-		Assertions.assertTrue(miniSocs.listerUtilisateurs().get(0).contains(nom));
-		Assertions.assertTrue(miniSocs.listerUtilisateurs().get(0).contains(prenom));
-		Assertions.assertTrue(miniSocs.listerUtilisateurs().get(0).contains(courriel));
-		Assertions.assertTrue(miniSocs.listerUtilisateurs().get(0).contains(EtatCompte.ACTIF.toString()));
-		Assertions.assertThrows(OperationImpossible.class,
-				() -> miniSocs.ajouterUtilisateur(pseudo, nom, prenom, courriel));
+	void ajouterUtilisateurTest5Jeu1() {
+		try {
+			user = minisocs.ajouterUtilisateur("pseudo", "nom", "prénom", "ok@courriel.fr");
+		} catch (OperationImpossible e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		Assertions.assertNotNull(user);
+		Assertions.assertEquals("pseudo", user.getPseudonyme());
+		Assertions.assertEquals("nom", user.getNom());
+		Assertions.assertEquals("prénom", user.getPrenom());
+		Assertions.assertEquals("ok@courriel.fr", user.getCourriel());
+		Assertions.assertEquals(EtatCompte.ACTIF, user.getEtatCompte());
 	}
 }

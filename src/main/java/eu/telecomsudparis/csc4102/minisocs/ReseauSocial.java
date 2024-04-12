@@ -37,6 +37,10 @@ public class ReseauSocial {
 		return this.ouvert;
 	}
 	
+	public void setOuvert(boolean ouvert) {
+		this.ouvert = ouvert;
+	}
+	
 	public Set<Membre> getMembres() {
 		return this.membres;
 	}

@@ -1,6 +1,7 @@
 package eu.telecomsudparis.csc4102.minisocs;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -11,8 +12,7 @@ public class Membre {
 	private String pseudoParticulier;
 	private final Utilisateur utilisateur;
 	protected final ReseauSocial rs;
-	
-	private Map<String, Message> messages;
+    private HashMap<String, Message> messages;
 
 	public Membre(final String pseudoParticulier, final Utilisateur utilisateur, final ReseauSocial rs) {	
 		if (pseudoParticulier == null || pseudoParticulier.isBlank()) {

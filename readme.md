@@ -936,49 +936,77 @@ public Message ajouterMessage(String contenu, Membre m)
 
 ### UC1 : Créer un réseau social
 
+public void creerReseauSocial(final String pseudoExec, final String nomReseau, final boolean ouvert, final String pseudoParticulier)
 
-|                                      | 1   | 2   |
-|:-------------------------------------|:----|:----|
-| Nom du réseau non valide             | T   | T   |
-|                                      |     |     |
-| Lancement d'une exception            | oui | oui |
-|                                      |     |     |
-| Nombre de tests dans le jeu de tests | 1   | 1   |
+|                                                                                 | 1   | 2   | 3   | 4   | 5   | 6   |
+|:--------------------------------------------------------------------------------|:----|:----|:----|-----|-----|-----|
+| pseudoExec  (non null ∧ non vide)                                               | F   | T   | T   | T   | T   | T   |
+| Compte exec actif                                                               |     | F   | T   | T   | T   | T   |
+| nomReseau  (non null ∧ non vide)                                                |     |     | F   | T   | T   | T   |
+| pseudoParticulier  (non null ∧ non vide)                                        |     |     |     | F   | T   | T   |
+| rs n'existe pas                                                                 |     |     |     |     | F   | T   |
+|                                                                                 |     |     |     |     |     |     |
+| rs non null                                                                     |     |     |     |     |     | T   |
+| nomReseau' = nomReseau                                                          |     |     |     |     |     | T   |
+| ouvert' = ouvert                                                                |     |     |     |     |     | T   |
+| pseudoParticulier' = pseudoParticulier                                          |     |     |     |     |     | T   |
+| rs contient moderateur nommé pseudoParticlier associé à utilisateur  pseudoExec |     |     |     |     |     | T   |
+|                                                                                 |     |     |     |     |     |     |
+| Lancement d'une exception                                                       | oui | oui | oui | oui | oui | non |
+|                                                                                 |     |     |     |     |     |     |
+| Nombre de tests dans le jeu de tests                                            | 2   | 1   | 2   | 2   | 1   | 1   |
 
-### UC2
+Nous avons aussi testé avec ouvert = false... OK
 
-|                                      | 1   | 2   | 3   |
-|:-------------------------------------|:----|:----|:----|
-| Pseudo non valide                    | T   | F   | F   |
-| Utilisateur null ou RS null          | F   | T   | T   |
-| Pseudo du membre non valide          | F   | F   | F   |
-|                                      |     |     |     |
-| Lancement d'une exception            | oui | oui | oui |
-|                                      |     |     |     |
-| Nombre de tests dans le jeu de tests | 1   | 1   | 1   |
+### UC2 : Ajouter un membre à un réseau social
 
-### UC3
+public Membre ajouterMembreRS(final String pseudo, final String nomReseau, final String pseudoParticulier, final boolean mod) 
 
-| Test Case Description                           | Username | Content | Member/Moderator | Social Network | Initial State | Expected Outcome                      |
-|-------------------------------------------------|----------|---------|------------------|----------------|---------------|---------------------------------------|
-| Valid message for a regular member              | Valid    | Valid   | Member           | Valid          | SENT          | State changes to VERIFICATION_PENDING |
-| Valid message for a moderator                   | Valid    | Valid   | Moderator        | Valid          | SENT          | State changes to ACCEPTE              |
-| Null username                                   | Null     | Valid   | Member           | Valid          | SENT          | IllegalArgumentException thrown       |
-| Blank username                                  | Blank    | Valid   | Member           | Valid          | SENT          | IllegalArgumentException thrown       |
-| Null content                                    | Valid    | Null    | Member           | Valid          | SENT          | IllegalArgumentException thrown       |
-| Blank content                                   | Valid    | Blank   | Member           | Valid          | SENT          | IllegalArgumentException thrown       |
-| Null member                                     | Valid    | Valid   | Null             | Valid          | SENT          | IllegalArgumentException thrown       |
-| Null social network                             | Valid    | Valid   | Member           | Null           | SENT          | IllegalArgumentException thrown       |
-| Regular member sends message with null content  | Valid    | Null    | Member           | Valid          | SENT          | IllegalArgumentException thrown       |
-| Regular member sends message with blank content | Valid    | Blank   | Member           | Valid          | SENT          | IllegalArgumentException thrown       |
+|                                          | 1   | 2   | 3   | 4   | 5   | 6   | 7   |
+|:-----------------------------------------|:----|:----|:----|-----|-----|-----|-----|
+| pseudo  (non null ∧ non vide)            | F   | T   | T   | T   | T   | T   | T   |
+| nomReseau  (non null ∧ non vide)         |     | F   | T   | T   | T   | T   | T   |
+| pseudoParticulier  (non null ∧ non vide) |     |     | F   | T   | T   | T   | T   |
+| Compte exec actif                        |     |     |     | F   | T   | T   | T   |
+| rs non null                              |     |     |     |     | F   | T   | T   |
+| rs ouvert                                |     |     |     |     |     | F   | T   |
+|                                          |     |     |     |     |     |     |     |
+| pseudoParticulier' = pseudoParticulier   |     |     |     |     |     |     | T   |
+| rs contient membre pseudoParticlier      |     |     |     |     |     |     | T   |
+| mod' = mod                               |     |     |     |     |     |     | T   |
+|                                          |     |     |     |     |     |     |     |
+| Lancement d'une exception                | oui | oui | oui | oui | oui | oui | non |
+|                                          |     |     |     |     |     |     |     |
+| Nombre de tests dans le jeu de tests     | 2   | 2   | 2   | 1   | 1   | 1   | 1   |
 
+### UC3 : Poster un message
+
+
+
+
+### UC4 : Modérer un message
+
+### Créer un utilisateur
+
+public Utilisateur ajouterUtilisateur(final String pseudo, final String nom, final String prenom, final String courriel)
+
+|                                                     | 1   | 2   | 3   | 4   | 5   |
+|:----------------------------------------------------|:----|:----|:----|-----|-----|
+| pseudo  (non null ∧ non vide)                       | F   | T   | T   | T   | T   |
+| nom  (non null ∧ non vide)                          |     | F   | T   | T   | T   |
+| prenom  (non null ∧ non vide)                       |     |     | F   | T   | T   |
+| Courriel bien formé (respectant le standard RFC822) |     |     |     | F   | T   |
+|                                                     |     |     |     |     |     |
+| utilisateur créé non null                           |     |     |     |     |     |
+| pseudo' = pseudo                                    |     |     |     |     | T   |
+| nom' = nom                                          |     |     |     |     | T   |
+| prenom' = prenom                                    |     |     |     |     | T   |
+| courriel'= courriel                                 |     |     |     |     | T   |
+| minisocs contient utilisateur                       |     |     |     |     | T   |
+|                                                     |     |     |     |     |     |
+| Lancement d'une exception                           | oui | oui | oui | oui | non |
+|                                                     |     |     |     |     |     |
+| Nombre de tests dans le jeu de tests                | 2   | 2   | 2   | 3   | 1   |
 
 ---
 FIN DU DOCUMENT
-
-val
-- creer rs
-- ajouter utilisateur (done)
-- ajouter membre a rs 
-- poster msg
-- moderer msg
