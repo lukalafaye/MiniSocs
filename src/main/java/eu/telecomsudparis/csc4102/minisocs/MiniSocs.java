@@ -41,6 +41,9 @@ public class MiniSocs {
 		assert invariant();
 	}
 
+	//N.B. Les return a la fin des methodes servent uniquement a faciliter l'implementation des tests. 
+	//Lors du deploiement de l'application, on pourra avoir des methodes sans return (void)
+	
 	/**
 	 * ajoute un utilisateur.
 	 * 
