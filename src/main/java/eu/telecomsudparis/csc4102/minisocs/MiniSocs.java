@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.ArrayList;
 
 import org.apache.commons.validator.routines.EmailValidator;
 
@@ -41,9 +42,6 @@ public class MiniSocs {
 		assert invariant();
 	}
 
-	//N.B. Les return a la fin des methodes servent uniquement a faciliter l'implementation des tests. 
-	//Lors du deploiement de l'application, on pourra avoir des methodes sans return (void)
-	
 	/**
 	 * ajoute un utilisateur.
 	 * 
@@ -52,7 +50,6 @@ public class MiniSocs {
 	 * @param prenom   le prénom de l'utilisateur.
 	 * @param courriel le courriel de l'utilisateur.
 	 * @throws OperationImpossible en cas de problème sur les pré-conditions.
-	 * @return utilisateur ajoute
 	 */
 	public Utilisateur ajouterUtilisateur(final String pseudo, final String nom, final String prenom, final String courriel)
 			throws OperationImpossible {
@@ -90,7 +87,6 @@ public class MiniSocs {
 	 * @param ouvert   l etat initial du RS.
 	 * @param pseudoParticulier le pseudo du membre particulier au reseau social.
 	 * @throws IllegalArgumentException en cas de problème sur les pré-conditions.
-	 * @return reseau social cree
 	 */
     public ReseauSocial creerReseauSocial(final String pseudoExec, final String nomReseau, final boolean ouvert, final String pseudoParticulier) throws OperationImpossible {
         if (pseudoExec == null || pseudoExec.isBlank()) {
@@ -135,7 +131,6 @@ public class MiniSocs {
 	 * @param mod   boolean indiquant si le membre est moderateur.
 	 * @param pseudoParticulier le pseudo du membre particulier au reseau social.
 	 * @throws OperationImpossible en cas de problème sur les pré-conditions.
-	 * @return Membre ajoute
 	 */
     public Membre ajouterMembreRS(final String pseudo, final String nomReseau, final String pseudoParticulier, final boolean mod) throws OperationImpossible {
         if (pseudo == null || pseudo.isBlank()) {
@@ -145,10 +140,11 @@ public class MiniSocs {
         	throw new OperationImpossible("Nom du Reseau non valide");
         }
         Utilisateur u = utilisateurs.get(pseudo);
+        
         ReseauSocial rs = reseauxSociaux.get(nomReseau);
         
         if (rs == null) {
-        	throw new OperationImpossible("Aucun rs possède nomReseau");
+        	throw new OperationImpossible("Le réseau social " + nomReseau + " n'existe pas.");
         }
         if (u == null || u.getEtatCompte() != EtatCompte.ACTIF) {
             throw new OperationImpossible("L'utilisateur n'est pas actif ou n'existe pas.");
@@ -177,7 +173,6 @@ public class MiniSocs {
 	 * @param nomReseau      le nom du reseau social.
 	 * @param contenu   le contenu du message.
 	 * @throws OperationImpossible en cas de problème sur les pré-conditions.
-	 * @return message poste
 	 */
     public Message posterMessageRS(final String pseudo, final String contenu, final String nomReseau) throws OperationImpossible {
         if (pseudo == null || pseudo.isBlank()) {
@@ -269,16 +264,24 @@ public class MiniSocs {
 	 * @return la liste des pseudonymes des utilisateurs.
 	 */
 	public List<String> listerUtilisateurs() {
-		return utilisateurs.values().stream().map(Utilisateur::toString).toList();
+		List<String> listeUtilisateurs = new ArrayList<>();
+        for (Utilisateur u : utilisateurs.values()) {
+        	listeUtilisateurs.add(u.getPseudonyme());
+        }
+        return listeUtilisateurs;
 	}
 	/**
 	 * liste les reseaux sociaux.
 	 * 
-	 * @return la liste des pseudonymes des reseaux sociaux.
+	 * @return la liste des noms des reseaux sociaux.
 	 */
 	public List<String> listerRS() {
-		return reseauxSociaux.values().stream().map(ReseauSocial::toString).toList();
-	}
+        List<String> nomsReseaux = new ArrayList<>();
+        for (ReseauSocial rs : reseauxSociaux.values()) {
+            nomsReseaux.add(rs.getNom());
+        }
+        return nomsReseaux;
+    }
 
 	/**
 	 * désactiver son compte utilisateur.
@@ -323,6 +326,10 @@ public class MiniSocs {
 	 */
 	public String getNomDeProjet() {
 		return nomDuSysteme;
+	}
+	
+	public Map<String, ReseauSocial> getReseauxSociaux() {
+	    return reseauxSociaux;
 	}
 
 	/**

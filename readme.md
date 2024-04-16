@@ -227,8 +227,6 @@ NB : l'opération est idempotente.
 - postcondition : \
 ∧ l'utilisateur est membre du réseau social
 
-
-
 #### Poster un message (HAUTE)
 - précondition : \
 ∧ pseudo bien formé (non null ∧ non vide) \
